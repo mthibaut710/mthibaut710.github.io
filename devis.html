@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demander un devis — Mat'Info</title>
+<meta name="description" content="Demandez un devis gratuit pour votre dépannage informatique à Lille ou autour d'Amiens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo"><span class="dot"></span>Mat'Info</a>
+    <nav class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#prestations">Prestations</a>
+      <a href="index.html#zone">Zone &amp; horaires</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="devis.html" class="nav-cta">Demander un devis</a>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / Demander un devis</div>
+    <span class="eyebrow">Devis gratuit</span>
+    <h1>Décrivez votre panne, recevez un devis.</h1>
+    <p>Répondez à ce court questionnaire — je reviens vers vous sous 24h avec un tarif clair, sans engagement.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="form-card">
+
+      <div class="form-success" id="successMsg">Votre client email va s'ouvrir avec votre demande pré-remplie. S'il ne s'ouvre pas, écrivez directement à <a href="mailto:mat-info@gmail.com" style="color:#1a7a44;font-weight:600;">mat-info@gmail.com</a>.</div>
+
+      <form id="devisForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="nom">Nom et prénom</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          <div class="field">
+            <label for="tel">Téléphone</label>
+            <input type="tel" id="tel" name="tel" required>
+          </div>
+          <div class="field full">
+            <label for="email">Email <span class="hint">(pour vous renvoyer le devis)</span></label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Zone d'intervention</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="zone" value="Lille (semaine)" checked> Lille (semaine)</label>
+            <label class="radio-opt"><input type="radio" name="zone" value="Amiens (week-end)"> Amiens (week-end)</label>
+            <label class="radio-opt"><input type="radio" name="zone" value="À distance"> À distance</label>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="type">Type de problème</label>
+          <select id="type" name="type" required>
+            <option value="">Sélectionnez...</option>
+            <option>Diagnostic / dépannage panne logicielle</option>
+            <option>Ordinateur lent / à optimiser</option>
+            <option>Réinstallation Windows</option>
+            <option>Récupération de données</option>
+            <option>Sécurisation / antivirus</option>
+            <option>Configuration wifi / imprimante</option>
+            <option>Installation d'un nouvel appareil</option>
+            <option>Création de site vitrine</option>
+            <option>Autre / projet particulier</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="description">Description du problème</label>
+          <textarea id="description" name="description" placeholder="Décrivez la panne, depuis quand, ce que vous avez déjà essayé..." required></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="dispo">Vos disponibilités <span class="hint">(jours / créneaux)</span></label>
+          <input type="text" id="dispo" name="dispo" placeholder="Ex : en semaine après 18h, ou samedi matin">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer ma demande de devis</button>
+
+        <p class="form-note">
+          <span>ℹ️</span>
+          <span>Ce site étant hébergé sur GitHub Pages, il n'y a pas de serveur d'envoi : le bouton ouvre votre application email (ou Gmail) avec le message déjà rempli, prêt à envoyer.</span>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo"><span class="dot"></span>Mat'Info</div>
+        <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="tel:0787451021">07 87 45 10 21</a>
+          <a href="mailto:mat-info@gmail.com">mat-info@gmail.com</a>
+        </div>
+        <div class="footer-col">
+          <h4>Zones</h4>
+          <span>19 rue Inkermann, 59000 Lille</span>
+          <span>Saint-Accart, Belloy-sur-Somme, 80310</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="index.html">Accueil</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Mathis THIBAUT — Micro-entrepreneur — SIRET [N° SIRET]</span>
+      <span class="mono">TVA non applicable, art. 293 B du CGI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('devisForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var nom = document.getElementById('nom').value;
+    var tel = document.getElementById('tel').value;
+    var email = document.getElementById('email').value;
+    var zone = document.querySelector('input[name="zone"]:checked').value;
+    var type = document.getElementById('type').value;
+    var description = document.getElementById('description').value;
+    var dispo = document.getElementById('dispo').value;
+
+    var subject = "Demande de devis - " + nom;
+    var body =
+      "Nom : " + nom + "\n" +
+      "Téléphone : " + tel + "\n" +
+      "Email : " + email + "\n" +
+      "Zone : " + zone + "\n" +
+      "Type de problème : " + type + "\n" +
+      "Disponibilités : " + dispo + "\n\n" +
+      "Description :\n" + description;
+
+    var mailto = "mailto:mat-info@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+    document.getElementById('successMsg').classList.add('show');
+    window.location.href = mailto;
+  });
+</script>
+
+</body>
+</html>
