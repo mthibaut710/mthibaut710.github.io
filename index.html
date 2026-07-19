@@ -1,49 +1,416 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CV - Mathis THIBAUT</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mat'Info — Dépannage informatique Lille &amp; Amiens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#142850;
+    --blue:#2F6FED;
+    --blue-dim:#5C8DF2;
+    --sky:#EAF2FF;
+    --white:#FFFFFF;
+    --slate:#33415C;
+    --line:#D7E3F5;
+    --ok:#1FAA59;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--slate);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:var(--navy);letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1120px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--navy);}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(31,170,89,0.18);}
+  .nav-links{display:flex;gap:32px;font-size:0.92rem;font-weight:500;color:var(--slate);}
+  .nav-links a{position:relative;padding:4px 0;}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--blue);transition:width .25s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;font-size:0.88rem;font-weight:600;white-space:nowrap;}
+  .nav-cta:hover{background:var(--blue);}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:linear-gradient(180deg, var(--sky) 0%, #fff 100%);
+    padding:72px 0 88px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
+
+  .terminal-line{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--blue);
+    background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;
+    margin-bottom:22px;
+  }
+  .terminal-line .cursor{display:inline-block;width:7px;height:14px;background:var(--blue);animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero h1{font-size:clamp(2.1rem, 4.2vw, 3.2rem);line-height:1.08;font-weight:700;margin-bottom:20px;}
+  .hero h1 span{color:var(--blue);}
+  .hero p{font-size:1.05rem;color:var(--slate);max-width:480px;margin-bottom:32px;}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{padding:13px 22px;border-radius:9px;font-weight:600;font-size:0.93rem;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:var(--navy);color:#fff;}
+  .btn-primary:hover{background:var(--blue);}
+  .btn-ghost{border:1px solid var(--line);color:var(--navy);background:#fff;}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+
+  /* ticket visual — signature element */
+  .ticket{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 20px 40px -18px rgba(20,40,80,0.25);
+    overflow:hidden;
+    transform:rotate(1.5deg);
+  }
+  .ticket-top{padding:20px 24px 16px;display:flex;justify-content:space-between;align-items:flex-start;}
+  .ticket-id{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--blue-dim);letter-spacing:0.03em;}
+  .ticket-status{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:600;color:var(--ok);display:flex;align-items:center;gap:6px;}
+  .ticket-status .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);}
+  .ticket-body{padding:0 24px 22px;}
+  .ticket-body h3{font-size:1.15rem;margin-bottom:4px;}
+  .ticket-body p{font-size:0.86rem;color:#5b6b8a;}
+  .perf{position:relative;height:0;border-top:1.5px dashed var(--line);margin:0 24px;}
+  .perf::before,.perf::after{content:"";position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--sky);border:1px solid var(--line);}
+  .perf::before{left:-33px;}
+  .perf::after{right:-33px;}
+  .ticket-rows{padding:20px 24px 24px;display:flex;flex-direction:column;gap:12px;}
+  .ticket-row{display:flex;justify-content:space-between;font-size:0.85rem;}
+  .ticket-row .k{color:#7688a8;}
+  .ticket-row .v{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--navy);}
+  .ticket-bar{height:6px;border-radius:3px;background:var(--sky);margin:2px 24px 22px;overflow:hidden;}
+  .ticket-bar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--blue),var(--ok));}
+
+  /* ===== SECTION SHELL ===== */
+  section{padding:80px 0;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:block;}
+  .section-head{margin-bottom:44px;max-width:620px;}
+  .section-head h2{font-size:clamp(1.6rem,2.6vw,2.1rem);margin-bottom:12px;}
+  .section-head p{color:#5b6b8a;font-size:1rem;}
+
+  /* ===== ZONE CARDS ===== */
+  .zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media (max-width:700px){.zone-grid{grid-template-columns:1fr;}}
+  .zone-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+    background:linear-gradient(160deg,#fff 60%,var(--sky) 140%);
+    position:relative;overflow:hidden;
+  }
+  .zone-card .signal{display:flex;gap:3px;align-items:flex-end;height:18px;margin-bottom:18px;}
+  .zone-card .signal i{width:4px;background:var(--blue);border-radius:2px;}
+  .zone-card .signal i:nth-child(1){height:6px;}
+  .zone-card .signal i:nth-child(2){height:10px;}
+  .zone-card .signal i:nth-child(3){height:14px;}
+  .zone-card .signal i:nth-child(4){height:18px;}
+  .zone-card h3{font-size:1.3rem;margin-bottom:6px;}
+  .zone-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;color:var(--blue);background:#fff;border:1px solid var(--line);padding:4px 10px;border-radius:999px;margin-bottom:14px;}
+  .zone-card p{color:#5b6b8a;font-size:0.92rem;}
+  .zone-days{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap;}
+  .day{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;border:1px solid var(--line);color:#9aabc9;background:#fff;}
+  .day.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  /* ===== PRESTATIONS GRID ===== */
+  .presta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media (max-width:960px){.presta-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.presta-grid{grid-template-columns:1fr;}}
+  .presta-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    background:#fff;
+  }
+  .presta-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(20,40,80,0.35);border-color:var(--blue-dim);}
+  .presta-card .ic{width:38px;height:38px;border-radius:9px;background:var(--sky);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--blue);}
+  .presta-card h3{font-size:1rem;font-weight:600;margin-bottom:6px;color:var(--navy);}
+  .presta-card p{font-size:0.85rem;color:#6b7a99;}
+  .presta-card.special{background:var(--navy);border-color:var(--navy);}
+  .presta-card.special h3,.presta-card.special p{color:#fff;}
+  .presta-card.special .ic{background:rgba(255,255,255,0.12);color:#fff;}
+  .presta-card.special p{color:#c9d6f2;}
+
+  /* ===== PROCESS ===== */
+  .process{display:flex;gap:0;position:relative;}
+  @media (max-width:800px){.process{flex-direction:column;gap:28px;}}
+  .process-step{flex:1;position:relative;padding:0 20px;}
+  .process-step:first-child{padding-left:0;}
+  .process-step:last-child{padding-right:0;}
+  .process-num{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue);border:1px solid var(--line);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:#fff;}
+  .process-step h3{font-size:1.02rem;margin-bottom:6px;}
+  .process-step p{font-size:0.87rem;color:#6b7a99;}
+  .process-line{position:absolute;top:15px;left:0;right:0;height:1px;background:var(--line);z-index:-1;}
+  @media (max-width:800px){.process-line{display:none;}}
+
+  /* ===== CTA BANNER ===== */
+  .cta-banner{
+    background:var(--navy);
+    border-radius:20px;
+    padding:52px 44px;
+    display:flex;justify-content:space-between;align-items:center;gap:32px;
+    position:relative;overflow:hidden;
+  }
+  .cta-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%, rgba(47,111,237,0.35), transparent 55%);}
+  .cta-banner *{position:relative;}
+  .cta-banner h2{color:#fff;font-size:1.6rem;margin-bottom:8px;max-width:440px;}
+  .cta-banner p{color:#aebde3;font-size:0.94rem;max-width:420px;}
+  @media (max-width:700px){.cta-banner{flex-direction:column;text-align:center;align-items:center;}}
+  .btn-white{background:#fff;color:var(--navy);white-space:nowrap;}
+  .btn-white:hover{background:var(--sky);}
+
+  /* ===== FOOTER ===== */
+  footer{border-top:1px solid var(--line);padding:44px 0 32px;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:28px;}
+  .footer-grid .logo{margin-bottom:8px;}
+  .footer-grid p{font-size:0.85rem;color:#7688a8;max-width:320px;}
+  .footer-cols{display:flex;gap:56px;flex-wrap:wrap;}
+  .footer-col h4{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--blue);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+  .footer-col a,.footer-col span{display:block;font-size:0.87rem;color:#5b6b8a;margin-bottom:8px;}
+  .footer-col a:hover{color:var(--blue);}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:0.78rem;color:#9aabc9;}
+  .footer-bottom .mono{color:#9aabc9;}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>THIBAUT Mathis</h1>
-            <p class="subtitle">Learn networks | Lille, France | mathis.thibaut@ecoles-epsi.net </p>
-        </header>
-        <section class="profile">
-            <h2>Profile</h2>
-            <p>Passionate about networks. I seek to bring my technical and creative skills to innovative projects.</p>
-            <a href="Formulaire.html">Contact form</a>
-            <a href="carte.html">My card</a>
-        </section>
-        <section>
-            <div class="job">
-                <h2>Network technician intern</h2>
-                <p class="company">NORIAP AMIENS (April-May 2024)</p>
-                <ul>
-                    <li>Mastering and putting into Active Directory</li>
-                    <li>On-site installation and maintenance</li>
-                </ul>
-            </div>
-        </section>
-        
-        <section class="education">
-            <h2>Training</h2>
-            <p><strong>Professional Bachelor's Degree in Sales/Commerce </strong> - Lycée Sacré-Coeur Amiens (2020-2023)</p>
-            <p><strong>BTS SIO </strong> - EPSI Lille (2023-2025)</p>
 
-        </section>
-        
-        <section class="languages">
-            <h2>Languages</h2>
-            <ul>
-                <li>French (Native language)</li>
-                <li>English (Basic)</li>
-            </ul>
-        </section>
+<header>
+  <div class="nav">
+    <div class="logo"><span class="dot"></span>Mat'Info</div>
+    <nav class="nav-links">
+      <a href="#prestations">Prestations</a>
+      <a href="#zone">Zone &amp; horaires</a>
+      <a href="#process">Comment ça marche</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Demander un devis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="terminal-line">&gt; diagnostic terminé — intervention possible <span class="cursor"></span></div>
+      <h1>On répare ce qui <span>bloque</span> votre ordinateur.</h1>
+      <p>Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end. Devis gratuit, intervention claire, prix annoncé avant de commencer.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn btn-primary">Demander un devis gratuit</a>
+        <a href="#prestations" class="btn btn-ghost">Voir les prestations</a>
+      </div>
     </div>
+
+    <div class="ticket">
+      <div class="ticket-top">
+        <div>
+          <div class="ticket-id mono">TICKET N° MI-2026-014</div>
+        </div>
+        <div class="ticket-status"><span class="dot"></span>RÉSOLU</div>
+      </div>
+      <div class="ticket-body">
+        <h3>Ordinateur très lent + antivirus expiré</h3>
+        <p>Diagnostic, nettoyage, sécurisation</p>
+      </div>
+      <div class="perf"></div>
+      <div class="ticket-rows">
+        <div class="ticket-row"><span class="k">Type</span><span class="v">Dépannage + sécurisation</span></div>
+        <div class="ticket-row"><span class="k">Lieu</span><span class="v">Domicile — Lille</span></div>
+        <div class="ticket-row"><span class="k">Durée</span><span class="v">1h20</span></div>
+      </div>
+      <div class="ticket-bar"><span></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="zone">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Zone &amp; disponibilité</span>
+      <h2>Deux secteurs, deux rythmes de semaine.</h2>
+      <p>Basé étudiant à Lille, disponible chez vous les soirs de semaine, et dans un rayon de 20 minutes autour d'Amiens le week-end.</p>
+    </div>
+    <div class="zone-grid">
+      <div class="zone-card">
+        <div class="signal"><i></i><i></i><i></i><i></i></div>
+        <span class="zone-tag">SEMAINE</span>
+        <h3>Lille centre</h3>
+        <p>Interventions en semaine, en soirée ou selon disponibilité, à domicile ou à distance.</p>
+        <div class="zone-days">
+          <div class="day on">L</div><div class="day on">M</div><div class="day on">M</div><div class="day on">J</div><div class="day on">V</div><div class="day">S</div><div class="day">D</div>
+        </div>
+      </div>
+      <div class="zone-card">
+        <div class="signal"><i></i><i></i><i></i><i></i></div>
+        <span class="zone-tag">WEEK-END</span>
+        <h3>Amiens &amp; alentours <span class="mono" style="font-size:0.7rem;color:#7688a8;">(20 min)</span></h3>
+        <p>Interventions le samedi et le dimanche, secteur Amiens et communes proches.</p>
+        <div class="zone-days">
+          <div class="day">L</div><div class="day">M</div><div class="day">M</div><div class="day">J</div><div class="day">V</div><div class="day on">S</div><div class="day on">D</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prestations" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Prestations</span>
+      <h2>Tout ce qui fait qu'un ordinateur remarche.</h2>
+      <p>Du dépannage express à l'accompagnement complet, en présentiel ou à distance.</p>
+    </div>
+    <div class="presta-grid">
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Dépannage physique ou à distance</h3>
+        <p>À domicile, ou par prise en main à distance pour les pannes qui ne bloquent pas l'accès internet.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0018 0V5"/><path d="M3 12a9 3 0 0018 0"/></svg>
+        </div>
+        <h3>Récupération de données</h3>
+        <p>Photos, documents, fichiers importants récupérés avant ou après une panne.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        </div>
+        <h3>Sécurisation</h3>
+        <p>Antivirus, mots de passe, protection des données personnelles.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0M8.5 16.5a6 6 0 017 0M12 20h.01"/></svg>
+        </div>
+        <h3>Paramétrage</h3>
+        <p>Wifi, imprimante, périphériques, mise en route d'un nouvel appareil.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 10-3.2 6.4M20 12v6h-6"/></svg>
+        </div>
+        <h3>Nettoyage &amp; optimisation</h3>
+        <p>Fichiers inutiles, programmes au démarrage, ordinateur qui retrouve de la vitesse.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="6" rx="2"/><path d="M8 15v2M16 15v2M12 9V5"/></svg>
+        </div>
+        <h3>Installation d'appareils</h3>
+        <p>Borne wifi, répéteur, imprimante réseau et autres périphériques.</p>
+      </div>
+      <div class="presta-card">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+        </div>
+        <h3>Création de site vitrine</h3>
+        <p>Une page simple pour présenter votre activité, vos coordonnées et vos services.</p>
+      </div>
+      <div class="presta-card special">
+        <div class="ic">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+        </div>
+        <h3>Projet particulier ?</h3>
+        <p>Décrivez votre besoin, on regarde ensemble si c'est faisable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Comment ça marche</span>
+      <h2>Trois étapes, aucune surprise sur le prix.</h2>
+    </div>
+    <div class="process">
+      <div class="process-line"></div>
+      <div class="process-step">
+        <div class="process-num mono">1</div>
+        <h3>Vous décrivez la panne</h3>
+        <p>Par téléphone, message ou via le formulaire du site.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num mono">2</div>
+        <h3>Devis gratuit</h3>
+        <p>Un tarif clair avant toute intervention, sans engagement.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num mono">3</div>
+        <h3>Intervention</h3>
+        <p>À domicile ou à distance, selon votre zone et vos disponibilités.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-banner">
+      <div>
+        <h2>Un projet particulier en tête ?</h2>
+        <p>Contactez-moi pour qu'on regarde ensemble si c'est réalisable — même si ça sort du cadre habituel.</p>
+      </div>
+      <a href="#" class="btn btn-white">Me contacter</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo"><span class="dot"></span>Mat'Info</div>
+        <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <span>[Téléphone]</span>
+          <span>[Email]</span>
+        </div>
+        <div class="footer-col">
+          <h4>Zones</h4>
+          <span>Lille centre</span>
+          <span>Amiens (20 min)</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Mathis THIBAUT — Micro-entrepreneur — SIRET [N° SIRET]</span>
+      <span class="mono">TVA non applicable, art. 293 B du CGI</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
