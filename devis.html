@@ -38,36 +38,42 @@
   <div class="wrap">
     <div class="form-card">
 
-      <div class="form-success" id="successMsg">Votre client email va s'ouvrir avec votre demande pré-remplie. S'il ne s'ouvre pas, écrivez directement à <a href="mailto:mat-info@gmail.com" style="color:#1a7a44;font-weight:600;">mat-info@gmail.com</a>.</div>
+      <form id="devisForm" action="https://formsubmit.co/mat-info@gmail.com" method="POST">
+        <!-- Configuration FormSubmit -->
+        <input type="hidden" name="_subject" value="Nouvelle demande de devis — Mat'Info">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://mthibaut710.github.io/merci.html">
+        <!-- Piège anti-spam (doit rester vide et invisible) -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
-      <form id="devisForm">
         <div class="form-grid">
           <div class="field">
             <label for="nom">Nom et prénom</label>
-            <input type="text" id="nom" name="nom" required>
+            <input type="text" id="nom" name="Nom et prénom" required>
           </div>
           <div class="field">
             <label for="tel">Téléphone</label>
-            <input type="tel" id="tel" name="tel" required>
+            <input type="tel" id="tel" name="Téléphone" required>
           </div>
           <div class="field full">
             <label for="email">Email <span class="hint">(pour vous renvoyer le devis)</span></label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="Email" required>
           </div>
         </div>
 
         <div class="field full">
           <label>Zone d'intervention</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="zone" value="Lille (semaine)" checked> Lille (semaine)</label>
-            <label class="radio-opt"><input type="radio" name="zone" value="Amiens (week-end)"> Amiens (week-end)</label>
-            <label class="radio-opt"><input type="radio" name="zone" value="À distance"> À distance</label>
+            <label class="radio-opt"><input type="radio" name="Zone" value="Lille (semaine)" checked> Lille (semaine)</label>
+            <label class="radio-opt"><input type="radio" name="Zone" value="Amiens (week-end)"> Amiens (week-end)</label>
+            <label class="radio-opt"><input type="radio" name="Zone" value="À distance"> À distance</label>
           </div>
         </div>
 
         <div class="field full">
           <label for="type">Type de problème</label>
-          <select id="type" name="type" required>
+          <select id="type" name="Type de problème" required>
             <option value="">Sélectionnez...</option>
             <option>Diagnostic / dépannage panne logicielle</option>
             <option>Ordinateur lent / à optimiser</option>
@@ -83,19 +89,19 @@
 
         <div class="field full">
           <label for="description">Description du problème</label>
-          <textarea id="description" name="description" placeholder="Décrivez la panne, depuis quand, ce que vous avez déjà essayé..." required></textarea>
+          <textarea id="description" name="Description du problème" placeholder="Décrivez la panne, depuis quand, ce que vous avez déjà essayé..." required></textarea>
         </div>
 
         <div class="field full">
           <label for="dispo">Vos disponibilités <span class="hint">(jours / créneaux)</span></label>
-          <input type="text" id="dispo" name="dispo" placeholder="Ex : en semaine après 18h, ou samedi matin">
+          <input type="text" id="dispo" name="Disponibilités" placeholder="Ex : en semaine après 18h, ou samedi matin">
         </div>
 
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer ma demande de devis</button>
 
         <p class="form-note">
           <span>ℹ️</span>
-          <span>Ce site étant hébergé sur GitHub Pages, il n'y a pas de serveur d'envoi : le bouton ouvre votre application email (ou Gmail) avec le message déjà rempli, prêt à envoyer.</span>
+          <span>Votre demande est envoyée directement par email, sans ouvrir votre messagerie — vous recevrez une confirmation à l'écran.</span>
         </p>
       </form>
     </div>
@@ -133,34 +139,6 @@
     </div>
   </div>
 </footer>
-
-<script>
-  document.getElementById('devisForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    var nom = document.getElementById('nom').value;
-    var tel = document.getElementById('tel').value;
-    var email = document.getElementById('email').value;
-    var zone = document.querySelector('input[name="zone"]:checked').value;
-    var type = document.getElementById('type').value;
-    var description = document.getElementById('description').value;
-    var dispo = document.getElementById('dispo').value;
-
-    var subject = "Demande de devis - " + nom;
-    var body =
-      "Nom : " + nom + "\n" +
-      "Téléphone : " + tel + "\n" +
-      "Email : " + email + "\n" +
-      "Zone : " + zone + "\n" +
-      "Type de problème : " + type + "\n" +
-      "Disponibilités : " + dispo + "\n\n" +
-      "Description :\n" + description;
-
-    var mailto = "mailto:mat-info@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-
-    document.getElementById('successMsg').classList.add('show');
-    window.location.href = mailto;
-  });
-</script>
 
 </body>
 </html>
