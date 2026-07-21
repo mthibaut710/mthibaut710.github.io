@@ -60,6 +60,8 @@
 
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
   @media (max-width:760px){.price-grid{grid-template-columns:1fr;}}
+  .price-grid.grid-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:760px){.price-grid.grid-3{grid-template-columns:1fr;}}
 
   .price-card{
     border:1px solid var(--line);border-radius:var(--radius);padding:24px;
@@ -131,22 +133,27 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">01</span><h2>Dépannage physique ou à distance</h2></div>
-      <div class="price-grid">
+      <div class="price-grid grid-3">
         <div class="price-card">
           <div class="price-top">
             <h3>Dépannage à distance</h3>
             <div class="price-tag">39 €</div>
           </div>
           <p>Petits blocages logiciels, bugs de messagerie, prise en main rapide.</p>
-          <div class="price-extra">Durée max : 45 min à 1h</div>
+        </div>
+        <div class="price-card">
+          <div class="price-top">
+            <h3>Dépannage au dépôt</h3>
+            <div class="price-tag">59 €</div>
+          </div>
+          <p>Vous déposez votre PC, je diagnostique la panne et je répare — prix forfaitaire annoncé avant réparation.</p>
         </div>
         <div class="price-card">
           <div class="price-top">
             <h3>Intervention à domicile</h3>
             <div class="price-tag">59 €</div>
           </div>
-          <p>Déplacement + 1ère heure de main-d'œuvre pour diagnostiquer et réparer la panne.</p>
-          <div class="price-extra">Heure supplémentaire : 40 €</div>
+          <p>Déplacement inclus pour diagnostiquer et réparer la panne sur place — prix forfaitaire annoncé avant réparation.</p>
         </div>
       </div>
     </div>
