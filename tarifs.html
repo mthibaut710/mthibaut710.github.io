@@ -74,7 +74,7 @@
 
   section{padding:56px 0;}
   .cat{margin-bottom:64px;}
-  .cat-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:14px;}
+  .cat-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:14px;scroll-margin-top:110px;}
   .cat-num{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--blue);background:var(--sky);border-radius:6px;padding:3px 9px;}
   .cat-head h2{font-size:1.35rem;}
 
@@ -159,7 +159,7 @@
   <div class="wrap">
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">01</span><h2>Dépannage physique ou à distance</h2></div>
+      <div class="cat-head" id="depannage"><span class="cat-num">01</span><h2>Dépannage physique ou à distance</h2></div>
       <img class="cat-photo" src="depannage.jpg" alt="Réparation matérielle d'un ordinateur">
       <div class="price-grid price-grid-3">
         <div class="price-card">
@@ -187,7 +187,7 @@
     </div>
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">02</span><h2>Récupération de données</h2></div>
+      <div class="cat-head" id="recuperation"><span class="cat-num">02</span><h2>Récupération de données</h2></div>
       <img class="cat-photo" src="recuperation-donnees.jpg" alt="Disque dur et SSD pour récupération de données">
       <div class="price-grid">
         <div class="price-card">
@@ -208,7 +208,7 @@
     </div>
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">03</span><h2>Sécurisation</h2></div>
+      <div class="cat-head" id="securisation"><span class="cat-num">03</span><h2>Sécurisation</h2></div>
       <img class="cat-photo" src="securisation.jpg" alt="Sécurisation informatique et protection des données">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
@@ -222,7 +222,7 @@
     </div>
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">04</span><h2>Paramétrage &amp; installation d'appareils</h2></div>
+      <div class="cat-head" id="parametrage"><span class="cat-num">04</span><h2>Paramétrage &amp; installation d'appareils</h2></div>
       <img class="cat-photo" src="parametrage.jpg" alt="Installation et configuration d'une imprimante">
       <div class="price-grid">
         <div class="price-card">
@@ -243,7 +243,7 @@
     </div>
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">05</span><h2>Nettoyage &amp; optimisation</h2></div>
+      <div class="cat-head" id="nettoyage"><span class="cat-num">05</span><h2>Nettoyage &amp; optimisation</h2></div>
       <img class="cat-photo" src="nettoyage.jpg" alt="Dépoussiérage et nettoyage d'un ordinateur portable">
       <div class="price-grid">
         <div class="price-card">
@@ -265,7 +265,7 @@
     </div>
 
     <div class="cat">
-      <div class="cat-head"><span class="cat-num">06</span><h2>Création de site vitrine</h2></div>
+      <div class="cat-head" id="site-vitrine"><span class="cat-num">06</span><h2>Création de site vitrine</h2></div>
       <img class="cat-photo" src="site-vitrine.jpg" alt="Code d'un site internet">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
@@ -280,7 +280,7 @@
     </div>
 
     <div class="cat" style="margin-bottom:0;">
-      <div class="cat-head"><span class="cat-num">07</span><h2>Projet particulier ?</h2></div>
+      <div class="cat-head" id="projet"><span class="cat-num">07</span><h2>Projet particulier ?</h2></div>
       <div class="devis-card">
         <h3>Une demande sur mesure ?</h3>
         <p>Montage d'un PC sur mesure, installation d'un réseau pour un petit commerce, ou tout autre besoin spécifique — on étudie ensemble la faisabilité et j'établis un devis adapté.</p>

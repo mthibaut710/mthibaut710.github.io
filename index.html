@@ -152,7 +152,10 @@
   .presta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
   @media (max-width:900px){.presta-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.presta-grid{grid-template-columns:1fr;}}
-  .presta-card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;}
+  .presta-card{display:block;border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;cursor:pointer;}
+  .presta-more{display:block;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--blue);opacity:0;transform:translateX(-4px);transition:opacity .2s ease, transform .2s ease;}
+  .presta-card:hover .presta-more{opacity:1;transform:translateX(0);}
+  .presta-card.special .presta-more{color:#8fb4ff;}
   .presta-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(20,40,80,0.3);border-color:var(--blue-dim);}
   .presta-card .ic{width:38px;height:38px;border-radius:9px;background:var(--sky);color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
   .presta-card h3{font-size:0.98rem;margin-bottom:8px;}
@@ -306,62 +309,70 @@
     </div>
 
     <div class="presta-grid">
-      <div class="presta-card">
+      <a class="presta-card" href="tarifs.html#depannage">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
         <h3>Dépannage physique ou à distance</h3>
         <p>À domicile, au dépôt, ou par prise en main à distance selon la panne.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#recuperation">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0018 0V5"/><path d="M3 12a9 3 0 0018 0"/></svg>
         </div>
         <h3>Récupération de données</h3>
         <p>Photos, documents, fichiers importants récupérés avant ou après une panne.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#securisation">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
         </div>
         <h3>Sécurisation</h3>
         <p>Antivirus, mots de passe, protection des données personnelles.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#parametrage">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0M8.5 16.5a6 6 0 017 0M12 20h.01"/></svg>
         </div>
         <h3>Paramétrage</h3>
         <p>Wifi, imprimante, périphériques, mise en route d'un nouvel appareil.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#nettoyage">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 10-3.2 6.4M20 12v6h-6"/></svg>
         </div>
         <h3>Nettoyage &amp; optimisation</h3>
         <p>Fichiers inutiles, programmes au démarrage, ordinateur qui retrouve de la vitesse.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#parametrage">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="6" rx="2"/><path d="M8 15v2M16 15v2M12 9V5"/></svg>
         </div>
         <h3>Installation d'appareils</h3>
         <p>Borne wifi, répéteur, imprimante réseau et autres périphériques.</p>
-      </div>
-      <div class="presta-card">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card" href="tarifs.html#site-vitrine">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
         </div>
         <h3>Création de site vitrine</h3>
         <p>Une page simple pour présenter votre activité, vos coordonnées et vos services.</p>
-      </div>
-      <div class="presta-card special">
+        <span class="presta-more">Voir les tarifs →</span>
+      </a>
+      <a class="presta-card special" href="tarifs.html#projet">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
         </div>
         <h3>Projet particulier ?</h3>
         <p>Décrivez votre besoin, on regarde ensemble si c'est faisable.</p>
-      </div>
+        <span class="presta-more">En discuter →</span>
+      </a>
     </div>
   </div>
 </section>
