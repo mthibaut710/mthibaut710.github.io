@@ -80,6 +80,8 @@
 
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
   @media (max-width:760px){.price-grid{grid-template-columns:1fr;}}
+  .cat-photo{width:100%;height:180px;object-fit:cover;border-radius:var(--radius);margin-bottom:20px;border:1px solid var(--line);}
+  @media (max-width:760px){.cat-photo{height:150px;}}
 
   .price-card{
     border:1px solid var(--line);border-radius:var(--radius);padding:24px;
@@ -156,6 +158,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">01</span><h2>Dépannage physique ou à distance</h2></div>
+      <img class="cat-photo" src="depannage.jpg" alt="Réparation matérielle d'un ordinateur">
       <div class="price-grid">
         <div class="price-card">
           <div class="price-top">
@@ -178,6 +181,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">02</span><h2>Récupération de données</h2></div>
+      <img class="cat-photo" src="recuperation-donnees.jpg" alt="Disque dur et SSD pour récupération de données">
       <div class="price-grid">
         <div class="price-card">
           <div class="price-top">
@@ -198,6 +202,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">03</span><h2>Sécurisation</h2></div>
+      <img class="cat-photo" src="securisation.jpg" alt="Sécurisation informatique et protection des données">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
           <div class="price-top">
@@ -211,6 +216,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">04</span><h2>Paramétrage &amp; installation d'appareils</h2></div>
+      <img class="cat-photo" src="parametrage.jpg" alt="Installation et configuration d'une imprimante">
       <div class="price-grid">
         <div class="price-card">
           <div class="price-top">
@@ -231,6 +237,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">05</span><h2>Nettoyage &amp; optimisation</h2></div>
+      <img class="cat-photo" src="nettoyage.jpg" alt="Dépoussiérage et nettoyage d'un ordinateur portable">
       <div class="price-grid">
         <div class="price-card">
           <div class="price-top">
@@ -252,6 +259,7 @@
 
     <div class="cat">
       <div class="cat-head"><span class="cat-num">06</span><h2>Création de site vitrine</h2></div>
+      <img class="cat-photo" src="site-vitrine.jpg" alt="Code d'un site internet">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
           <div class="price-top">
