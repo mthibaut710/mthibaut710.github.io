@@ -80,6 +80,8 @@
 
   .price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
   @media (max-width:760px){.price-grid{grid-template-columns:1fr;}}
+  .price-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:900px){.price-grid-3{grid-template-columns:1fr;}}
   .cat-photo{width:100%;height:340px;object-fit:cover;border-radius:var(--radius);margin-bottom:20px;border:1px solid var(--line);}
   @media (max-width:760px){.cat-photo{height:180px;}}
 
@@ -159,7 +161,7 @@
     <div class="cat">
       <div class="cat-head"><span class="cat-num">01</span><h2>Dépannage physique ou à distance</h2></div>
       <img class="cat-photo" src="depannage.jpg" alt="Réparation matérielle d'un ordinateur">
-      <div class="price-grid">
+      <div class="price-grid price-grid-3">
         <div class="price-card">
           <div class="price-top">
             <h3>Dépannage à distance</h3>
@@ -173,8 +175,14 @@
             <h3>Intervention à domicile</h3>
             <div class="price-tag">59 €</div>
           </div>
-          <p>Déplacement + 1ère heure de main-d'œuvre pour diagnostiquer et réparer la panne.</p>
-          <div class="price-extra">Heure supplémentaire : 40 €</div>
+          <p>Déplacement chez vous pour diagnostiquer et réparer la panne.</p>
+        </div>
+        <div class="price-card">
+          <div class="price-top">
+            <h3>Dépôt à mon domicile</h3>
+            <div class="price-tag">49 €</div>
+          </div>
+          <p>Vous m'apportez votre ordinateur, je le répare chez moi (secteur Lille), sans frais de déplacement.</p>
         </div>
       </div>
     </div>
