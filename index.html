@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dépannage Informatique Lille &amp; Amiens | Mat'Info</title>
+<title>Dépannage Informatique Lille &amp; Amiens | MT Informatique</title>
 <meta name="description" content="Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end. Devis gratuit.">
 <meta name="google-site-verification" content="wI9Yz0jClPWnlKZQk6W6RkzcvqOmybKUxCSfn_2sMxM" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,6 +141,8 @@
   .day.on{background:var(--navy);color:#fff;}
 
   /* prestations */
+  .presta-photo{width:100%;border-radius:var(--radius);overflow:hidden;margin-bottom:36px;border:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(20,40,80,0.35);}
+  .presta-photo img{width:100%;display:block;}
   .presta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
   @media (max-width:900px){.presta-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.presta-grid{grid-template-columns:1fr;}}
@@ -186,12 +188,8 @@
 <header>
   <div class="nav">
     <a href="index.html" class="logo">
-      <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-        <rect x="1.5" y="1.5" width="37" height="37" rx="11" stroke="#2F6FED" stroke-width="1.6"/>
-        <path d="M8.5 27V13L14.5 22L20.5 13V27" stroke="#142850" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M24 20H27L29 14.5L31.5 25.5L33.5 20H35.5" stroke="#2F6FED" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-      Mat'Info
+      <img src="logo-mascotte.png" alt="MT Informatique" style="width:34px;height:34px;object-fit:contain;">
+      MT Informatique
     </a>
     <nav class="nav-links">
       <a href="index.html" class="active">Accueil</a>
@@ -296,6 +294,11 @@
       <h2>Tout ce qui fait qu'un ordinateur remarche.</h2>
       <p>Du dépannage express à l'accompagnement complet, en présentiel ou à distance.</p>
     </div>
+
+    <div class="presta-photo">
+      <img src="prestations-collage.jpg" alt="Réparation, diagnostic, sauvegarde et garantie — interventions MT Informatique">
+    </div>
+
     <div class="presta-grid">
       <div class="presta-card">
         <div class="ic">
@@ -404,12 +407,8 @@
     <div class="footer-grid">
       <div>
         <div class="logo">
-          <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
-            <rect x="1.5" y="1.5" width="37" height="37" rx="11" stroke="#2F6FED" stroke-width="1.6"/>
-            <path d="M8.5 27V13L14.5 22L20.5 13V27" stroke="#142850" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <path d="M24 20H27L29 14.5L31.5 25.5L33.5 20H35.5" stroke="#2F6FED" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          Mat'Info
+          <img src="logo-mascotte.png" alt="MT Informatique" style="width:26px;height:26px;object-fit:contain;">
+          MT Informatique
         </div>
         <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
       </div>
