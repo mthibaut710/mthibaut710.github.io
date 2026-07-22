@@ -90,6 +90,9 @@
     background-size:cover;background-position:center;background-attachment:fixed;
     filter:grayscale(65%) brightness(0.55) contrast(1.05);
   }
+  @media (max-width:860px){
+    .hero-photo{background-attachment:scroll;}
+  }
   .hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(160deg, rgba(20,40,80,0.92) 0%, rgba(20,40,80,0.82) 45%, rgba(47,111,237,0.55) 100%);}
   .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
   @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
