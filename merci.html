@@ -9,6 +9,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Correctif mobile : le hamburger devient invisible sans ceci sur petits écrans */
+  @media (max-width:760px){
+    .nav{gap:8px;padding:12px 16px;}
+    .logo{gap:6px;font-size:0.95rem;}
+    .logo img{width:34px !important;height:34px !important;}
+    .nav-cta{display:none;}
+  }
+</style>
 <link rel="icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="logo-180.png">
