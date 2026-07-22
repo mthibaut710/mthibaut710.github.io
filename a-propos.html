@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>À propos — MT Informatique</title>
+<meta name="description" content="Mathis THIBAUT, alternant en informatique, propose du dépannage informatique à Lille et Amiens. Découvrez qui je suis et les avis de mes clients.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Correctif mobile : le hamburger devient invisible sans ceci sur petits écrans */
+  @media (max-width:760px){
+    .nav{gap:8px;padding:12px 16px;}
+    .logo{gap:6px;font-size:0.95rem;}
+    .logo img{width:34px !important;height:34px !important;}
+    .nav-cta{display:none;}
+  }
+  .menu-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s ease, opacity .2s ease;}
+  .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-toggle.open span:nth-child(2){opacity:0;}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media (max-width:760px){.menu-toggle{display:flex;}}
+  .mobile-menu{display:none;flex-direction:column;position:fixed;left:0;right:0;top:60px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 16px 30px -20px rgba(20,40,80,0.3);z-index:49;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:15px 24px;font-size:0.95rem;font-weight:500;color:var(--navy);border-bottom:1px solid var(--line);}
+  .mobile-menu a.active{color:var(--blue);}
+  .mobile-menu a:last-child{border-bottom:none;}
+  @media (min-width:761px){.mobile-menu{display:none !important;}}
+
+  /* profil */
+  .profile-grid{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:start;}
+  @media (max-width:700px){.profile-grid{grid-template-columns:1fr;justify-items:center;text-align:center;}}
+  .profile-photo{width:220px;height:220px;border-radius:20px;object-fit:cover;border:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(20,40,80,0.35);}
+  .profile-tags{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px;}
+  @media (max-width:700px){.profile-tags{justify-content:center;}}
+  .profile-tag{font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--blue);background:var(--sky);border-radius:999px;padding:5px 12px;}
+  .profile-name{font-size:1.5rem;margin-bottom:4px;}
+  .profile-role{color:#5b6b8a;font-size:0.95rem;margin-bottom:16px;}
+  .profile-text p{color:#3a4a68;font-size:0.96rem;line-height:1.65;margin-bottom:14px;}
+
+  /* entreprise */
+  .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;}
+  .about-card h3{font-size:1rem;margin-bottom:8px;}
+  .about-card p{font-size:0.87rem;color:#5b6b8a;}
+
+  /* avis clients (repris du site) */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:900px){.reviews-grid{grid-template-columns:1fr;}}
+  .review-card{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;}
+  .review-stars{color:#F5B942;font-size:1rem;letter-spacing:2px;margin-bottom:12px;}
+  .review-text{font-size:0.92rem;color:#3a4a68;line-height:1.55;margin-bottom:16px;}
+  .review-author{font-size:0.85rem;font-weight:600;color:var(--navy);}
+  .review-meta{font-size:0.78rem;color:#8ea0c2;}
+
+  /* star rating input (formulaire d'avis) */
+  .star-rating{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;}
+  .star-rating input{position:absolute;opacity:0;width:0;height:0;}
+  .star-rating label{font-size:2rem;line-height:1;color:#D7E3F5;cursor:pointer;transition:color .15s ease;}
+  .star-rating input:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label{color:#F5B942;}
+</style>
+<link rel="icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="logo-180.png">
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo"><img src="logo-mascotte.png" alt="MT Informatique" width="72" height="72" style="object-fit:contain;">MT Informatique</a>
+    <nav class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#prestations">Prestations</a>
+      <a href="index.html#zone">Zone &amp; horaires</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="a-propos.html" class="active">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="devis.html" class="nav-cta">Demander un devis</a>
+    <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#prestations">Prestations</a>
+    <a href="index.html#zone">Zone &amp; horaires</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="a-propos.html" class="active">À propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="devis.html">Demander un devis</a>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> / À propos</div>
+    <span class="eyebrow">À propos</span>
+    <h1>Qui se cache derrière MT Informatique ?</h1>
+    <p>Un peu de contexte sur qui je suis, ce que je fais, et ce que mes clients en disent.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="profile-grid">
+      <img class="profile-photo" src="mathis.jpg" alt="Mathis THIBAUT">
+      <div>
+        <h2 class="profile-name">Mathis THIBAUT</h2>
+        <p class="profile-role">21 ans — Master en alternance, 4ᵉ/5ᵉ année, spécialisation Cloud &amp; Virtualisation</p>
+        <div class="profile-tags">
+          <span class="profile-tag">Étudiant à Lille</span>
+          <span class="profile-tag">Alternance Cloud &amp; Virtualisation</span>
+          <span class="profile-tag">Micro-entrepreneur</span>
+        </div>
+        <div class="profile-text">
+          <p>Je m'appelle Mathis, j'ai 21 ans, et je suis actuellement en Master (4ᵉ/5ᵉ année) en alternance, spécialisé en virtualisation et cloud. En parallèle de mes études, j'ai lancé MT Informatique pour mettre mes compétences au service des particuliers autour de moi : dépannage, sécurisation, montage PC, ou tout simplement un coup de main sur un ordinateur qui bloque.</p>
+          <p>Ce qui m'anime, c'est de rendre l'informatique accessible : pas de jargon inutile, un prix clair avant chaque intervention, et une vraie explication de ce qui a été fait. À terme, je veux évoluer vers l'administration de systèmes et d'infrastructures cloud — mais je garde ce contact direct et humain avec mes clients, quelle que soit la taille du projet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>L'entreprise</h3>
+        <p>MT Informatique est une micro-entreprise individuelle, basée à Lille, intervenant aussi le week-end autour d'Amiens. Dépannage, sécurisation, récupération de données, montage PC et création de sites vitrines pour particuliers.</p>
+      </div>
+      <div class="about-card">
+        <h3>Mon approche</h3>
+        <p>Devis gratuit avant toute intervention, un prix annoncé clairement, et une explication simple de la panne et de la solution — sans jargon technique inutile.</p>
+      </div>
+      <div class="about-card">
+        <h3>Ma zone</h3>
+        <p>Lille centre en semaine (soirées après 18h), secteur Amiens le week-end (20 min alentours), et intervention à distance quand c'est possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Avis clients</span>
+      <h2>Ce qu'en disent les clients.</h2>
+      <p>Des avis vérifiés avant publication, pour rester fiables.</p>
+    </div>
+
+    <!--
+      COMMENT AJOUTER UN NOUVEL AVIS (à faire soi-même après vérification) :
+      Copier-coller un bloc <div class="review-card">...</div> ci-dessous et remplacer
+      le texte, le nombre d'étoiles (★ pleine / ☆ vide) et le nom/ville.
+    -->
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Intervention rapide et efficace, mon PC ne redémarrait plus et tout est reparti en moins d'une heure. Prix annoncé clairement avant."</p>
+        <div class="review-author">Claire D.</div>
+        <div class="review-meta">Lille — Dépannage physique</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"J'avais perdu toutes mes photos suite à une panne de disque dur, tout a pu être récupéré. Très sérieux et de bon conseil."</p>
+        <div class="review-author">Julien M.</div>
+        <div class="review-meta">Amiens — Récupération de données</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Bonne installation de ma nouvelle box et de l'imprimante, explications claires pour comprendre ce qu'il avait fait."</p>
+        <div class="review-author">Sophie L.</div>
+        <div class="review-meta">Lille — Paramétrage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Votre avis compte</span>
+      <h2>Vous avez été client ? Laissez un avis.</h2>
+      <p>Votre avis m'aide à m'améliorer et aide d'autres personnes à me faire confiance. Il est vérifié avant publication.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="avisForm" action="https://formsubmit.co/contact.matinfopro@gmail.com" method="POST">
+        <!-- Configuration FormSubmit -->
+        <input type="hidden" name="_subject" value="Nouvel avis client — MT Informatique">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://mthibaut710.github.io/merci.html">
+        <!-- Piège anti-spam (doit rester vide et invisible) -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="nom">Nom et prénom</label>
+            <input type="text" id="nom" name="Nom et prénom" required>
+          </div>
+          <div class="field">
+            <label for="ville">Ville / secteur</label>
+            <input type="text" id="ville" name="Ville" placeholder="Ex : Lille, Amiens...">
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="prestation">Prestation concernée</label>
+          <select id="prestation" name="Prestation">
+            <option value="">Sélectionnez...</option>
+            <option>Dépannage physique ou à distance</option>
+            <option>Montage PC</option>
+            <option>Récupération de données</option>
+            <option>Sécurisation</option>
+            <option>Paramétrage / installation d'appareils</option>
+            <option>Nettoyage &amp; optimisation</option>
+            <option>Création de site vitrine</option>
+            <option>Autre</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Votre note</label>
+          <div class="star-rating">
+            <input type="radio" id="star5" name="Note" value="5 étoiles" required><label for="star5">★</label>
+            <input type="radio" id="star4" name="Note" value="4 étoiles"><label for="star4">★</label>
+            <input type="radio" id="star3" name="Note" value="3 étoiles"><label for="star3">★</label>
+            <input type="radio" id="star2" name="Note" value="2 étoiles"><label for="star2">★</label>
+            <input type="radio" id="star1" name="Note" value="1 étoile"><label for="star1">★</label>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="avis">Votre avis</label>
+          <textarea id="avis" name="Avis" placeholder="Décrivez votre expérience : rapidité, clarté, résultat obtenu..." required></textarea>
+        </div>
+
+        <div class="field full">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:500;">
+            <input type="checkbox" name="Autorisation de publication" value="Oui, publication autorisée" style="width:auto;" checked>
+            J'autorise la publication de mon avis (nom et ville) sur le site
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer mon avis</button>
+
+        <p class="form-note">
+          <span>ℹ️</span>
+          <span>Votre avis est d'abord envoyé pour vérification avant publication sur le site — il n'apparaît pas automatiquement.</span>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo"><img src="logo-mascotte.png" alt="MT Informatique" width="56" height="56" style="object-fit:contain;">MT Informatique</div>
+        <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="tel:0787451021">07 87 45 10 21</a>
+          <a href="mailto:contact.matinfopro@gmail.com">contact.matinfopro@gmail.com</a>
+        </div>
+        <div class="footer-col">
+          <h4>Zones</h4>
+          <span>19 rue Inkermann, 59000 Lille</span>
+          <span>Saint-Accart, Belloy-sur-Somme, 80310</span>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="index.html">Accueil</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Mathis THIBAUT — Micro-entrepreneur — SIRET [N° SIRET]</span>
+      <span class="mono">TVA non applicable, art. 293 B du CGI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn = document.querySelector('.menu-toggle');
+  var menu = document.querySelector('.mobile-menu');
+  var header = document.querySelector('header');
+  function setPos(){ if(menu && header){ menu.style.top = header.offsetHeight + 'px'; } }
+  setPos();
+  window.addEventListener('resize', setPos);
+  if(btn && menu){
+    btn.addEventListener('click', function(){
+      var isOpen = menu.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+    });
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
