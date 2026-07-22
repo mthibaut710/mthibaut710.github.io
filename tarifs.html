@@ -109,6 +109,13 @@
   .btn-primary:hover{background:var(--blue);}
 
   .disclaimer{font-size:0.8rem;color:#8ea0c2;text-align:center;margin-top:8px;}
+  .cat-note{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--sky);border-radius:var(--radius);
+    padding:16px 18px;margin-top:16px;
+    font-size:0.86rem;color:#3a4a68;line-height:1.5;
+  }
+  .cat-note .ic{flex-shrink:0;width:22px;height:22px;color:var(--blue);margin-top:1px;}
 
   footer{border-top:1px solid var(--line);padding:36px 0 28px;text-align:center;}
   footer p{font-size:0.82rem;color:#7688a8;}
@@ -184,10 +191,31 @@
           <p>Vous m'apportez votre ordinateur, je le répare chez moi (secteur Lille), sans frais de déplacement.</p>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Tous les dépannages ne sont pas réalisables à distance (pannes matérielles, PC qui ne démarre plus...). Contactez-moi pour un premier diagnostic gratuit — si c'est possible à distance, vous évitez le déplacement.</span>
+      </div>
     </div>
 
     <div class="cat">
-      <div class="cat-head" id="recuperation"><span class="cat-num">02</span><h2>Récupération de données</h2></div>
+      <div class="cat-head" id="montage-pc"><span class="cat-num">02</span><h2>Montage PC</h2></div>
+      <div class="price-grid">
+        <div class="price-card" style="grid-column:1 / -1;">
+          <div class="price-top">
+            <h3>Assemblage de configuration</h3>
+            <div class="price-tag">79 €</div>
+          </div>
+          <p>Vous avez acheté vos pièces (boîtier, carte mère, processeur, RAM, stockage...) ? Je monte votre PC, vérifie les branchements et teste le bon fonctionnement avant remise.</p>
+        </div>
+      </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Pièces fournies par vos soins. En cas de doute sur la compatibilité avant achat, je peux aussi vous conseiller au préalable.</span>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-head" id="recuperation"><span class="cat-num">03</span><h2>Récupération de données</h2></div>
       <img class="cat-photo" src="recuperation-donnees.jpg" alt="Disque dur et SSD pour récupération de données">
       <div class="price-grid">
         <div class="price-card">
@@ -205,10 +233,14 @@
           <p>Disque endommagé ou formaté par erreur — récupération profonde nécessaire.</p>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Le taux de réussite dépend de l'état du disque. Un diagnostic gratuit permet d'évaluer la faisabilité avant tout engagement — aucun frais si rien n'est récupérable.</span>
+      </div>
     </div>
 
     <div class="cat">
-      <div class="cat-head" id="securisation"><span class="cat-num">03</span><h2>Sécurisation</h2></div>
+      <div class="cat-head" id="securisation"><span class="cat-num">04</span><h2>Sécurisation</h2></div>
       <img class="cat-photo" src="securisation.jpg" alt="Sécurisation informatique et protection des données">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
@@ -219,10 +251,14 @@
           <p>Analyse complète, éradication des virus/malwares, installation et paramétrage d'un antivirus, configuration d'un gestionnaire de mots de passe.</p>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Un antivirus ne remplace pas la vigilance au quotidien : je vous donne aussi quelques réflexes simples pour repérer les tentatives de phishing et limiter les risques.</span>
+      </div>
     </div>
 
     <div class="cat">
-      <div class="cat-head" id="parametrage"><span class="cat-num">04</span><h2>Paramétrage &amp; installation d'appareils</h2></div>
+      <div class="cat-head" id="parametrage"><span class="cat-num">05</span><h2>Paramétrage &amp; installation d'appareils</h2></div>
       <img class="cat-photo" src="parametrage.jpg" alt="Installation et configuration d'une imprimante">
       <div class="price-grid">
         <div class="price-card">
@@ -240,10 +276,14 @@
           <p>PC neuf : premier démarrage, suppression des logiciels préinstallés, mises à jour Windows, logiciels de base, transfert des anciens fichiers.</p>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Vous venez de recevoir votre nouvelle box internet et ne savez pas l'installer ? C'est aussi inclus dans cette prestation, à un tarif adapté.</span>
+      </div>
     </div>
 
     <div class="cat">
-      <div class="cat-head" id="nettoyage"><span class="cat-num">05</span><h2>Nettoyage &amp; optimisation</h2></div>
+      <div class="cat-head" id="nettoyage"><span class="cat-num">06</span><h2>Nettoyage &amp; optimisation</h2></div>
       <img class="cat-photo" src="nettoyage.jpg" alt="Dépoussiérage et nettoyage d'un ordinateur portable">
       <div class="price-grid">
         <div class="price-card">
@@ -262,10 +302,14 @@
           <div class="price-extra">Idéal en cas de surchauffe / bruit</div>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Un entretien tous les 6 à 12 mois limite la surchauffe, réduit le bruit des ventilateurs et prolonge la durée de vie du matériel.</span>
+      </div>
     </div>
 
     <div class="cat">
-      <div class="cat-head" id="site-vitrine"><span class="cat-num">06</span><h2>Création de site vitrine</h2></div>
+      <div class="cat-head" id="site-vitrine"><span class="cat-num">07</span><h2>Création de site vitrine</h2></div>
       <img class="cat-photo" src="site-vitrine.jpg" alt="Code d'un site internet">
       <div class="price-grid">
         <div class="price-card" style="grid-column:1 / -1;">
@@ -277,10 +321,14 @@
           <div class="price-extra">Frais d'hébergement à la charge du client</div>
         </div>
       </div>
+      <div class="cat-note">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4M12 17h.01"/></svg>
+        <span>Le tarif varie selon le nombre de pages et les fonctionnalités souhaitées (formulaire de contact, prise de rendez-vous...). Un premier échange permet d'établir un devis précis.</span>
+      </div>
     </div>
 
     <div class="cat" style="margin-bottom:0;">
-      <div class="cat-head" id="projet"><span class="cat-num">07</span><h2>Projet particulier ?</h2></div>
+      <div class="cat-head" id="projet"><span class="cat-num">08</span><h2>Projet particulier ?</h2></div>
       <div class="devis-card">
         <h3>Une demande sur mesure ?</h3>
         <p>Montage d'un PC sur mesure, installation d'un réseau pour un petit commerce, ou tout autre besoin spécifique — on étudie ensemble la faisabilité et j'établis un devis adapté.</p>
