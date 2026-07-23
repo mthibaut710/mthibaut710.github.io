@@ -97,6 +97,17 @@
   .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
   @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
 
+  /* bannières photo à défilement fixe entre les sections */
+  .fixed-banner{
+    position:relative;height:360px;overflow:hidden;isolation:isolate;
+    background-size:cover;background-position:center;background-attachment:fixed;
+    filter:grayscale(55%) brightness(0.6) contrast(1.05);
+  }
+  .fixed-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg, rgba(20,40,80,0.55) 0%, rgba(47,111,237,0.28) 100%);}
+  @media (max-width:860px){
+    .fixed-banner{height:240px;background-attachment:scroll;}
+  }
+
   .terminal-line{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#cfe0ff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;margin-bottom:22px;}
   .cursor{display:inline-block;width:7px;height:14px;background:#cfe0ff;animation:blink 1s steps(1) infinite;}
   @keyframes blink{50%{opacity:0;}}
@@ -110,12 +121,12 @@
 
   /* floating scenario chips */
   .chip-field{position:relative;height:0;}
-  .chip{position:absolute;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--navy);background:rgba(255,255,255,0.92);border-radius:999px;padding:6px 12px;box-shadow:0 10px 22px -10px rgba(0,0,0,0.4);animation:float 6s ease-in-out infinite;white-space:nowrap;}
+  .chip{position:absolute;z-index:6;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--navy);background:rgba(255,255,255,0.92);border-radius:999px;padding:6px 12px;box-shadow:0 10px 22px -10px rgba(0,0,0,0.4);animation:float 6s ease-in-out infinite;white-space:nowrap;}
   @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
   /* rotating ticket/case cards */
   .cases{position:relative;height:290px;}
-  .case-card{position:absolute;inset:0;background:#fff;border-radius:16px;padding:26px;box-shadow:0 24px 48px -20px rgba(0,0,0,0.5);opacity:0;animation:cardCycle 9s ease-in-out infinite;}
+  .case-card{position:absolute;z-index:1;inset:0;background:#fff;border-radius:16px;padding:26px;box-shadow:0 24px 48px -20px rgba(0,0,0,0.5);opacity:0;animation:cardCycle 9s ease-in-out infinite;}
   .case-card:nth-child(1){animation-delay:0s;}
   .case-card:nth-child(2){animation-delay:3s;}
   .case-card:nth-child(3){animation-delay:6s;}
@@ -252,9 +263,9 @@
 
     <div>
       <div class="chip-field">
-        <span class="chip" style="top:-46px;left:10%;animation-delay:0s;">Écran bleu au démarrage</span>
-        <span class="chip" style="top:-10px;right:2%;animation-delay:1.4s;">Wifi qui coupe</span>
-        <span class="chip" style="top:270px;left:-4%;animation-delay:2.6s;">3200 photos disparues</span>
+        <span class="chip" style="top:-58px;left:8%;animation-delay:0s;">Écran bleu au démarrage</span>
+        <span class="chip" style="top:-58px;right:4%;animation-delay:1.4s;">Wifi qui coupe</span>
+        <span class="chip" style="top:312px;left:12%;animation-delay:2.6s;">3200 photos disparues</span>
       </div>
       <div class="cases">
         <div class="case-card">
@@ -311,6 +322,8 @@
     </div>
   </div>
 </section>
+
+<div class="fixed-banner" style="background-image:url('banner-hardware.jpg');"></div>
 
 <section id="prestations" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="wrap">
@@ -400,6 +413,8 @@
     </div>
   </div>
 </section>
+
+<div class="fixed-banner" style="background-image:url('banner-code.jpg');"></div>
 
 <section id="process">
   <div class="wrap">
