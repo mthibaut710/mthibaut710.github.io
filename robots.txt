@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mthibaut710.github.io/sitemap.xml
+Sitemap: https://mtinformatique.fr/sitemap.xml
