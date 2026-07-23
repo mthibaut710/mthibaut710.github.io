@@ -10,6 +10,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
+  body{
+    background-color:#fff;
+    background-image:
+      radial-gradient(circle at 8% 6%, rgba(47,111,237,0.13), transparent 42%),
+      radial-gradient(circle at 92% 16%, rgba(20,40,80,0.10), transparent 38%),
+      radial-gradient(circle at 50% 96%, rgba(47,111,237,0.09), transparent 42%),
+      radial-gradient(circle, rgba(20,40,80,0.05) 1px, transparent 1px);
+    background-repeat:no-repeat, no-repeat, no-repeat, repeat;
+    background-size:100% 100%, 100% 100%, 100% 100%, 26px 26px;
+    background-attachment:fixed, fixed, fixed, scroll;
+  }
+  @media (max-width:860px){
+    body{background-attachment:scroll, scroll, scroll, scroll;}
+  }
   /* Correctif mobile : le hamburger devient invisible sans ceci sur petits écrans */
   @media (max-width:760px){
     .nav{gap:8px;padding:12px 16px;}
@@ -61,7 +75,9 @@
   </div>
 </header>
 
-<section class="page-hero">
+<section class="page-hero" style="position:relative;overflow:hidden;">
+  <div style="position:absolute;z-index:-1;top:-90px;left:-8%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle, rgba(47,111,237,0.16) 0%, rgba(47,111,237,0.06) 45%, transparent 70%);pointer-events:none;"></div>
+
   <div class="wrap">
     <div class="breadcrumb"><a href="index.html">Accueil</a> / Demander un devis</div>
     <span class="eyebrow">Devis gratuit</span>
