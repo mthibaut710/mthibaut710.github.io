@@ -28,8 +28,17 @@
   html{scroll-behavior:smooth;}
   body{font-family:'Inter',sans-serif;color:var(--slate);line-height:1.5;-webkit-font-smoothing:antialiased;
     background-color:#fff;
-    background-image:radial-gradient(circle, rgba(20,40,80,0.05) 1px, transparent 1px);
-    background-size:26px 26px;
+    background-image:
+      radial-gradient(circle at 8% 6%, rgba(47,111,237,0.13), transparent 42%),
+      radial-gradient(circle at 92% 16%, rgba(20,40,80,0.10), transparent 38%),
+      radial-gradient(circle at 50% 96%, rgba(47,111,237,0.09), transparent 42%),
+      radial-gradient(circle, rgba(20,40,80,0.05) 1px, transparent 1px);
+    background-repeat:no-repeat, no-repeat, no-repeat, repeat;
+    background-size:100% 100%, 100% 100%, 100% 100%, 26px 26px;
+    background-attachment:fixed, fixed, fixed, scroll;
+  }
+  @media (max-width:860px){
+    body{background-attachment:scroll, scroll, scroll, scroll;}
   }
   h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:var(--navy);letter-spacing:-0.01em;}
   .mono{font-family:'JetBrains Mono',monospace;}
@@ -98,6 +107,7 @@
     .hero-photo{background-attachment:scroll;}
   }
   .hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(160deg, rgba(20,40,80,0.92) 0%, rgba(20,40,80,0.82) 45%, rgba(47,111,237,0.55) 100%);}
+  .hero-glow{position:absolute;top:-120px;left:-10%;width:640px;height:640px;z-index:-1;border-radius:50%;background:radial-gradient(circle, rgba(120,160,255,0.35) 0%, rgba(120,160,255,0.12) 45%, transparent 70%);pointer-events:none;}
   .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
   @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
 
@@ -254,6 +264,7 @@
 <section class="hero">
   <div class="hero-photo"></div>
   <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
   <div class="wrap hero-grid">
     <div>
       <div class="terminal-line">&gt; Lille — semaine · Amiens — week-end <span class="cursor"></span></div>
@@ -295,7 +306,7 @@
   </div>
 </section>
 
-<section id="zone">
+<section id="zone" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Zone &amp; disponibilité</span>
@@ -329,7 +340,7 @@
 
 <div class="fixed-banner" style="background-image:url('banner-hardware.jpg');"></div>
 
-<section id="prestations" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+<section id="prestations">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Prestations</span>
@@ -447,8 +458,9 @@
   </div>
 </section>
 
-<section id="avis" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);scroll-margin-top:90px;">
-  <div class="wrap">
+<section id="avis" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);scroll-margin-top:90px;position:relative;overflow:hidden;">
+  <div style="position:absolute;z-index:0;top:-80px;right:-6%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(47,111,237,0.16) 0%, rgba(47,111,237,0.06) 45%, transparent 70%);pointer-events:none;"></div>
+  <div class="wrap" style="position:relative;z-index:1;">
     <div class="section-head">
       <span class="eyebrow">Avis clients</span>
       <h2>Ce qu'en disent les clients.</h2>
