@@ -134,6 +134,14 @@
   }
   .cat-note .ic{flex-shrink:0;width:22px;height:22px;color:var(--blue);margin-top:1px;}
 
+  /* Barème kilométrique */
+  .km-baremes{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
+  .km-baremes-title{font-family:'Space Grotesk',sans-serif;font-size:0.75rem;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .km-baremes-title svg{width:14px;height:14px;color:var(--blue);}
+  .km-baremes ul{list-style:none;padding:0;margin:0;font-size:0.82rem;}
+  .km-baremes li{display:flex;justify-content:space-between;align-items:center;padding:3px 0;color:#5b6b8a;}
+  .km-baremes li strong{color:var(--navy);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+
   footer{border-top:1px solid var(--line);padding:36px 0 28px;text-align:center;}
   footer p{font-size:0.82rem;color:#7688a8;}
   footer .mono{color:#9aabc9;font-size:0.76rem;display:block;margin-top:6px;}
@@ -200,9 +208,21 @@
         <div class="price-card">
           <div class="price-top">
             <h3>Intervention à domicile</h3>
-            <div class="price-tag">59 €</div>
+            <div class="price-tag">59 €<small>+ km si &gt; 10 km</small></div>
           </div>
           <p>Déplacement chez vous pour diagnostiquer et réparer la panne.</p>
+          <div class="km-baremes">
+            <div class="km-baremes-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Frais de déplacement
+            </div>
+            <ul>
+              <li><span>0 – 10 km</span><strong>inclus</strong></li>
+              <li><span>10 – 30 km</span><strong>+ 10 €</strong></li>
+              <li><span>30 – 50 km</span><strong>+ 20 €</strong></li>
+              <li><span>+ 50 km</span><strong>sur devis</strong></li>
+            </ul>
+          </div>
         </div>
         <div class="price-card">
           <div class="price-top">
