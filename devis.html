@@ -100,6 +100,15 @@
         <!-- Piège anti-spam (doit rester vide et invisible) -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
+        <!-- ===== Type de client (Particulier / Professionnel) ===== -->
+        <div class="field full">
+          <label>Vous êtes...</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="Type de client" value="Particulier" checked onchange="toggleClientType()"> Particulier</label>
+            <label class="radio-opt"><input type="radio" name="Type de client" value="Professionnel" onchange="toggleClientType()"> Professionnel</label>
+          </div>
+        </div>
+
         <div class="form-grid">
           <div class="field">
             <label for="nom">Nom et prénom</label>
@@ -113,6 +122,18 @@
             <label for="email">Email <span class="hint">(pour vous renvoyer le devis)</span></label>
             <input type="email" id="email" name="Email" required>
           </div>
+        </div>
+
+        <!-- ===== Champ conditionnel : Nom de l'entreprise (uniquement si Professionnel) ===== -->
+        <div class="field full" id="entreprise-field" style="display:none;">
+          <label for="entreprise">Nom de l'entreprise</label>
+          <input type="text" id="entreprise" name="Nom de l'entreprise">
+        </div>
+
+        <!-- ===== Adresse d'intervention (obligatoire pour calcul du déplacement) ===== -->
+        <div class="field full">
+          <label for="adresse">Adresse d'intervention <span class="hint">(numéro, rue, code postal, ville)</span></label>
+          <input type="text" id="adresse" name="Adresse d'intervention" placeholder="Ex : 15 rue de la République, 80000 Amiens" required>
         </div>
 
         <div class="field full">
@@ -154,12 +175,29 @@
 
         <p class="form-note">
           <span>ℹ️</span>
-          <span>Votre demande est envoyée directement par email, sans ouvrir votre messagerie — vous recevrez une confirmation à l'écran.</span>
+          <span>Votre demande est envoyée directement par email, sans ouvrir votre messagerie — vous recevrez une confirmation à l'écran.<br><strong>Frais de déplacement</strong> : gratuit jusqu'à 10 km, 10 € entre 10 et 30 km, 20 € entre 30 et 50 km, sur devis au-delà.</span>
         </p>
       </form>
     </div>
   </div>
 </section>
+
+<script>
+// Affiche/masque le champ "Nom de l'entreprise" selon le type de client
+function toggleClientType() {
+  var pro = document.querySelector('input[name="Type de client"]:checked').value === 'Professionnel';
+  var entrepriseField = document.getElementById('entreprise-field');
+  var entrepriseInput = document.getElementById('entreprise');
+  if (pro) {
+    entrepriseField.style.display = 'block';
+    entrepriseInput.required = true;
+  } else {
+    entrepriseField.style.display = 'none';
+    entrepriseInput.required = false;
+    entrepriseInput.value = '';
+  }
+}
+</script>
 
 <footer>
   <div class="wrap">
