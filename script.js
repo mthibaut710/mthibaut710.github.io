@@ -45,4 +45,27 @@
       targets.forEach(function(t){ t.classList.add('in'); });
     }
   }
+  /* Halo bleu qui suit le curseur.
+     Desktop uniquement : ignoré sur mobile/tablette (pas de souris) et si
+     l'utilisateur a demandé de réduire les animations. */
+  if(window.matchMedia('(hover:hover) and (pointer:fine)').matches &&
+     !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+    var gx=0, gy=0, tx=0, ty=0, seen=false, idle;
+    document.addEventListener('mousemove', function(e){
+      tx = e.clientX; ty = e.clientY;
+      if(!seen){ gx = tx; gy = ty; seen = true; }
+      glow.style.opacity = '1';
+      clearTimeout(idle);
+      idle = setTimeout(function(){ glow.style.opacity = '0.35'; }, 700);
+    });
+    document.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
+    (function loop(){
+      gx += (tx-gx)*0.14; gy += (ty-gy)*0.14;
+      glow.style.transform = 'translate('+gx.toFixed(1)+'px,'+gy.toFixed(1)+'px)';
+      requestAnimationFrame(loop);
+    })();
+  }
 })();

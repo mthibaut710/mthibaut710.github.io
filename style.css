@@ -412,3 +412,7 @@ footer.simple .mono{color:var(--faint);font-size:0.78rem;display:block;margin-to
 /* ===== misc small helpers ===== */
 .skip-link{position:absolute;left:-9999px;top:0;background:var(--navy);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:100;font-size:0.85rem;font-weight:600;}
 .skip-link:focus{left:0;}
+
+/* ===== Halo bleu qui suit le curseur (desktop uniquement) ===== */
+.cursor-glow{position:fixed;top:0;left:0;width:360px;height:360px;margin:-180px 0 0 -180px;border-radius:50%;pointer-events:none;z-index:48;opacity:0;transition:opacity .5s ease;will-change:transform;background:radial-gradient(circle, rgba(47,111,237,0.20) 0%, rgba(47,111,237,0.10) 38%, rgba(47,111,237,0) 70%);}
+@media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.cursor-glow{display:none;}}
