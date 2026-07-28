@@ -420,3 +420,13 @@ footer.simple .mono{color:var(--faint);font-size:0.78rem;display:block;margin-to
 /* ===== Halo bleu qui suit le curseur (desktop uniquement) ===== */
 .cursor-glow{position:fixed;top:0;left:0;width:360px;height:360px;margin:-180px 0 0 -180px;border-radius:50%;pointer-events:none;z-index:48;opacity:0;transition:opacity .5s ease;will-change:transform;background:radial-gradient(circle, rgba(47,111,237,0.20) 0%, rgba(47,111,237,0.10) 38%, rgba(47,111,237,0) 70%);}
 @media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.cursor-glow{display:none;}}
+/* ===== Ajustements mobile du hero ===== */
+@media (max-width:860px){
+  .hero{padding:64px 0 72px;}
+  .chip-field{display:none;}
+}
+@media (max-width:560px){
+  .btn-row{flex-direction:column;gap:12px;}
+  .btn-row .btn{width:100%;justify-content:center;}
+}
+
