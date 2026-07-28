@@ -1,0 +1,13 @@
+{
+  "name": "MT Informatique",
+  "short_name": "MT Informatique",
+  "description": "Dépannage informatique à Lille et autour d'Amiens",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#142850",
+  "icons": [
+    { "src": "logo-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logo-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

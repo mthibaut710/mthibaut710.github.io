@@ -5,56 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Demande envoyée — MT Informatique</title>
 <meta name="description" content="Votre demande de devis a bien été envoyée à MT Informatique.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://mtinformatique.fr/merci.html">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<style>
-  body{
-    background-color:#fff;
-    background-image:
-      radial-gradient(circle at 8% 6%, rgba(47,111,237,0.13), transparent 42%),
-      radial-gradient(circle at 92% 16%, rgba(20,40,80,0.10), transparent 38%),
-      radial-gradient(circle at 50% 96%, rgba(47,111,237,0.09), transparent 42%),
-      radial-gradient(circle, rgba(20,40,80,0.05) 1px, transparent 1px);
-    background-repeat:no-repeat, no-repeat, no-repeat, repeat;
-    background-size:100% 100%, 100% 100%, 100% 100%, 26px 26px;
-    background-attachment:fixed, fixed, fixed, scroll;
-  }
-  @media (max-width:860px){
-    body{background-attachment:scroll, scroll, scroll, scroll;}
-  }
-  /* Correctif mobile : le hamburger devient invisible sans ceci sur petits écrans */
-  @media (max-width:760px){
-    .nav{gap:8px;padding:12px 16px;}
-    .logo{gap:6px;font-size:0.95rem;}
-    .logo img{width:34px !important;height:34px !important;}
-    .nav-cta{display:none;}
-  }
-</style>
-<link rel="icon" href="favicon.ico">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<link rel="icon" type="image/png" sizes="16x16" href="logo-16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="logo-48.png">
 <link rel="apple-touch-icon" sizes="180x180" href="logo-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#142850">
 </head>
 <body>
 <header>
   <div class="nav">
-    <a href="index.html" class="logo"><img src="logo-mascotte.png" alt="MT Informatique" width="72" height="72" style="object-fit:contain;">MT Informatique</a>
+    <a href="index.html" class="logo">
+      <img src="logo-icon.svg" alt="MT Informatique" width="40" height="40">
+      <span class="logo-text">MT Informatique<span class="logo-sub">Dépannage &amp; services info</span></span>
+    </a>
     <nav class="nav-links">
       <a href="index.html">Accueil</a>
       <a href="index.html#prestations">Prestations</a>
       <a href="index.html#zone">Zone &amp; horaires</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="a-propos.html">À propos</a>
       <a href="contact.html">Contact</a>
     </nav>
     <a href="devis.html" class="nav-cta">Demander un devis</a>
+    <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#prestations">Prestations</a>
+    <a href="index.html#zone">Zone &amp; horaires</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="a-propos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="devis.html">Demander un devis</a>
   </div>
 </header>
-<section class="page-hero" style="border-bottom:none;position:relative;overflow:hidden;">
-  <div style="position:absolute;z-index:-1;top:-90px;left:-8%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle, rgba(47,111,237,0.16) 0%, rgba(47,111,237,0.06) 45%, transparent 70%);pointer-events:none;"></div>
 
+<main id="main">
+<div class="page-hero" style="border-bottom:none;">
+  <div class="glow"></div>
   <div class="wrap" style="text-align:center;padding:40px 0 20px;">
-    <div style="width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:1.6rem;">✓</div>
+    <div style="width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:1.6rem;box-shadow:0 14px 28px -12px rgba(31,170,89,0.55);">✓</div>
     <span class="eyebrow" style="display:block;">Demande envoyée</span>
     <h1>Merci, votre demande a bien été reçue.</h1>
     <p style="margin:0 auto;">Je reviens vers vous sous 24h par téléphone ou par email avec un devis clair et sans engagement.</p>
@@ -63,18 +63,23 @@
       <a href="contact.html" class="btn btn-ghost">Voir mes coordonnées</a>
     </div>
   </div>
-</section>
+</div>
+</main>
+
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="logo"><img src="logo-mascotte.png" alt="MT Informatique" width="56" height="56" style="object-fit:contain;">MT Informatique</div>
+        <a href="index.html" class="logo">
+          <img src="logo-icon.svg" alt="MT Informatique" width="40" height="40">
+          <span class="logo-text">MT Informatique</span>
+        </a>
         <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
           <h4>Contact</h4>
-          <a href="tel:0787451021">07 87 45 10 21</a>
+          <a href="tel:+33787451021">07 87 45 10 21</a>
           <a href="mailto:contact@mtinformatique.fr">contact@mtinformatique.fr</a>
         </div>
         <div class="footer-col">
@@ -85,7 +90,9 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <a href="index.html">Accueil</a>
+          <a href="tarifs.html">Tarifs</a>
           <a href="devis.html">Demander un devis</a>
+          <a href="mentions-legales.html">Mentions légales</a>
         </div>
       </div>
     </div>
@@ -95,5 +102,8 @@
     </div>
   </div>
 </footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
