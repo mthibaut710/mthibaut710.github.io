@@ -412,11 +412,3 @@ footer.simple .mono{color:var(--faint);font-size:0.78rem;display:block;margin-to
 /* ===== misc small helpers ===== */
 .skip-link{position:absolute;left:-9999px;top:0;background:var(--navy);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:100;font-size:0.85rem;font-weight:600;}
 .skip-link:focus{left:0;}
-
-/* ===== Logo mascotte (image carrée à fond transparent) ===== */
-.logo img{width:48px;height:48px;object-fit:contain;border-radius:0;}
-.footer-grid .logo img,
-footer.simple .logo img{width:44px;height:44px;object-fit:contain;border-radius:0;}
-@media (max-width:900px){
-  .logo img{width:40px;height:40px;}
-}
