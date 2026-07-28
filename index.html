@@ -14,243 +14,69 @@
 <title>Dépannage Informatique Lille &amp; Amiens | MT Informatique</title>
 <meta name="description" content="Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end. Devis gratuit.">
 <meta name="google-site-verification" content="wI9Yz0jClPWnlKZQk6W6RkzcvqOmybKUxCSfn_2sMxM" />
+<link rel="canonical" href="https://mtinformatique.fr/">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MT Informatique">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Dépannage Informatique Lille &amp; Amiens | MT Informatique">
+<meta property="og:description" content="Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end. Devis gratuit.">
+<meta property="og:url" content="https://mtinformatique.fr/">
+<meta property="og:image" content="https://mtinformatique.fr/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dépannage Informatique Lille &amp; Amiens | MT Informatique">
+<meta name="twitter:description" content="Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end. Devis gratuit.">
+<meta name="twitter:image" content="https://mtinformatique.fr/og-image.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="favicon.ico">
+
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="logo-48.png">
+<link rel="icon" type="image/png" sizes="64x64" href="logo-64.png">
 <link rel="apple-touch-icon" sizes="180x180" href="logo-180.png">
-<style>
-  :root{
-    --navy:#142850;
-    --blue:#2F6FED;
-    --blue-dim:#5C8DF2;
-    --sky:#EAF2FF;
-    --white:#FFFFFF;
-    --slate:#33415C;
-    --line:#D7E3F5;
-    --ok:#1FAA59;
-    --radius:14px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif;color:var(--slate);line-height:1.5;-webkit-font-smoothing:antialiased;
-    background-color:#fff;
-    background-image:
-      radial-gradient(circle at 8% 6%, rgba(47,111,237,0.13), transparent 42%),
-      radial-gradient(circle at 92% 16%, rgba(20,40,80,0.10), transparent 38%),
-      radial-gradient(circle at 50% 96%, rgba(47,111,237,0.09), transparent 42%),
-      radial-gradient(circle, rgba(20,40,80,0.05) 1px, transparent 1px);
-    background-repeat:no-repeat, no-repeat, no-repeat, repeat;
-    background-size:100% 100%, 100% 100%, 100% 100%, 26px 26px;
-    background-attachment:fixed, fixed, fixed, scroll;
-  }
-  @media (max-width:860px){
-    body{background-attachment:scroll, scroll, scroll, scroll;}
-  }
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:var(--navy);letter-spacing:-0.01em;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  a{color:inherit;text-decoration:none;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px;}
-  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition-duration:0.01ms !important;}}
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#142850">
 
-  /* header */
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto;gap:12px;}
-  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.12rem;color:var(--navy);}
-  .nav-links{display:flex;gap:32px;font-size:0.92rem;font-weight:500;color:var(--slate);}
-  .nav-links a{position:relative;padding:4px 0;}
-  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--blue);transition:width .25s ease;}
-  .nav-links a:hover::after{width:100%;}
-  .nav-links a.active::after{width:100%;}
-  .nav-cta{background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;font-size:0.88rem;font-weight:600;white-space:nowrap;}
-  .nav-cta:hover{background:var(--blue);}
-  @media (max-width:760px){.nav-links{display:none;}}
-  @media (max-width:760px){
-    .nav{gap:8px;padding:12px 16px;}
-    .logo{gap:6px;font-size:0.95rem;}
-    .logo img{width:34px !important;height:34px !important;}
-    .nav-cta{display:none;}
-  }
+<link rel="stylesheet" href="style.css">
 
-  /* mobile menu (hamburger) */
-  .menu-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;}
-  .menu-toggle span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s ease, opacity .2s ease;}
-  .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .menu-toggle.open span:nth-child(2){opacity:0;}
-  .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  @media (max-width:760px){.menu-toggle{display:flex;}}
-  .mobile-menu{display:none;flex-direction:column;position:fixed;left:0;right:0;top:60px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 16px 30px -20px rgba(20,40,80,0.3);z-index:49;}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{padding:15px 24px;font-size:0.95rem;font-weight:500;color:var(--navy);border-bottom:1px solid var(--line);}
-  .mobile-menu a.active{color:var(--blue);}
-  .mobile-menu a:last-child{border-bottom:none;}
-  @media (min-width:761px){.mobile-menu{display:none !important;}}
-
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:block;}
-  section{padding:64px 0;}
-  .section-head{max-width:640px;margin-bottom:40px;}
-  .section-head h2{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:12px;}
-  .section-head p{color:#5b6b8a;font-size:1rem;}
-
-  .btn{padding:12px 22px;border-radius:9px;font-weight:600;font-size:0.9rem;display:inline-flex;align-items:center;gap:8px;}
-  .btn-primary{background:var(--navy);color:#fff;}
-  .btn-primary:hover{background:var(--blue);}
-  .btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--blue-dim);}
-  .btn-white{background:#fff;color:var(--navy);}
-  .btn-white:hover{background:var(--sky);}
-  .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;}
-
-  /* hero */
-  .hero{position:relative;padding:100px 0 110px;overflow:hidden;isolation:isolate;}
-  .hero-photo{
-    position:absolute;inset:0;z-index:-2;
-    background-image:url("hero-bg.jpg");
-    background-size:cover;background-position:center;background-attachment:fixed;
-    filter:grayscale(65%) brightness(0.55) contrast(1.05);
-  }
-  @media (max-width:860px){
-    .hero-photo{background-attachment:scroll;}
-  }
-  .hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(160deg, rgba(20,40,80,0.92) 0%, rgba(20,40,80,0.82) 45%, rgba(47,111,237,0.55) 100%);}
-  .hero-glow{position:absolute;top:-120px;left:-10%;width:640px;height:640px;z-index:-1;border-radius:50%;background:radial-gradient(circle, rgba(120,160,255,0.35) 0%, rgba(120,160,255,0.12) 45%, transparent 70%);pointer-events:none;}
-  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
-  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
-
-  /* bannières photo à défilement fixe entre les sections */
-  .fixed-banner{
-    position:relative;height:480px;overflow:hidden;isolation:isolate;
-    background-size:cover;background-position:center 42%;background-attachment:fixed;
-    filter:grayscale(35%) brightness(0.78) contrast(1.05);
-  }
-  .fixed-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg, rgba(20,40,80,0.38) 0%, rgba(47,111,237,0.16) 100%);}
-  @media (max-width:860px){
-    .fixed-banner{height:280px;background-attachment:scroll;}
-  }
-
-  .terminal-line{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#cfe0ff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;margin-bottom:22px;}
-  .cursor{display:inline-block;width:7px;height:14px;background:#cfe0ff;animation:blink 1s steps(1) infinite;}
-  @keyframes blink{50%{opacity:0;}}
-  .hero h1{font-size:clamp(2.1rem,4.2vw,3.15rem);line-height:1.08;margin-bottom:20px;color:#fff;}
-  .hero h1 span{color:#8fb4ff;}
-  .hero p{color:#c7d5f2;font-size:1.05rem;max-width:480px;}
-  .hero .btn-primary{background:#fff;color:var(--navy);}
-  .hero .btn-primary:hover{background:var(--sky);}
-  .hero .btn-ghost{border:1px solid rgba(255,255,255,0.4);color:#fff;background:transparent;}
-  .hero .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,0.08);}
-
-  /* floating scenario chips */
-  .chip-field{position:relative;height:0;}
-  .chip{position:absolute;z-index:6;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--navy);background:rgba(255,255,255,0.92);border-radius:999px;padding:6px 12px;box-shadow:0 10px 22px -10px rgba(0,0,0,0.4);animation:float 6s ease-in-out infinite;white-space:nowrap;}
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-
-  /* rotating ticket/case cards */
-  .cases{position:relative;height:290px;}
-  .case-card{position:absolute;z-index:1;inset:0;background:#fff;border-radius:16px;padding:26px;box-shadow:0 24px 48px -20px rgba(0,0,0,0.5);opacity:0;animation:cardCycle 9s ease-in-out infinite;}
-  .case-card:nth-child(1){animation-delay:0s;}
-  .case-card:nth-child(2){animation-delay:3s;}
-  .case-card:nth-child(3){animation-delay:6s;}
-  @keyframes cardCycle{
-    0%{opacity:0; transform:translateY(8px) scale(0.98);}
-    4%{opacity:1; transform:translateY(0) scale(1);}
-    30%{opacity:1; transform:translateY(0) scale(1);}
-    36%{opacity:0; transform:translateY(-8px) scale(0.98);}
-    100%{opacity:0;}
-  }
-  .case-tag{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;color:var(--ok);margin-bottom:16px;}
-  .case-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);}
-  .case-card h3{font-size:1.2rem;margin-bottom:10px;}
-  .case-flow{display:flex;align-items:center;gap:10px;font-size:0.86rem;color:#6b7a99;margin-bottom:20px;}
-  .case-flow .before{color:#b4453f;}
-  .case-flow .after{color:var(--ok);font-weight:600;}
-  .case-meta{display:flex;gap:18px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#8ea0c2;border-top:1px dashed var(--line);padding-top:16px;}
-
-  /* zone */
-  .zone-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
-  @media (max-width:760px){.zone-grid{grid-template-columns:1fr;}}
-  .zone-card{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;}
-  .zone-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(20,40,80,0.3);border-color:var(--blue-dim);}
-  .signal{display:flex;gap:3px;align-items:flex-end;height:14px;margin-bottom:12px;}
-  .signal i{display:block;width:4px;background:var(--blue-dim);border-radius:2px;}
-  .signal i:nth-child(1){height:5px;} .signal i:nth-child(2){height:8px;} .signal i:nth-child(3){height:11px;} .signal i:nth-child(4){height:14px;}
-  .zone-tag{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--blue);background:var(--sky);border-radius:6px;padding:3px 9px;display:inline-block;margin-bottom:10px;}
-  .zone-card h3{font-size:1.1rem;margin-bottom:8px;}
-  .zone-card p{font-size:0.88rem;color:#5b6b8a;margin-bottom:14px;}
-  .addr{font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--navy);margin-bottom:16px;}
-  .zone-days{display:flex;gap:6px;}
-  .day{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.76rem;font-weight:600;background:var(--sky);color:#8ea0c2;}
-  .day.on{background:var(--navy);color:#fff;}
-
-  /* prestations */
-  .presta-photo{width:100%;border-radius:var(--radius);overflow:hidden;margin-bottom:36px;border:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(20,40,80,0.35);}
-  .presta-photo img{width:100%;display:block;}
-  .presta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-  @media (max-width:900px){.presta-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:520px){.presta-grid{grid-template-columns:1fr;}}
-  .presta-card{display:block;border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;cursor:pointer;}
-  .presta-more{display:block;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--blue);opacity:0;transform:translateX(-4px);transition:opacity .2s ease, transform .2s ease;}
-  .presta-card:hover .presta-more{opacity:1;transform:translateX(0);}
-  .presta-card.special .presta-more{color:#8fb4ff;}
-  .presta-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(20,40,80,0.3);border-color:var(--blue-dim);}
-  .presta-card .ic{width:38px;height:38px;border-radius:9px;background:var(--sky);color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
-  .presta-card h3{font-size:0.98rem;margin-bottom:8px;}
-  .presta-card p{font-size:0.85rem;color:#5b6b8a;}
-  .presta-card.special{background:var(--navy);border-color:var(--navy);}
-  .presta-card.special .ic{background:rgba(255,255,255,0.12);color:#fff;}
-  .presta-card.special h3,.presta-card.special p{color:#fff;}
-  .presta-card.special p{color:#c3d3f2;}
-
-  /* process */
-  .process{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
-  @media (max-width:760px){.process{grid-template-columns:1fr;}}
-  .process-line{display:none;}
-  .process-step{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;}
-  .process-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:14px;}
-  .process-step h3{font-size:1rem;margin-bottom:8px;}
-  .process-step p{font-size:0.87rem;color:#5b6b8a;}
-
-  /* avis Google */
-  .google-reviews-header{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:24px;box-shadow:0 2px 10px rgba(20,40,80,0.04);}
-  .google-reviews-badge{display:flex;align-items:center;gap:14px;}
-  .google-reviews-info{display:flex;flex-direction:column;line-height:1.3;}
-  .google-reviews-title{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--navy);font-size:1rem;}
-  .google-reviews-note{color:#5b6b8a;font-size:0.86rem;}
-  @media (max-width:640px){.google-reviews-header{flex-direction:column;text-align:center;padding:20px;} .google-reviews-header .btn{width:100%;justify-content:center;}}
-
-  /* fallback (visible tant que le widget Trustindex n'est pas installé) */
-  .trustindex-fallback{background:#fff;border:1px dashed var(--line);border-radius:var(--radius);padding:48px 24px;text-align:center;}
-  .trustindex-fallback .ti-icon{font-size:2.2rem;margin-bottom:12px;}
-  .ti-fallback-title{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--navy);font-size:1.05rem;margin-bottom:8px;}
-  .ti-fallback-text{color:#5b6b8a;font-size:0.9rem;max-width:480px;margin:0 auto;}
-
-  /* cta */
-  .cta-banner{background:var(--navy);border-radius:var(--radius);padding:40px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
-  .cta-banner h2{color:#fff;font-size:1.5rem;margin-bottom:8px;}
-  .cta-banner p{color:#c3d3f2;font-size:0.94rem;max-width:440px;}
-
-  footer{border-top:1px solid var(--line);padding:48px 0 28px;}
-  .footer-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:32px;}
-  .footer-grid>div:first-child{max-width:280px;}
-  .footer-grid>div:first-child .logo{margin-bottom:12px;}
-  .footer-grid>div:first-child p{font-size:0.86rem;color:#5b6b8a;}
-  .footer-cols{display:flex;gap:48px;flex-wrap:wrap;}
-  .footer-col{display:flex;flex-direction:column;gap:8px;}
-  .footer-col h4{font-family:'Space Grotesk',sans-serif;font-size:0.86rem;color:var(--navy);margin-bottom:4px;}
-  .footer-col a,.footer-col span{font-size:0.86rem;color:#5b6b8a;}
-  .footer-col a:hover{color:var(--blue);}
-  .footer-bottom{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:0.82rem;color:#7688a8;}
-</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "MT Informatique",
+  "image": "https://mtinformatique.fr/og-image.jpg",
+  "url": "https://mtinformatique.fr/",
+  "telephone": "+33787451021",
+  "email": "contact@mtinformatique.fr",
+  "priceRange": "€€",
+  "areaServed": [
+    {"@type": "City", "name": "Lille"},
+    {"@type": "City", "name": "Amiens"}
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "19 rue Inkermann",
+    "postalCode": "59000",
+    "addressLocality": "Lille",
+    "addressCountry": "FR"
+  },
+  "description": "Dépannage informatique à domicile ou à distance, pour particuliers, à Lille en semaine et autour d'Amiens le week-end."
+}
+</script>
 </head>
 <body>
+
+<a href="#main" class="skip-link">Aller au contenu</a>
 
 <header>
   <div class="nav">
     <a href="index.html" class="logo">
-      <img src="logo-mascotte.png" alt="MT Informatique" style="width:72px;height:72px;object-fit:contain;">
-      MT Informatique
+      <img src="logo-mascotte.png" alt="MT Informatique" width="40" height="40">
+      <span class="logo-text">MT Informatique<span class="logo-sub">Dépannage &amp; services info</span></span>
     </a>
     <nav class="nav-links">
       <a href="index.html" class="active">Accueil</a>
@@ -274,6 +100,7 @@
   </div>
 </header>
 
+<main id="main">
 <section class="hero">
   <div class="hero-photo"></div>
   <div class="hero-overlay"></div>
@@ -321,12 +148,12 @@
 
 <section id="zone" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Zone &amp; disponibilité</span>
       <h2>Deux secteurs, deux rythmes de semaine.</h2>
       <p>Basé étudiant à Lille, disponible chez vous les soirs de semaine, et dans un rayon de 20 minutes autour d'Amiens le week-end.</p>
     </div>
-    <div class="zone-grid">
+    <div class="zone-grid reveal-stagger">
       <div class="zone-card">
         <div class="signal"><i></i><i></i><i></i><i></i></div>
         <span class="zone-tag">SEMAINE</span>
@@ -340,7 +167,7 @@
       <div class="zone-card">
         <div class="signal"><i></i><i></i><i></i><i></i></div>
         <span class="zone-tag">WEEK-END</span>
-        <h3>Amiens &amp; alentours <span class="mono" style="font-size:0.7rem;color:#7688a8;">(20 min)</span></h3>
+        <h3>Amiens &amp; alentours <span class="mono" style="font-size:0.7rem;color:var(--faint);">(20 min)</span></h3>
         <p>Disponible toute la journée le week-end, horaires flexibles à convenir ensemble.</p>
         <div class="addr">📍 Saint-Accart, Belloy-sur-Somme, 80310</div>
         <div class="zone-days">
@@ -355,17 +182,17 @@
 
 <section id="prestations">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Prestations</span>
       <h2>Tout ce qui fait qu'un ordinateur remarche.</h2>
       <p>Du dépannage express à l'accompagnement complet, en présentiel ou à distance.</p>
     </div>
 
-    <div class="presta-photo">
-      <img src="prestations-collage.jpg" alt="Réparation, diagnostic, sauvegarde et garantie — interventions MT Informatique">
+    <div class="presta-photo reveal">
+      <img src="prestations-collage.jpg" alt="Réparation, diagnostic, sauvegarde et garantie — interventions MT Informatique" width="1400" height="933" loading="lazy" decoding="async">
     </div>
 
-    <div class="presta-grid">
+    <div class="presta-grid reveal-stagger">
       <a class="presta-card" href="tarifs.html#depannage">
         <div class="ic">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -446,12 +273,11 @@
 
 <section id="process">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Comment ça marche</span>
       <h2>Trois étapes, aucune surprise sur le prix.</h2>
     </div>
-    <div class="process">
-      <div class="process-line"></div>
+    <div class="process reveal-stagger">
       <div class="process-step">
         <div class="process-num mono">1</div>
         <h3>Vous décrivez la panne</h3>
@@ -474,14 +300,14 @@
 <section id="avis" style="background:var(--sky);border-top:1px solid var(--line);border-bottom:1px solid var(--line);scroll-margin-top:90px;position:relative;overflow:hidden;">
   <div style="position:absolute;z-index:0;top:-80px;right:-6%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(47,111,237,0.16) 0%, rgba(47,111,237,0.06) 45%, transparent 70%);pointer-events:none;"></div>
   <div class="wrap" style="position:relative;z-index:1;">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Avis clients</span>
       <h2>Ce qu'en disent les clients.</h2>
       <p>Des avis vérifiés avant publication, pour rester fiables.</p>
     </div>
 
     <!-- Bandeau note Google + CTA -->
-    <div class="google-reviews-header">
+    <div class="google-reviews-header reveal">
       <div class="google-reviews-badge">
         <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -502,8 +328,10 @@
       Une fois votre compte Trustindex créé (voir instructions), collez le code du widget
       À LA PLACE de la div "trustindex-fallback" ci-dessous.
     -->
-    <div class="trustindex-fallback">
-      <div class="ti-icon">💬</div>
+    <div class="trustindex-fallback reveal">
+      <div class="ti-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+      </div>
       <p class="ti-fallback-title">Vos avis Google apparaîtront ici bientôt</p>
       <p class="ti-fallback-text">Vous avez fait appel à mes services ? Votre avis compte énormément et aide d'autres personnes à me faire confiance.</p>
     </div>
@@ -512,7 +340,7 @@
 
 <section id="cta">
   <div class="wrap">
-    <div class="cta-banner">
+    <div class="cta-banner reveal">
       <div>
         <h2>Un projet particulier en tête ?</h2>
         <p>Décrivez votre besoin via le questionnaire de devis, ou contactez-moi directement — même si ça sort du cadre habituel.</p>
@@ -524,15 +352,16 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="logo">
-          <img src="logo-mascotte.png" alt="MT Informatique" style="width:56px;height:56px;object-fit:contain;">
-          MT Informatique
-        </div>
+        <a href="index.html" class="logo">
+          <img src="logo-mascotte.png" alt="MT Informatique" width="40" height="40">
+          <span class="logo-text">MT Informatique</span>
+        </a>
         <p>Dépannage informatique pour particuliers — Lille en semaine, secteur Amiens le week-end.</p>
       </div>
       <div class="footer-cols">
@@ -562,30 +391,7 @@
   </div>
 </footer>
 
-<script>
-(function(){
-  var btn = document.querySelector('.menu-toggle');
-  var menu = document.querySelector('.mobile-menu');
-  var header = document.querySelector('header');
-  function setPos(){ if(menu && header){ menu.style.top = header.offsetHeight + 'px'; } }
-  setPos();
-  window.addEventListener('resize', setPos);
-  if(btn && menu){
-    btn.addEventListener('click', function(){
-      var isOpen = menu.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen);
-    });
-    menu.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        menu.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-})();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
