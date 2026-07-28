@@ -8,6 +8,13 @@
   function setPos(){ if(menu && header){ menu.style.top = header.offsetHeight + 'px'; } }
   setPos();
   window.addEventListener('resize', setPos);
+
+  /* Ombre du header une fois qu'on a quitté le haut de page */
+  if(header){
+    function setScrolled(){ header.classList.toggle('scrolled', window.scrollY > 8); }
+    setScrolled();
+    window.addEventListener('scroll', setScrolled, {passive:true});
+  }
   if(btn && menu){
     btn.addEventListener('click', function(){
       var isOpen = menu.classList.toggle('open');
