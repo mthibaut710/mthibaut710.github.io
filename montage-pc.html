@@ -207,31 +207,34 @@
 /* ---------- MOBILE ---------- */
 @media (max-width:860px){
   .bd{height:290vh}
-  .bd-sticky{align-items:start; padding-top:56px}
 
-  /* La machine occupe tout le haut de l'écran et passe devant. */
-  .bd-stage{width:100vw; margin-top:2vh; perspective:1050px}
-  .bd-rig{transform:rotateX(4deg) rotateY(-9deg) scale(1.24)}
+  /* La machine est centrée dans l'espace libre au-dessus de la fiche,
+     au lieu d'être collée en haut et rognée par le bord de l'écran. */
+  .bd-sticky{align-items:center; padding-top:60px; padding-bottom:30svh}
+  .bd-stage{width:96vw; margin:0; perspective:1000px}
+  .bd-rig{transform:rotateX(4deg) rotateY(-9deg) scale(1.06)}
 
-  /* Éclatement resserré : sur un petit écran, les pièces
-     sortaient du cadre avec les distances du bureau. */
-  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -115px))}
-  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -2%),0,calc(var(--bd-e,0) * -48px))}
-  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 6px))}
-  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 5%),calc(var(--bd-e,0) * -8%),calc(var(--bd-e,0) * 52px))}
-  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 5%),calc(var(--bd-e,0) * 100px))}
-  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 175px))}
+  /* Éclatement resserré : avec les distances du bureau,
+     les pièces sortaient du cadre sur un petit écran. */
+  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -100px))}
+  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -2%),0,calc(var(--bd-e,0) * -42px))}
+  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -8%),calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * 5px))}
+  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 4%),calc(var(--bd-e,0) * -7%),calc(var(--bd-e,0) * 46px))}
+  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * 4%),calc(var(--bd-e,0) * 88px))}
+  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 150px))}
 
-  /* Les pièces en retrait restent lisibles au lieu de disparaître. */
-  .bd-stepping .bd-layer{opacity:.32; filter:saturate(.45) brightness(.85)}
+  /* UNE SEULE pièce allumée à la fois : les autres redeviennent
+     un simple contour fantôme. C'est ce réglage que j'avais cassé. */
+  .bd-stepping .bd-layer{opacity:.09; filter:saturate(.2) brightness(.7)}
+  .bd-stepping .bd-layer.is-active{opacity:1; filter:none}
 
-  /* La fiche : bandeau bas, discret, jamais au milieu de la machine. */
+  /* La fiche : bandeau bas, compact, jamais au milieu de la machine. */
   .bd-bubble{
     left:10px; right:10px; bottom:12px;
     top:auto;                      /* sinon la hauteur se bloque et le texte déborde */
-    width:auto; max-height:27svh; overflow:hidden;
+    width:auto; max-height:26svh; overflow:hidden;
     padding:13px 15px 14px; border-radius:14px;
-    background:rgba(9,20,42,.82);
+    background:rgba(9,20,42,.86);
     transform:translateY(20px);
   }
   .bd-bubble.is-on{transform:none}
@@ -241,7 +244,7 @@
   .bd-more{display:none}          /* seconde moitié du texte : bureau seulement */
   .bd-tags{display:none}
 
-  .bd-ticker{top:70px; bottom:auto}
+  .bd-ticker{top:72px; bottom:auto}
 }
 
 @media (prefers-reduced-motion:reduce){
