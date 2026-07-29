@@ -184,13 +184,16 @@
   padding:5px 9px; border:1px solid var(--bd-line);
   border-radius:6px; color:var(--bd-dim);
 }
-.bd-pos-r {right:-5%; top:14%}
-.bd-pos-l {left:-5%;  top:26%}
-.bd-pos-l2{left:-4%;  bottom:16%}
-.bd-pos-r2{right:-4%; bottom:12%}
+.bd-pos-r {right:6%; top:21%}
+.bd-pos-l {left:6%;  top:25%}
+.bd-pos-l2{left:6%;  bottom:19%}
+.bd-pos-r2{right:6%; bottom:17%}
+
+.bd-more{display:inline}
 
 .bd-ticker{
-  position:absolute; left:0; bottom:-8%; display:flex; gap:7px; z-index:6;
+  position:absolute; left:50%; transform:translateX(-50%); bottom:7%;
+  display:flex; gap:7px; z-index:6;
 }
 .bd-ticker b{
   display:block; width:24px; height:2px; border-radius:2px;
@@ -204,15 +207,41 @@
 /* ---------- MOBILE ---------- */
 @media (max-width:860px){
   .bd{height:290vh}
-  .bd-rig{transform:rotateX(4deg) rotateY(-8deg)}
-  .bd-stage{width:94vw; margin-top:-12vh}
+  .bd-sticky{align-items:start; padding-top:56px}
+
+  /* La machine occupe tout le haut de l'écran et passe devant. */
+  .bd-stage{width:100vw; margin-top:2vh; perspective:1050px}
+  .bd-rig{transform:rotateX(4deg) rotateY(-9deg) scale(1.24)}
+
+  /* Éclatement resserré : sur un petit écran, les pièces
+     sortaient du cadre avec les distances du bureau. */
+  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -115px))}
+  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -2%),0,calc(var(--bd-e,0) * -48px))}
+  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 6px))}
+  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 5%),calc(var(--bd-e,0) * -8%),calc(var(--bd-e,0) * 52px))}
+  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 5%),calc(var(--bd-e,0) * 100px))}
+  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 175px))}
+
+  /* Les pièces en retrait restent lisibles au lieu de disparaître. */
+  .bd-stepping .bd-layer{opacity:.32; filter:saturate(.45) brightness(.85)}
+
+  /* La fiche : bandeau bas, discret, jamais au milieu de la machine. */
   .bd-bubble{
-    position:fixed; left:12px; right:12px; bottom:14px; width:auto;
-    transform:translateY(24px);
+    left:10px; right:10px; bottom:12px;
+    top:auto;                      /* sinon la hauteur se bloque et le texte déborde */
+    width:auto; max-height:27svh; overflow:hidden;
+    padding:13px 15px 14px; border-radius:14px;
+    background:rgba(9,20,42,.82);
+    transform:translateY(20px);
   }
   .bd-bubble.is-on{transform:none}
-  .bd-bubble h2{font-size:1.15rem}
-  .bd-ticker{left:50%; transform:translateX(-50%); bottom:auto; top:78px}
+  .bd-bubble .bd-step{font-size:.58rem; letter-spacing:.14em; margin-bottom:4px}
+  .bd-bubble h2{font-size:.95rem; margin-bottom:5px}
+  .bd-bubble p{font-size:.76rem; line-height:1.42}
+  .bd-more{display:none}          /* seconde moitié du texte : bureau seulement */
+  .bd-tags{display:none}
+
+  .bd-ticker{top:70px; bottom:auto}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -465,44 +494,45 @@
 
       </div>
 
+    </div>
+
       <!-- BULLES -->
       <article class="bd-bubble bd-pos-r" data-bubble="0">
         <div class="bd-step">Étape 01</div>
         <h2>Le boîtier</h2>
-        <p>Je commence par le préparer à vide : entretoises au bon pas de vis, ventilateurs orientés dans le bon sens, câbles passés derrière la cloison. C'est ce qui fait la différence entre un PC propre et un plat de spaghettis.</p>
+        <p>Je commence par le préparer à vide : entretoises au bon pas de vis, ventilateurs orientés dans le bon sens, câbles passés derrière la cloison.<span class="bd-more"> C'est ce qui fait la différence entre un PC propre et un plat de spaghettis.</span></p>
         <div class="bd-tags"><span class="bd-tag">Entretoises</span><span class="bd-tag">Sens du flux d'air</span><span class="bd-tag">Câblage arrière</span></div>
       </article>
 
       <article class="bd-bubble bd-pos-l" data-bubble="1">
         <div class="bd-step">Étape 02</div>
         <h2>La carte mère</h2>
-        <p>Processeur, mémoire et SSD M.2 sont installés hors du boîtier, à plat : plus de place, moins de risque de forcer. Je vérifie que les barrettes sont dans les bons emplacements — sinon vous perdez la moitié des performances de la RAM.</p>
+        <p>Processeur, mémoire et SSD M.2 sont installés hors du boîtier, à plat : plus de place, moins de risque de forcer.<span class="bd-more"> Je vérifie que les barrettes sont dans les bons emplacements — sinon vous perdez la moitié des performances de la RAM.</span></p>
         <div class="bd-tags"><span class="bd-tag">Pose du CPU</span><span class="bd-tag">RAM en dual channel</span><span class="bd-tag">SSD M.2</span></div>
       </article>
 
       <article class="bd-bubble bd-pos-l2" data-bubble="2">
         <div class="bd-step">Étape 03</div>
         <h2>L'alimentation</h2>
-        <p>Fixée en premier parce que c'est la pièce la plus encombrante à câbler. Si elle est modulaire, je ne branche que les câbles réellement utilisés : moins d'obstacles dans le boîtier, meilleure circulation de l'air.</p>
+        <p>Fixée en premier parce que c'est la pièce la plus encombrante à câbler.<span class="bd-more"> Si elle est modulaire, je ne branche que les câbles réellement utilisés : moins d'obstacles dans le boîtier, meilleure circulation de l'air.</span></p>
         <div class="bd-tags"><span class="bd-tag">Câbles utiles</span><span class="bd-tag">24 broches</span><span class="bd-tag">Alim CPU + GPU</span></div>
       </article>
 
       <article class="bd-bubble bd-pos-r" data-bubble="3">
         <div class="bd-step">Étape 04</div>
         <h2>Le refroidissement</h2>
-        <p>Pâte thermique appliquée en quantité juste — trop, c'est aussi mauvais que pas assez. Le ventirad est serré en croix, progressivement, pour que la pression soit répartie sur toute la surface du processeur.</p>
+        <p>Pâte thermique appliquée en quantité juste — trop, c'est aussi mauvais que pas assez.<span class="bd-more"> Le ventirad est serré en croix, progressivement, pour que la pression soit répartie sur toute la surface du processeur.</span></p>
         <div class="bd-tags"><span class="bd-tag">Pâte thermique</span><span class="bd-tag">Serrage en croix</span><span class="bd-tag">Ventilateur branché</span></div>
       </article>
 
       <article class="bd-bubble bd-pos-r2" data-bubble="4">
         <div class="bd-step">Étape 05</div>
         <h2>La carte graphique &amp; les tests</h2>
-        <p>Elle arrive en dernier, une fois que tout le reste est câblé. Puis vient le vrai moment de vérité : premier démarrage, réglages du BIOS, test de charge, contrôle des températures. Je ne vous rends la machine qu'après.</p>
+        <p>Elle arrive en dernier, une fois que tout le reste est câblé.<span class="bd-more"> Puis vient le vrai moment de vérité : premier démarrage, réglages du BIOS, test de charge, contrôle des températures. Je ne vous rends la machine qu'après.</span></p>
         <div class="bd-tags"><span class="bd-tag">PCIe + alim</span><span class="bd-tag">BIOS</span><span class="bd-tag">Test de charge</span></div>
       </article>
 
       <div class="bd-ticker" id="bdTicker" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></div>
-    </div>
   </div>
 </section>
 
