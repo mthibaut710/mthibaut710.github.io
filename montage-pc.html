@@ -131,7 +131,7 @@
 @keyframes bdDrip{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
 
 /* ---------- SCÈNE ÉCLATÉE ---------- */
-.bd{background:var(--bd-bg); color:var(--bd-text); position:relative; height:600vh}
+.bd{background:var(--bd-bg); color:var(--bd-text); position:relative; height:340vh}
 .bd-sticky{
   position:sticky; top:0; height:100svh;
   display:grid; place-items:center; overflow:hidden;
@@ -144,11 +144,11 @@
 .bd-rig{
   position:absolute; inset:0; transform-style:preserve-3d;
   transform:rotateX(6deg) rotateY(-16deg);
-  transition:transform .5s cubic-bezier(.22,.9,.32,1);
+  transition:transform .35s cubic-bezier(.22,.9,.32,1);
 }
 .bd-layer{
   position:absolute; inset:0; transform-style:preserve-3d;
-  transition:opacity .55s ease, filter .55s ease;
+  transition:opacity .28s ease, filter .28s ease;
 }
 .bd-layer svg{width:100%; height:100%; display:block; overflow:visible}
 
@@ -165,8 +165,8 @@
 .bd-ring{opacity:0; transition:opacity .4s ease}
 .is-active .bd-ring{opacity:1}
 .bd-ring circle{fill:none; stroke:var(--bd-arc)}
-.bd-ring .pulse{animation:bdPulse 2.4s ease-out infinite}
-@keyframes bdPulse{0%{r:13; opacity:.9} 100%{r:44; opacity:0}}
+.bd-ring .pulse{animation:bdPulse 1.8s ease-out infinite}
+@keyframes bdPulse{0%{r:13; opacity:.9} 100%{r:40; opacity:0}}
 
 /* ---------- BULLES ---------- */
 .bd-bubble{
@@ -180,7 +180,7 @@
   border-radius:12px;
   box-shadow:0 24px 48px -22px rgba(0,0,0,.7);
   opacity:0; transform:translateY(16px) scale(.98);
-  transition:opacity .5s ease, transform .5s cubic-bezier(.22,.9,.32,1);
+  transition:opacity .3s ease, transform .3s cubic-bezier(.22,.9,.32,1);
   pointer-events:none;
 }
 .bd-bubble.is-on{opacity:1; transform:none; pointer-events:auto}
@@ -216,6 +216,7 @@
 
 /* ---------- MOBILE ---------- */
 @media (max-width:860px){
+  .bd{height:290vh}
   .bd-rig{transform:rotateX(4deg) rotateY(-8deg)}
   .bd-stage{width:94vw; margin-top:-12vh}
   .bd-bubble{
@@ -281,6 +282,7 @@
       <a href="index.html">Accueil</a>
       <a href="index.html#prestations">Prestations</a>
       <a href="index.html#zone">Zone &amp; horaires</a>
+      <a class="active" href="montage-pc.html">Montage PC</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="a-propos.html">À propos</a>
       <a href="contact.html">Contact</a>
@@ -292,8 +294,8 @@
     <a href="index.html">Accueil</a>
     <a href="index.html#prestations">Prestations</a>
     <a href="index.html#zone">Zone &amp; horaires</a>
+    <a class="active" href="montage-pc.html">Montage PC</a>
     <a href="tarifs.html">Tarifs</a>
-    <a href="montage-pc.html" class="active">Montage PC</a>
     <a href="a-propos.html">À propos</a>
     <a href="contact.html">Contact</a>
     <a href="devis.html">Demander un devis</a>
@@ -608,7 +610,7 @@
   var layers  = [].slice.call(document.querySelectorAll('.bd-layer[data-step]'));
   var bubbles = [].slice.call(document.querySelectorAll('.bd-bubble'));
   var ticks   = [].slice.call(document.querySelectorAll('#bdTicker b'));
-  var STEPS = 5, OPEN = 0.20, current = -2, ticking = false;
+  var STEPS = 5, OPEN = 0.15, current = -2, ticking = false;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function clamp(v,a,b){ return Math.min(b, Math.max(a, v)); }
