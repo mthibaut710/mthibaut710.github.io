@@ -204,31 +204,36 @@
 /* repli sans JS : tout reste lisible */
 .bd-fallback{display:none}
 
-/* ---------- MOBILE ---------- */
+/* ---------- MOBILE ----------
+   Sur iOS, "transform-style:preserve-3d" empêche l'opacité des calques
+   enfants d'être appliquée : les pièces restaient toutes affichées et
+   gardaient leur état précédent au retour. Sur mobile on abandonne donc
+   la pile 3D : une seule pièce à l'écran, centrée et agrandie.
+   ------------------------------------------------------------------ */
 @media (max-width:860px){
   .bd{height:290vh}
+  .bd-sticky{align-items:center; padding-top:60px; padding-bottom:29svh}
 
-  /* La machine est centrée dans l'espace libre au-dessus de la fiche,
-     au lieu d'être collée en haut et rognée par le bord de l'écran. */
-  .bd-sticky{align-items:center; padding-top:60px; padding-bottom:30svh}
-  .bd-stage{width:96vw; margin:0; perspective:1000px}
-  .bd-rig{transform:rotateX(4deg) rotateY(-9deg) scale(1.06)}
+  /* plus aucun contexte 3D : l'opacité redevient fiable */
+  .bd-stage{width:96vw; margin:0; perspective:none}
+  .bd-rig{transform:none; transform-style:flat}
+  .bd-layer{transform-style:flat; transition:opacity .25s ease, transform .4s cubic-bezier(.22,.9,.32,1)}
 
-  /* Éclatement resserré : avec les distances du bureau,
-     les pièces sortaient du cadre sur un petit écran. */
-  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -100px))}
-  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -2%),0,calc(var(--bd-e,0) * -42px))}
-  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -8%),calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * 5px))}
-  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 4%),calc(var(--bd-e,0) * -7%),calc(var(--bd-e,0) * 46px))}
-  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * 4%),calc(var(--bd-e,0) * 88px))}
-  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 150px))}
+  /* machine assemblée tant que le défilement n'a pas commencé */
+  .bd-l-case, .bd-l-mobo, .bd-l-psu, .bd-l-cpu, .bd-l-gpu, .bd-l-glass{transform:none}
 
-  /* UNE SEULE pièce allumée à la fois : les autres redeviennent
-     un simple contour fantôme. C'est ce réglage que j'avais cassé. */
-  .bd-stepping .bd-layer{opacity:.09; filter:saturate(.2) brightness(.7)}
-  .bd-stepping .bd-layer.is-active{opacity:1; filter:none}
+  /* UNE seule pièce visible, les autres totalement retirées */
+  .bd-stepping .bd-layer{opacity:0; filter:none}
+  .bd-stepping .bd-layer.is-active{opacity:1}
 
-  /* La fiche : bandeau bas, compact, jamais au milieu de la machine. */
+  /* chaque pièce est recentrée et agrandie quand c'est son tour */
+  .bd-stepping .bd-l-case.is-active{transform:scale(1.08)}
+  .bd-stepping .bd-l-mobo.is-active{transform:translate(0.87%,1.17%)   scale(1.40)}
+  .bd-stepping .bd-l-psu.is-active {transform:translate(27.30%,-53.55%) scale(2.10)}
+  .bd-stepping .bd-l-cpu.is-active {transform:translate(5.25%,34.65%)  scale(2.10)}
+  .bd-stepping .bd-l-gpu.is-active {transform:translate(4.04%,-13.46%) scale(1.90)}
+
+  /* La fiche : bandeau bas, compact. */
   .bd-bubble{
     left:10px; right:10px; bottom:12px;
     top:auto;                      /* sinon la hauteur se bloque et le texte déborde */
