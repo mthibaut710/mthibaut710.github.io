@@ -134,10 +134,15 @@
   transition:transform .35s cubic-bezier(.22,.9,.32,1);
 }
 .bd-layer{
-  position:absolute; inset:0; transform-style:preserve-3d;
+  position:absolute; inset:0;
+  /* Pas de transform-style ici : sur WebKit, un calque en contexte 3D
+     ignore l'opacité de ses enfants. La mise au point est donc portée
+     par le <svg>, qui lui reste en 2D. */
+}
+.bd-layer svg{
+  width:100%; height:100%; display:block; overflow:visible;
   transition:opacity .28s ease, filter .28s ease;
 }
-.bd-layer svg{width:100%; height:100%; display:block; overflow:visible}
 
 .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -180px))}
 .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -3%),0,calc(var(--bd-e,0) * -75px))}
@@ -146,8 +151,8 @@
 .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 165px))}
 .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 285px))}
 
-.bd-stepping .bd-layer{opacity:.15; filter:saturate(.25) brightness(.75)}
-.bd-stepping .bd-layer.is-active{opacity:1; filter:none}
+.bd-stepping .bd-layer svg{opacity:.15; filter:saturate(.25) brightness(.75)}
+.bd-stepping .bd-layer.is-active svg{opacity:1; filter:none}
 
 .bd-ring{opacity:0; transition:opacity .4s ease}
 .is-active .bd-ring{opacity:1}
@@ -205,35 +210,26 @@
 .bd-fallback{display:none}
 
 /* ---------- MOBILE ----------
-   Sur iOS, "transform-style:preserve-3d" empêche l'opacité des calques
-   enfants d'être appliquée : les pièces restaient toutes affichées et
-   gardaient leur état précédent au retour. Sur mobile on abandonne donc
-   la pile 3D : une seule pièce à l'écran, centrée et agrandie.
+   Exactement la même scène que sur ordinateur : même vue éclatée, mêmes
+   angles, même mise au point. Seules les dimensions changent — la scène
+   fait 359 px de large au lieu de 720, donc les écarts de profondeur et
+   la perspective sont divisés par deux pour garder les mêmes proportions.
    ------------------------------------------------------------------ */
 @media (max-width:860px){
   .bd{height:290vh}
   .bd-sticky{align-items:center; padding-top:60px; padding-bottom:29svh}
 
-  /* plus aucun contexte 3D : l'opacité redevient fiable */
-  .bd-stage{width:96vw; margin:0; perspective:none}
-  .bd-rig{transform:none; transform-style:flat}
-  .bd-layer{transform-style:flat; transition:opacity .25s ease, transform .4s cubic-bezier(.22,.9,.32,1)}
+  .bd-stage{width:92vw; margin:0; perspective:750px}
+  .bd-rig{transform:rotateX(6deg) rotateY(-16deg) scale(1.1)}
 
-  /* machine assemblée tant que le défilement n'a pas commencé */
-  .bd-l-case, .bd-l-mobo, .bd-l-psu, .bd-l-cpu, .bd-l-gpu, .bd-l-glass{transform:none}
+  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -90px))}
+  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -3%),0,calc(var(--bd-e,0) * -37px))}
+  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -13%),calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 5px))}
+  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * -11%),calc(var(--bd-e,0) * 42px))}
+  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 82px))}
+  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 142px))}
 
-  /* UNE seule pièce visible, les autres totalement retirées */
-  .bd-stepping .bd-layer{opacity:0; filter:none}
-  .bd-stepping .bd-layer.is-active{opacity:1}
-
-  /* chaque pièce est recentrée et agrandie quand c'est son tour */
-  .bd-stepping .bd-l-case.is-active{transform:scale(1.08)}
-  .bd-stepping .bd-l-mobo.is-active{transform:translate(0.87%,1.17%)   scale(1.40)}
-  .bd-stepping .bd-l-psu.is-active {transform:translate(27.30%,-53.55%) scale(2.10)}
-  .bd-stepping .bd-l-cpu.is-active {transform:translate(5.25%,34.65%)  scale(2.10)}
-  .bd-stepping .bd-l-gpu.is-active {transform:translate(4.04%,-13.46%) scale(1.90)}
-
-  /* La fiche : bandeau bas, compact. */
+  /* La fiche : bandeau bas, compact, pour ne pas masquer la machine. */
   .bd-bubble{
     left:10px; right:10px; bottom:12px;
     top:auto;                      /* sinon la hauteur se bloque et le texte déborde */
