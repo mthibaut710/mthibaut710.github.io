@@ -85,7 +85,7 @@
      Déplaçable tel quel dans style.css si tu préfères.
      ============================================================ -->
 <style>
-.bd{
+.pc3d{
   --bd-bg:#071228;
   --bd-panel:#0E1F3F;
   --bd-line:rgba(255,255,255,0.10);
@@ -122,140 +122,97 @@
 }
 @keyframes bdDrip{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
 
-/* ---------- SCÈNE ÉCLATÉE ---------- */
-.bd{background:var(--bd-bg); color:var(--bd-text); position:relative; height:340vh}
-.bd-sticky{
-  position:sticky; top:0; height:100svh;
-  display:grid; place-items:center; overflow:hidden;
-  padding-top:64px; /* sous le header collant du site */
-}
-.bd-stage{
-  position:relative; width:min(86vw,720px); aspect-ratio:4/3;
-  perspective:1500px; perspective-origin:50% 45%;
-}
-.bd-rig{
-  position:absolute; inset:0; transform-style:preserve-3d;
-  transform:rotateX(6deg) rotateY(-16deg);
-  transition:transform .35s cubic-bezier(.22,.9,.32,1);
-}
-.bd-layer{
-  position:absolute; inset:0;
-  /* Pas de transform-style ici : sur WebKit, un calque en contexte 3D
-     ignore l'opacité de ses enfants. La mise au point est donc portée
-     par le <svg>, qui lui reste en 2D. */
-}
-.bd-layer svg{
-  width:100%; height:100%; display:block; overflow:visible;
-  transition:opacity .28s ease, filter .28s ease;
-}
-
-.bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -180px))}
-.bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -3%),0,calc(var(--bd-e,0) * -75px))}
-.bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -13%),calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 10px))}
-.bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * -11%),calc(var(--bd-e,0) * 85px))}
-.bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 165px))}
-.bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 285px))}
-
-.bd-stepping .bd-layer svg{opacity:.15; filter:saturate(.25) brightness(.75)}
-.bd-stepping .bd-layer.is-active svg{opacity:1; filter:none}
-
-.bd-ring{opacity:0; transition:opacity .4s ease}
-.is-active .bd-ring{opacity:1}
-.bd-ring circle{fill:none; stroke:var(--bd-arc)}
-.bd-ring .pulse{animation:bdPulse 1.8s ease-out infinite}
-@keyframes bdPulse{0%{r:13; opacity:.9} 100%{r:40; opacity:0}}
-
-/* ---------- BULLES ---------- */
-.bd-bubble{
-  position:absolute; z-index:5; width:min(320px,74vw);
-  padding:20px 22px 22px;
-  background:rgba(14,31,63,.80);
-  backdrop-filter:blur(14px) saturate(1.3);
-  -webkit-backdrop-filter:blur(14px) saturate(1.3);
-  border:1px solid var(--bd-line);
-  border-left:2px solid var(--bd-blue);
-  border-radius:12px;
-  box-shadow:0 24px 48px -22px rgba(0,0,0,.7);
-  opacity:0; transform:translateY(16px) scale(.98);
-  transition:opacity .3s ease, transform .3s cubic-bezier(.22,.9,.32,1);
+/* ---------- SCÈNE 3D (remplace la vue éclatée) ---------- */
+.pc3d{
+  --pc3d-hdr:67px;
+  --pc3d-ink:#EDF2FA;
+  --pc3d-dim:rgba(237,242,250,.62);
+  --pc3d-line:rgba(237,242,250,.15);
+  --pc3d-accent:var(--bd-blue-soft);
+  position:relative; background:var(--bd-bg); color:var(--pc3d-ink);
   pointer-events:none;
 }
-.bd-bubble.is-on{opacity:1; transform:none; pointer-events:auto}
-.bd-bubble .bd-step{
-  font-family:'JetBrains Mono',monospace; font-size:.7rem;
-  letter-spacing:.16em; text-transform:uppercase;
-  color:var(--bd-blue-soft); margin-bottom:9px;
+.pc3d-viewer{
+  position:sticky; top:var(--pc3d-hdr); height:calc(100vh - var(--pc3d-hdr));
+  z-index:1; pointer-events:auto; overflow:hidden;
+  background:radial-gradient(115% 95% at 50% 8%,#1E3D74 0%,var(--navy) 44%,var(--bd-bg) 100%);
 }
-.bd-bubble h2{color:#fff; font-size:1.32rem; margin-bottom:9px}
-.bd-bubble p{font-size:.88rem; line-height:1.6; color:#C4D3EC}
-.bd-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px}
-.bd-tag{
-  font-family:'JetBrains Mono',monospace; font-size:.66rem;
-  padding:5px 9px; border:1px solid var(--bd-line);
-  border-radius:6px; color:var(--bd-dim);
+.pc3d-viewer canvas{
+  position:absolute; inset:0; width:100%; height:100%;
+  touch-action:none; cursor:grab;
 }
-.bd-pos-r {right:6%; top:21%}
-.bd-pos-l {left:6%;  top:25%}
-.bd-pos-l2{left:6%;  bottom:19%}
-.bd-pos-r2{right:6%; bottom:17%}
-
-.bd-more{display:inline}
-
-.bd-ticker{
-  position:absolute; left:50%; transform:translateX(-50%); bottom:7%;
-  display:flex; gap:7px; z-index:6;
+.pc3d-viewer canvas.pc3d-dragging{cursor:grabbing}
+.pc3d-hud{
+  position:absolute; top:16px; left:20px; font-family:'JetBrains Mono',monospace;
+  font-size:.68rem; letter-spacing:.1em; color:var(--pc3d-dim);
 }
-.bd-ticker b{
-  display:block; width:24px; height:2px; border-radius:2px;
-  background:rgba(255,255,255,.16); transition:background .35s, width .35s;
+.pc3d-btn{
+  position:absolute; right:16px; z-index:3; appearance:none; cursor:pointer;
+  width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  background:rgba(7,18,40,.72); border:1px solid var(--pc3d-line); color:var(--pc3d-ink);
+  backdrop-filter:blur(6px); transition:opacity .35s ease, background .2s ease;
 }
-.bd-ticker b.on{background:var(--bd-blue-soft); width:44px}
-
-/* repli sans JS : tout reste lisible */
-.bd-fallback{display:none}
-
-/* ---------- MOBILE ----------
-   Exactement la même scène que sur ordinateur : même vue éclatée, mêmes
-   angles, même mise au point. Seules les dimensions changent — la scène
-   fait 359 px de large au lieu de 720, donc les écarts de profondeur et
-   la perspective sont divisés par deux pour garder les mêmes proportions.
-   ------------------------------------------------------------------ */
-@media (max-width:860px){
-  .bd{height:290vh}
-  .bd-sticky{align-items:center; padding-top:60px; padding-bottom:29svh}
-
-  .bd-stage{width:92vw; margin:0; perspective:750px}
-  .bd-rig{transform:rotateX(6deg) rotateY(-16deg) scale(1.1)}
-
-  .bd-l-case {transform:translate3d(0,0,calc(var(--bd-e,0) * -90px))}
-  .bd-l-mobo {transform:translate3d(calc(var(--bd-e,0) * -3%),0,calc(var(--bd-e,0) * -37px))}
-  .bd-l-psu  {transform:translate3d(calc(var(--bd-e,0) * -13%),calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 5px))}
-  .bd-l-cpu  {transform:translate3d(calc(var(--bd-e,0) * 6%),calc(var(--bd-e,0) * -11%),calc(var(--bd-e,0) * 42px))}
-  .bd-l-gpu  {transform:translate3d(calc(var(--bd-e,0) * 9%),calc(var(--bd-e,0) * 7%),calc(var(--bd-e,0) * 82px))}
-  .bd-l-glass{transform:translate3d(0,0,calc(var(--bd-e,0) * 142px))}
-
-  /* La fiche : bandeau bas, compact, pour ne pas masquer la machine. */
-  .bd-bubble{
-    left:10px; right:10px; bottom:12px;
-    top:auto;                      /* sinon la hauteur se bloque et le texte déborde */
-    width:auto; max-height:26svh; overflow:hidden;
-    padding:13px 15px 14px; border-radius:14px;
-    background:rgba(9,20,42,.86);
-    transform:translateY(20px);
-  }
-  .bd-bubble.is-on{transform:none}
-  .bd-bubble .bd-step{font-size:.58rem; letter-spacing:.14em; margin-bottom:4px}
-  .bd-bubble h2{font-size:.95rem; margin-bottom:5px}
-  .bd-bubble p{font-size:.76rem; line-height:1.42}
-  .bd-more{display:none}          /* seconde moitié du texte : bureau seulement */
-  .bd-tags{display:none}
-
-  .bd-ticker{top:72px; bottom:auto}
+.pc3d-btn:hover{background:rgba(47,111,237,.5)}
+.pc3d-btn:focus-visible{outline:2px solid var(--pc3d-ink); outline-offset:3px}
+.pc3d-down{bottom:16px}
+.pc3d-recentre{bottom:64px}
+.pc3d-gone{opacity:0; pointer-events:none}
+.pc3d-grab{
+  position:absolute; bottom:18px; left:0; right:0; text-align:center;
+  font-size:.72rem; color:var(--pc3d-dim); pointer-events:none;
+  transition:opacity .5s ease;
 }
+.pc3d-steps{position:relative; z-index:2; pointer-events:none}
+.pc3d-step{
+  min-height:96vh; padding:calc(62vh + var(--pc3d-hdr)) 18px 0;
+  display:flex; justify-content:center;
+}
+.pc3d-card{
+  width:100%; max-width:440px; height:max-content; pointer-events:auto;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:rgba(7,18,40,.90); backdrop-filter:blur(10px);
+  border:1px solid var(--pc3d-line); border-radius:var(--radius); padding:16px 17px;
+}
+.pc3d-fin{min-height:78vh; padding:0; display:flex; align-items:center}
+.pc3d-fin .pc3d-anchor{height:1px}
+.pc3d-card .pc3d-num{
+  display:block; font-family:'JetBrains Mono',monospace; font-size:.63rem;
+  letter-spacing:.14em; color:var(--pc3d-accent); margin-bottom:7px;
+}
+.pc3d-card h2{
+  font-family:'Space Grotesk',sans-serif; font-weight:600;
+  font-size:1.22rem; color:#fff; margin-bottom:7px; letter-spacing:-.01em;
+}
+.pc3d-card p{font-size:.86rem; line-height:1.55; color:var(--pc3d-dim)}
+.pc3d-card ul{list-style:none; margin-top:13px; border-top:1px solid var(--pc3d-line); padding-top:11px}
+.pc3d-card li{display:flex; gap:10px; font-size:.79rem; line-height:1.5; padding:5px 0; color:var(--pc3d-dim)}
+.pc3d-card li em{color:#fff; font-style:normal; font-weight:600; flex:none; min-width:7.4em}
 
+@media (min-width:900px){
+  .pc3d{display:grid; grid-template-columns:56% 44%; align-items:start;
+        max-width:1480px; margin:0 auto}
+  .pc3d-viewer{border-right:1px solid var(--pc3d-line)}
+  .pc3d-steps{grid-column:2}
+  .pc3d-step{min-height:100vh; padding:0 44px; align-items:center}
+  .pc3d-card{max-width:none}
+}
+@media (max-width:899px){
+  .pc3d{--pc3d-hdr:61px}
+  .pc3d-viewer{height:53vh}
+  .pc3d-step{padding-top:58vh; justify-content:flex-start}
+  .pc3d-card{max-width:min(330px,84vw); padding:13px 14px; border-radius:12px}
+  .pc3d-card .pc3d-num{font-size:.56rem; margin-bottom:5px}
+  .pc3d-card h2{font-size:1.02rem; margin-bottom:5px}
+  .pc3d-card p{font-size:.78rem; line-height:1.48}
+  .pc3d-card ul{margin-top:10px; padding-top:9px}
+  /* en colonne étroite, l'intitulé passe en ligne plutôt qu'en colonne */
+  .pc3d-card li{display:block; font-size:.73rem; line-height:1.45; padding:4px 0}
+  .pc3d-card li em{display:inline; min-width:0; margin-right:.45em}
+}
 @media (prefers-reduced-motion:reduce){
-  .bd-ring .pulse, .bd-hint i::after{animation:none}
+  .pc3d-grab{display:none}
 }
+
 
 /* ---------- BLOC RÉCAP (clair, cartes identiques aux tarifs) ---------- */
 .bd-outro{padding:clamp(60px,9vh,90px) 0 clamp(70px,10vh,110px)}
@@ -342,208 +299,78 @@
 </section>
 
 <!-- ===== SCÈNE ÉCLATÉE ===== -->
-<section class="bd" id="eclate" aria-label="Les étapes du montage, en vue éclatée">
-  <div class="bd-sticky">
-    <div class="bd-stage">
-      <div class="bd-rig" id="bdRig">
+<!-- ===== SCÈNE 3D ===== -->
+<section class="pc3d" id="eclate" aria-label="Les étapes du montage, en 3D">
 
-        <!-- 01 · BOÎTIER -->
-        <div class="bd-layer bd-l-case" data-step="0">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <rect x="150" y="60" width="500" height="480" rx="8" fill="#0A1832" stroke="#24406E" stroke-width="2"/>
-            <g fill="#0C1C39">
-              <circle cx="600" cy="120" r="34"/><circle cx="600" cy="200" r="34"/>
-            </g>
-            <g stroke="#1E3560" stroke-width="1.6" fill="none">
-              <circle cx="600" cy="120" r="26"/><circle cx="600" cy="120" r="17"/><circle cx="600" cy="120" r="8"/>
-              <circle cx="600" cy="200" r="26"/><circle cx="600" cy="200" r="17"/><circle cx="600" cy="200" r="8"/>
-            </g>
-            <g fill="none" stroke="#152A50" stroke-width="10" stroke-linecap="round">
-              <path d="M200 110 q0 60 40 90 q40 30 40 90"/>
-              <path d="M200 470 q0 -50 46 -70"/>
-            </g>
-            <g fill="#1E3560">
-              <circle cx="196" cy="140" r="4"/><circle cx="196" cy="240" r="4"/>
-              <circle cx="196" cy="340" r="4"/><circle cx="196" cy="440" r="4"/>
-            </g>
-            <text x="176" y="524" font-family="JetBrains Mono, monospace" font-size="13" fill="#2C4B7E">01 — BOÎTIER</text>
-            <g class="bd-ring" transform="translate(206,300)">
-              <circle r="11" stroke-width="1.6"/><circle class="pulse" r="13" stroke-width="1.2"/>
-            </g>
-          </svg>
-        </div>
+  <div class="pc3d-viewer" id="pc3dViewer">
+    <div class="pc3d-hud" id="pc3dHud">01 / 05</div>
+    <button class="pc3d-btn pc3d-recentre pc3d-gone" id="pc3dReset" type="button" aria-label="Recentrer la vue">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+    </button>
+    <button class="pc3d-btn pc3d-down" id="pc3dDown" type="button" aria-label="Étape suivante">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="pc3d-grab" id="pc3dGrab">Un doigt pour pivoter · deux doigts pour déplacer</div>
+  </div>
 
-        <!-- 02 · CARTE MÈRE -->
-        <div class="bd-layer bd-l-mobo" data-step="1">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <rect x="215" y="115" width="360" height="360" rx="5" fill="#0B1730" stroke="#24406E" stroke-width="1.6"/>
-            <g stroke="#2F6FED" stroke-width="1.1" fill="none" opacity=".55" stroke-linecap="square">
-              <path d="M250 150 h70 l24 24 h60"/>
-              <path d="M250 175 h96 l24 24 h44"/>
-              <path d="M250 200 h58 l30 30 v46"/>
-              <path d="M540 160 h-70 l-26 26 v40"/>
-              <path d="M540 190 h-52 l-26 26 v70"/>
-              <path d="M250 430 h84 l30 -30 h70"/>
-              <path d="M540 440 h-90 l-30 -30"/>
-            </g>
-            <g fill="#2F6FED" opacity=".8">
-              <circle cx="250" cy="150" r="2.6"/><circle cx="250" cy="175" r="2.6"/><circle cx="250" cy="200" r="2.6"/>
-              <circle cx="540" cy="160" r="2.6"/><circle cx="540" cy="190" r="2.6"/>
-              <circle cx="250" cy="430" r="2.6"/><circle cx="540" cy="440" r="2.6"/>
-            </g>
-            <rect x="330" y="185" width="96" height="96" rx="4" fill="#122444" stroke="#33558C" stroke-width="1.6"/>
-            <rect x="344" y="199" width="68" height="68" rx="3" fill="#0A162E" stroke="#24406E"/>
-            <g>
-              <rect x="470" y="150" width="14" height="170" rx="3" fill="#15274A" stroke="#2B4877"/>
-              <rect x="492" y="150" width="14" height="170" rx="3" fill="#15274A" stroke="#2B4877"/>
-              <rect x="514" y="150" width="14" height="170" rx="3" fill="#15274A" stroke="#2B4877"/>
-              <rect x="536" y="150" width="14" height="170" rx="3" fill="#15274A" stroke="#2B4877"/>
-              <rect x="470" y="150" width="14" height="170" rx="3" fill="#1D3563" stroke="#2F6FED" stroke-width="1.2"/>
-              <rect x="514" y="150" width="14" height="170" rx="3" fill="#1D3563" stroke="#2F6FED" stroke-width="1.2"/>
-            </g>
-            <rect x="255" y="330" width="240" height="12" rx="3" fill="#1A2E56" stroke="#33558C"/>
-            <rect x="255" y="392" width="180" height="12" rx="3" fill="#132447" stroke="#24406E"/>
-            <rect x="300" y="425" width="58" height="34" rx="4" fill="#15274A" stroke="#33558C"/>
-            <rect x="380" y="428" width="150" height="14" rx="3" fill="#0F1F3D" stroke="#24406E"/>
-            <text x="384" y="470" font-family="JetBrains Mono, monospace" font-size="11" fill="#2C4B7E">SSD M.2</text>
-            <text x="221" y="500" font-family="JetBrains Mono, monospace" font-size="13" fill="#2C4B7E">02 — CARTE MÈRE</text>
-            <g class="bd-ring" transform="translate(377,233)">
-              <circle r="11" stroke-width="1.6"/><circle class="pulse" r="13" stroke-width="1.2"/>
-            </g>
-          </svg>
-        </div>
+  <div class="pc3d-steps">
 
-        <!-- 03 · ALIMENTATION -->
-        <div class="bd-layer bd-l-psu" data-step="2">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <rect x="196" y="400" width="200" height="106" rx="6" fill="#0F1F3D" stroke="#33558C" stroke-width="1.6"/>
-            <circle cx="270" cy="453" r="40" fill="#0A1832" stroke="#24406E"/>
-            <g stroke="#31517F" stroke-width="1.4" fill="none">
-              <path d="M270 419 a34 34 0 0 1 26 50"/><path d="M304 453 a34 34 0 0 1 -50 26"/>
-              <path d="M270 487 a34 34 0 0 1 -26 -50"/><path d="M236 453 a34 34 0 0 1 50 -26"/>
-            </g>
-            <circle cx="270" cy="453" r="10" fill="#1A2E56" stroke="#456BA8"/>
-            <g fill="#15274A" stroke="#33558C" stroke-width="1.2">
-              <rect x="330" y="418" width="52" height="16" rx="3"/>
-              <rect x="330" y="442" width="52" height="16" rx="3"/>
-              <rect x="330" y="466" width="52" height="16" rx="3"/>
-            </g>
-            <text x="200" y="528" font-family="JetBrains Mono, monospace" font-size="13" fill="#2C4B7E">03 — ALIMENTATION</text>
-            <g class="bd-ring" transform="translate(270,453)">
-              <circle r="11" stroke-width="1.6"/><circle class="pulse" r="13" stroke-width="1.2"/>
-            </g>
-          </svg>
-        </div>
+    <section class="pc3d-step"><div class="pc3d-card pc3d-anchor">
+      <b class="pc3d-num">ÉTAPE 01</b><h2>Le boîtier</h2>
+      <p>Je le prépare à vide. C'est ce qui fait la différence entre une machine qui respire et une machine qui étouffe.</p>
+      <ul>
+        <li><em>Entretoises</em>la carte mère ne touche jamais la tôle.</li>
+        <li><em>Flux d'air</em>aspiration en façade, extraction à l'arrière.</li>
+        <li><em>Câblage</em>tout ce qui peut passer derrière passe derrière.</li>
+      </ul>
+    </div></section>
 
-        <!-- 04 · PROCESSEUR & REFROIDISSEMENT -->
-        <div class="bd-layer bd-l-cpu" data-step="3">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <rect x="300" y="120" width="160" height="140" rx="5" fill="#0D1D3B" stroke="#33558C" stroke-width="1.4"/>
-            <g stroke="#223D6B" stroke-width="1.2">
-              <path d="M306 132 h148"/><path d="M306 146 h148"/><path d="M306 160 h148"/><path d="M306 174 h148"/>
-              <path d="M306 188 h148"/><path d="M306 202 h148"/><path d="M306 216 h148"/><path d="M306 230 h148"/>
-              <path d="M306 244 h148"/>
-            </g>
-            <g stroke="#5C8DF2" stroke-width="7" stroke-linecap="round" fill="none" opacity=".85">
-              <path d="M334 262 v-14"/><path d="M362 262 v-14"/><path d="M398 262 v-14"/><path d="M426 262 v-14"/>
-            </g>
-            <rect x="326" y="262" width="108" height="20" rx="3" fill="#182D55" stroke="#456BA8"/>
-            <circle cx="380" cy="190" r="54" fill="rgba(7,18,40,.55)" stroke="#31517F" stroke-width="1.4"/>
-            <g stroke="#456BA8" stroke-width="1.6" fill="none" opacity=".85">
-              <path d="M380 140 a50 50 0 0 1 40 74"/><path d="M430 190 a50 50 0 0 1 -74 40"/>
-              <path d="M380 240 a50 50 0 0 1 -40 -74"/><path d="M330 190 a50 50 0 0 1 74 -40"/>
-            </g>
-            <circle cx="380" cy="190" r="13" fill="#1A2E56" stroke="#5C8DF2"/>
-            <text x="300" y="300" font-family="JetBrains Mono, monospace" font-size="13" fill="#2C4B7E">04 — PROCESSEUR</text>
-            <g class="bd-ring" transform="translate(380,190)">
-              <circle r="11" stroke-width="1.6"/><circle class="pulse" r="13" stroke-width="1.2"/>
-            </g>
-          </svg>
-        </div>
+    <section class="pc3d-step"><div class="pc3d-card pc3d-anchor">
+      <b class="pc3d-num">ÉTAPE 02</b><h2>La carte mère</h2>
+      <p>Mémoire et SSD sont installés à plat, hors du boîtier. La carte entre ensuite d'un bloc.</p>
+      <ul>
+        <li><em>Appuis</em>elle se visse sur ses entretoises, jamais sur la tôle.</li>
+        <li><em>Dual channel</em>slots 2 et 4, sinon moitié moins de débit.</li>
+        <li><em>SSD M.2</em>vissé sous son dissipateur, sinon il ralentit.</li>
+      </ul>
+    </div></section>
 
-        <!-- 05 · CARTE GRAPHIQUE -->
-        <div class="bd-layer bd-l-gpu" data-step="4">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <rect x="238" y="300" width="290" height="92" rx="6" fill="#112342" stroke="#456BA8" stroke-width="1.6"/>
-            <rect x="238" y="300" width="290" height="10" rx="3" fill="#1A2E56"/>
-            <circle cx="312" cy="348" r="36" fill="#0A1832" stroke="#31517F" stroke-width="1.4"/>
-            <circle cx="440" cy="348" r="36" fill="#0A1832" stroke="#31517F" stroke-width="1.4"/>
-            <g stroke="#42618F" stroke-width="1.5" fill="none">
-              <path d="M312 316 a32 32 0 0 1 26 48"/><path d="M344 348 a32 32 0 0 1 -48 26"/><path d="M312 380 a32 32 0 0 1 -26 -48"/>
-              <path d="M440 316 a32 32 0 0 1 26 48"/><path d="M472 348 a32 32 0 0 1 -48 26"/><path d="M440 380 a32 32 0 0 1 -26 -48"/>
-            </g>
-            <circle cx="312" cy="348" r="9" fill="#1A2E56" stroke="#5C8DF2"/>
-            <circle cx="440" cy="348" r="9" fill="#1A2E56" stroke="#5C8DF2"/>
-            <rect x="258" y="392" width="112" height="9" rx="2" fill="#2F6FED" opacity=".75"/>
-            <rect x="482" y="284" width="34" height="14" rx="3" fill="#15274A" stroke="#456BA8"/>
-            <text x="242" y="424" font-family="JetBrains Mono, monospace" font-size="13" fill="#2C4B7E">05 — CARTE GRAPHIQUE</text>
-            <g class="bd-ring" transform="translate(376,348)">
-              <circle r="11" stroke-width="1.6"/><circle class="pulse" r="13" stroke-width="1.2"/>
-            </g>
-          </svg>
-        </div>
+    <section class="pc3d-step"><div class="pc3d-card pc3d-anchor">
+      <b class="pc3d-num">ÉTAPE 03</b><h2>L'alimentation</h2>
+      <p>Elle se glisse sous la cloison, à l'arrière. Modulaire, je ne branche que les câbles utiles.</p>
+      <ul>
+        <li><em>24 broches</em>alimente la carte mère entière.</li>
+        <li><em>8 broches CPU</em>passe derrière la cloison, jamais en travers.</li>
+        <li><em>Ventilateur</em>vers le bas, l'alim aspire l'air frais.</li>
+      </ul>
+    </div></section>
 
-        <!-- VITRE -->
-        <div class="bd-layer bd-l-glass" data-step="-1">
-          <svg viewBox="0 0 800 600" aria-hidden="true">
-            <defs>
-              <linearGradient id="bdGlass" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="rgba(143,192,255,.12)"/>
-                <stop offset="45%" stop-color="rgba(255,255,255,.02)"/>
-                <stop offset="100%" stop-color="rgba(47,111,237,.10)"/>
-              </linearGradient>
-            </defs>
-            <rect x="150" y="60" width="500" height="480" rx="8" fill="url(#bdGlass)" stroke="rgba(255,255,255,.18)" stroke-width="1.4"/>
-            <g fill="#456BA8">
-              <circle cx="168" cy="78" r="3.4"/><circle cx="632" cy="78" r="3.4"/>
-              <circle cx="168" cy="522" r="3.4"/><circle cx="632" cy="522" r="3.4"/>
-            </g>
-          </svg>
-        </div>
+    <section class="pc3d-step"><div class="pc3d-card pc3d-anchor">
+      <b class="pc3d-num">ÉTAPE 04</b><h2>Le processeur</h2>
+      <p>Il se pose dans son socket sans aucune pression. Pâte thermique en quantité juste, puis le watercooling vient dessus.</p>
+      <ul>
+        <li><em>Détrompeurs</em>il n'entre que dans un seul sens.</li>
+        <li><em>Radiateur en haut</em>la pompe reste au point bas, sinon elle aspire l'air.</li>
+        <li><em>Serrage</em>en croix, par quarts de tour.</li>
+      </ul>
+    </div></section>
 
-      </div>
+    <section class="pc3d-step"><div class="pc3d-card pc3d-anchor">
+      <b class="pc3d-num">ÉTAPE 05</b><h2>La carte graphique</h2>
+      <p>Elle arrive en dernier, une fois tout le reste câblé. Puis premier démarrage, BIOS et test de charge.</p>
+      <ul>
+        <li><em>PCIe x16</em>le slot pleine longueur, près du processeur.</li>
+        <li><em>Alimentation</em>8 broches tirées depuis l'alim.</li>
+        <li><em>Test de charge</em>températures vérifiées avant remise.</li>
+      </ul>
+    </div></section>
 
-    </div>
+    <!-- repère de fin : sert à caler la fermeture du panneau vitré, sans texte -->
+    <div class="pc3d-step pc3d-fin" aria-hidden="true"><div class="pc3d-anchor"></div></div>
 
-      <!-- BULLES -->
-      <article class="bd-bubble bd-pos-r" data-bubble="0">
-        <div class="bd-step">Étape 01</div>
-        <h2>Le boîtier</h2>
-        <p>Je commence par le préparer à vide : entretoises au bon pas de vis, ventilateurs orientés dans le bon sens, câbles passés derrière la cloison.<span class="bd-more"> C'est ce qui fait la différence entre un PC propre et un plat de spaghettis.</span></p>
-        <div class="bd-tags"><span class="bd-tag">Entretoises</span><span class="bd-tag">Sens du flux d'air</span><span class="bd-tag">Câblage arrière</span></div>
-      </article>
-
-      <article class="bd-bubble bd-pos-l" data-bubble="1">
-        <div class="bd-step">Étape 02</div>
-        <h2>La carte mère</h2>
-        <p>Processeur, mémoire et SSD M.2 sont installés hors du boîtier, à plat : plus de place, moins de risque de forcer.<span class="bd-more"> Je vérifie que les barrettes sont dans les bons emplacements — sinon vous perdez la moitié des performances de la RAM.</span></p>
-        <div class="bd-tags"><span class="bd-tag">Pose du CPU</span><span class="bd-tag">RAM en dual channel</span><span class="bd-tag">SSD M.2</span></div>
-      </article>
-
-      <article class="bd-bubble bd-pos-l2" data-bubble="2">
-        <div class="bd-step">Étape 03</div>
-        <h2>L'alimentation</h2>
-        <p>Fixée en premier parce que c'est la pièce la plus encombrante à câbler.<span class="bd-more"> Si elle est modulaire, je ne branche que les câbles réellement utilisés : moins d'obstacles dans le boîtier, meilleure circulation de l'air.</span></p>
-        <div class="bd-tags"><span class="bd-tag">Câbles utiles</span><span class="bd-tag">24 broches</span><span class="bd-tag">Alim CPU + GPU</span></div>
-      </article>
-
-      <article class="bd-bubble bd-pos-r" data-bubble="3">
-        <div class="bd-step">Étape 04</div>
-        <h2>Le processeur</h2>
-        <p>Pâte thermique appliquée en quantité juste — trop, c'est aussi mauvais que pas assez.<span class="bd-more"> Le ventirad est serré en croix, progressivement, pour que la pression soit répartie sur toute la surface du processeur.</span></p>
-        <div class="bd-tags"><span class="bd-tag">Pâte thermique</span><span class="bd-tag">Serrage en croix</span><span class="bd-tag">Ventilateur branché</span></div>
-      </article>
-
-      <article class="bd-bubble bd-pos-r2" data-bubble="4">
-        <div class="bd-step">Étape 05</div>
-        <h2>La carte graphique</h2>
-        <p>Elle arrive en dernier, une fois que tout le reste est câblé.<span class="bd-more"> Puis vient le vrai moment de vérité : premier démarrage, réglages du BIOS, test de charge, contrôle des températures. Je ne vous rends la machine qu'après.</span></p>
-        <div class="bd-tags"><span class="bd-tag">PCIe + alim</span><span class="bd-tag">BIOS</span><span class="bd-tag">Test de charge</span></div>
-      </article>
-
-      <div class="bd-ticker" id="bdTicker" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></div>
   </div>
 </section>
+
 
 <!-- ===== RÉCAP + TARIF ===== -->
 <section class="bd-outro">
@@ -626,56 +453,550 @@
 
 <script src="script.js"></script>
 
-<!-- Animation de la vue éclatée — propre à cette page -->
+<!-- Montage en 3D — propre à cette page.
+     Three.js n'est téléchargé que lorsque la scène approche de l'écran,
+     pour ne pas peser sur le chargement initial ni sur le score PageSpeed. -->
 <script>
 (function(){
   "use strict";
-  var section = document.querySelector('.bd');
-  var sticky  = document.querySelector('.bd-sticky');
-  var rig     = document.getElementById('bdRig');
-  if(!section || !sticky) return;
+  var sec = document.getElementById('eclate');
+  if(!sec) return;
 
-  var layers  = [].slice.call(document.querySelectorAll('.bd-layer[data-step]'));
-  var bubbles = [].slice.call(document.querySelectorAll('.bd-bubble'));
-  var ticks   = [].slice.call(document.querySelectorAll('#bdTicker b'));
-  var STEPS = 5, OPEN = 0.15, current = -2, ticking = false;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function clamp(v,a,b){ return Math.min(b, Math.max(a, v)); }
-
-  function render(){
-    ticking = false;
-    var total = section.offsetHeight - window.innerHeight;
-    if(total <= 0) return;
-    var p = clamp(-section.getBoundingClientRect().top / total, 0, 1);
-
-    var e = reduce ? 1 : clamp(p / OPEN, 0, 1);
-    section.style.setProperty('--bd-e', (e*e*(3-2*e)).toFixed(4));
-
-    var seg = (1 - OPEN) / STEPS;
-    var idx = p <= OPEN ? -1 : Math.min(STEPS-1, Math.floor((p - OPEN) / seg));
-    if(idx === current) return;
-    current = idx;
-
-    sticky.classList.toggle('bd-stepping', idx >= 0);
-    layers.forEach(function(l){ l.classList.toggle('is-active', +l.dataset.step === idx); });
-    bubbles.forEach(function(b){ b.classList.toggle('is-on', +b.dataset.bubble === idx); });
-    ticks.forEach(function(t,i){ t.classList.toggle('on', i === idx); });
+  function secours(){
+    var v = document.getElementById('pc3dViewer');
+    if(!v) return;
+    v.innerHTML = '<img src="montage-pc.jpg" alt="Montage PC en cours d\'assemblage" '
+                + 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85">';
   }
 
-  window.addEventListener('scroll', function(){
-    if(!ticking){ ticking = true; requestAnimationFrame(render); }
-  }, {passive:true});
-  window.addEventListener('resize', render);
-  render();
+  var lance = false;
+  function charger(){
+    if(lance) return; lance = true;
+    if(!window.WebGLRenderingContext){ secours(); return; }
+    var t = document.createElement('script');
+    t.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    t.onload  = function(){ try{ demarrer3D(); }catch(e){ console.error(e); secours(); } };
+    t.onerror = secours;
+    document.head.appendChild(t);
+  }
 
-  /* Parallaxe souris — bureau uniquement */
-  if(window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:861px)').matches && !reduce){
-    window.addEventListener('mousemove', function(ev){
-      var x = ev.clientX / window.innerWidth  - 0.5;
-      var y = ev.clientY / window.innerHeight - 0.5;
-      rig.style.transform = 'rotateX(' + (6 - y*7).toFixed(2) + 'deg) rotateY(' + (-16 + x*11).toFixed(2) + 'deg)';
-    }, {passive:true});
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(e){
+      if(e[0].isIntersecting){ charger(); io.disconnect(); }
+    }, {rootMargin:'400px'});
+    io.observe(sec);
+  } else {
+    charger();
+  }
+
+  function demarrer3D(){
+
+/* ============================================================
+   Repère : 1 unité = 20 cm.
+   Boîtier moyenne tour  : 19,6 × 44,8 × 40,8 cm
+   Intérieur             : x −0,46 → +0,46   (verre côté +X)
+                           y −1,09 → +1,09
+                           z −0,97 → +0,97   (façade côté +Z)
+   Carte mère ATX 30,5 × 24,4 cm, plaquée sur x = −0,40
+   ============================================================ */
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const viewer = document.getElementById('pc3dViewer');
+const V = (x,y,z)=>new THREE.Vector3(x,y,z);
+const isPhone = ()=> innerWidth < 900;
+
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+viewer.insertBefore(renderer.domElement, viewer.firstChild);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36,1,.05,60);
+const world = new THREE.Group(); scene.add(world);
+
+function envMap(){
+  const c=document.createElement('canvas'); c.width=512;c.height=256;
+  const g=c.getContext('2d');
+  const grd=g.createLinearGradient(0,0,0,256);
+  grd.addColorStop(0,'#ffffff');grd.addColorStop(.44,'#8f9aad');
+  grd.addColorStop(.56,'#2c3446');grd.addColorStop(1,'#070c17');
+  g.fillStyle=grd;g.fillRect(0,0,512,256);
+  g.filter='blur(18px)';
+  g.fillStyle='rgba(255,255,255,.92)';g.fillRect(56,18,112,150);
+  g.fillStyle='rgba(120,200,255,.60)';g.fillRect(238,26,70,150);
+  g.fillStyle='rgba(233,69,155,.42)';g.fillRect(392,40,60,130);
+  g.filter='none';
+  const t=new THREE.CanvasTexture(c);
+  t.mapping=THREE.EquirectangularReflectionMapping;t.encoding=THREE.sRGBEncoding;return t;
+}
+const pm=new THREE.PMREMGenerator(renderer); pm.compileEquirectangularShader();
+scene.environment = pm.fromEquirectangular(envMap()).texture;
+scene.add(new THREE.AmbientLight(0xffffff,.30));
+const key=new THREE.DirectionalLight(0xffffff,1.3); key.position.set(5,6,5); scene.add(key);
+const fill=new THREE.DirectionalLight(0x9dc0ff,.5); fill.position.set(-5,1,-4); scene.add(fill);
+const rgbA=new THREE.PointLight(0x3FD0E8,0,3.2); rgbA.position.set(-.05,.45,-.30); world.add(rgbA);
+const rgbB=new THREE.PointLight(0xE9459B,0,3.2); rgbB.position.set(-.05,-.25,.30); world.add(rgbB);
+
+/* ---------------- textures ---------------- */
+function pcbTexture(){
+  const S=1024,c=document.createElement('canvas');c.width=c.height=S;
+  const g=c.getContext('2d');
+  g.fillStyle='#0E1218';g.fillRect(0,0,S,S);
+  g.fillStyle='#131A24';
+  for(let i=0;i<70;i++) g.fillRect(Math.random()*S,Math.random()*S,Math.random()*160+20,3);
+  g.strokeStyle='rgba(90,150,190,.30)';g.lineWidth=2;
+  for(let i=0;i<130;i++){
+    let x=Math.random()*S,y=Math.random()*S;g.beginPath();g.moveTo(x,y);
+    for(let s=0;s<3;s++){const d=40+Math.random()*130;
+      if(Math.random()<.5)x+=Math.random()<.5?d:-d; else y+=Math.random()<.5?d:-d;
+      g.lineTo(x,y);}
+    g.stroke();
+  }
+  g.fillStyle='rgba(214,176,90,.55)';
+  for(let i=0;i<220;i++){g.beginPath();g.arc(Math.random()*S,Math.random()*S,2.4,0,7);g.fill();}
+  g.strokeStyle='rgba(235,240,250,.42)';g.lineWidth=3;
+  for(let i=0;i<26;i++) g.strokeRect(Math.random()*S,Math.random()*S,26+Math.random()*90,16+Math.random()*44);
+  g.fillStyle='rgba(20,25,34,.9)';
+  for(let i=0;i<12;i++) g.fillRect(Math.random()*S,Math.random()*S,40+Math.random()*70,30+Math.random()*40);
+  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;
+  t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t;
+}
+function meshTexture(){
+  const S=512,c=document.createElement('canvas');c.width=c.height=S;
+  const g=c.getContext('2d');
+  g.fillStyle='#0B0E14';g.fillRect(0,0,S,S);
+  g.strokeStyle='rgba(150,168,195,.5)';g.lineWidth=2.2;
+  const r=15,h=Math.sqrt(3)/2*r;
+  for(let row=0;row*h*2<S+40;row++)for(let col=0;col*r*3<S+40;col++){
+    const cx=col*r*3+(row%2?r*1.5:0),cy=row*h*2;g.beginPath();
+    for(let i=0;i<6;i++){const a=Math.PI/3*i;
+      i?g.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):g.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a));}
+    g.closePath();g.stroke();
+  }
+  const t=new THREE.CanvasTexture(c);
+  t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2,3);t.encoding=THREE.sRGBEncoding;return t;
+}
+function psuLabel(){
+  const W=512,H=340,c=document.createElement('canvas');c.width=W;c.height=H;
+  const g=c.getContext('2d');
+  g.fillStyle='#0F131A';g.fillRect(0,0,W,H);
+  const grd=g.createLinearGradient(0,0,W,60);
+  grd.addColorStop(0,'#3FD0E8');grd.addColorStop(1,'#E9459B');
+  g.fillStyle=grd;g.fillRect(0,0,W,60);
+  g.fillStyle='#0F131A';g.font='700 60px Impact,"Arial Black",sans-serif';g.fillText('750 W',24,47);
+  g.fillStyle='rgba(237,242,250,.85)';g.font='600 30px -apple-system,Arial,sans-serif';
+  g.fillText('80 PLUS Gold',24,112);
+  g.fillStyle='rgba(237,242,250,.32)';g.font='400 20px -apple-system,Arial,sans-serif';
+  ['+12V   62 A','+5V   20 A','+3.3V   20 A','Modulaire'].forEach((s,i)=>g.fillText(s,24,156+i*30));
+  g.strokeStyle='rgba(237,242,250,.16)';g.strokeRect(14,74,W-28,H-92);
+  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
+}
+
+/* ---------------- matériaux ---------------- */
+const mat={
+  steel:new THREE.MeshStandardMaterial({color:0x1C2129,metalness:.82,roughness:.44}),
+  matte:new THREE.MeshStandardMaterial({color:0x0F131A,metalness:.14,roughness:.82}),
+  glass:new THREE.MeshStandardMaterial({color:0x8FC0FF,metalness:0,roughness:.04,transparent:true,opacity:.10,side:THREE.DoubleSide}),
+  edge :new THREE.MeshStandardMaterial({color:0x0D1117,metalness:.2,roughness:.7}),
+  alu  :new THREE.MeshStandardMaterial({color:0xC9CFD8,metalness:1,roughness:.22}),
+  fin  :new THREE.MeshStandardMaterial({color:0xB9C0CA,metalness:1,roughness:.34}),
+  copper:new THREE.MeshStandardMaterial({color:0xC07A3E,metalness:1,roughness:.26}),
+  blade:new THREE.MeshStandardMaterial({color:0x39404C,metalness:.2,roughness:.55}),
+  gold :new THREE.MeshStandardMaterial({color:0xD8B25E,metalness:1,roughness:.3}),
+  amber:new THREE.MeshStandardMaterial({color:0xF5A623,metalness:.35,roughness:.42}),
+  cable:new THREE.MeshStandardMaterial({color:0x191E27,metalness:.15,roughness:.85})
+};
+const glowMats=[];
+const glow=hex=>{const m=new THREE.MeshStandardMaterial({color:0x0B0F16,emissive:hex,emissiveIntensity:0,roughness:.4});glowMats.push(m);return m;};
+const box=(w,h,d,m,x=0,y=0,z=0)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);return o;};
+const cyl=(r,h,m,x=0,y=0,z=0,s=18)=>{const o=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,s),m);o.position.set(x,y,z);return o;};
+
+const spinners=[];
+function makeFan(r,depth,ringHex){
+  const g=new THREE.Group();
+  // virole ronde : plus de cadre carré qui dépasse
+  const duct=new THREE.Mesh(new THREE.CylinderGeometry(r*1.10,r*1.10,depth,30,1,true),mat.matte);
+  duct.rotation.x=Math.PI/2; g.add(duct);
+  g.add(new THREE.Mesh(new THREE.TorusGeometry(r*1.09,.018,8,32),mat.matte));
+  g.add(new THREE.Mesh(new THREE.TorusGeometry(r*.97,.026,8,34),glow(ringHex)));
+  g.add(new THREE.Mesh(new THREE.TorusGeometry(r*.34,.014,8,26),glow(ringHex)));
+  const b=new THREE.Group();
+  const hub=cyl(r*.28,depth*.75,mat.matte); hub.rotation.x=Math.PI/2; b.add(hub);
+  const cap=cyl(r*.22,depth*.80,mat.steel); cap.rotation.x=Math.PI/2; b.add(cap);
+  for(let i=0;i<11;i++){
+    const a=i/11*Math.PI*2;
+    const p=new THREE.Mesh(new THREE.BoxGeometry(r*.66,r*.34,.011),mat.blade);
+    p.rotation.order='ZYX';                 // pas d'abord, orientation radiale ensuite
+    p.rotation.set(.62,0,a);
+    p.position.set(Math.cos(a)*r*.61,Math.sin(a)*r*.61,0);
+    b.add(p);
+  }
+  g.add(b); spinners.push(b); return g;
+}
+
+/* ================= 01 · BOÎTIER ================= */
+const CASE=new THREE.Group();
+CASE.add(box(1.12,.06,2.04,mat.steel,-.07,-1.12,0));         // plancher
+CASE.add(box(1.12,.06,2.04,mat.steel,-.07,1.12,0));          // toit
+CASE.add(box(1.12,2.26,.05,mat.steel,-.07,0,-1.00));         // arrière
+CASE.add(box(.04,2.26,2.04,mat.steel,-.46,0,0));             // tray
+CASE.add(box(.02,2.24,2.00,mat.steel,-.61,0,0));             // flanc gauche plein
+/* façade : verre teinté sur cadre, les ventilateurs se voient au travers */
+const tinted=new THREE.MeshStandardMaterial({color:0x090C12,metalness:.10,roughness:.06,
+  transparent:true,opacity:.30,side:THREE.DoubleSide});
+CASE.add(box(.88,2.08,.02,tinted,-.02,0,1.010));
+CASE.add(box(.15,2.08,.03,new THREE.MeshStandardMaterial({map:meshTexture(),metalness:.5,roughness:.55}),-.545,0,.992));
+CASE.add(box(1.13,.11,.07,mat.matte,-.07,1.10,1.00));
+CASE.add(box(1.13,.11,.07,mat.matte,-.07,-1.10,1.00));
+CASE.add(box(.07,2.26,.07,mat.matte,-.615,0,1.00));
+CASE.add(box(.07,2.26,.07,mat.matte,.455,0,1.00));
+CASE.add(box(.88,.04,1.30,mat.matte,-.02,-.60,-.32));          // cloison alim
+CASE.add(box(.02,.44,1.30,mat.matte,-.43,-.40,-.32));
+CASE.add(box(.86,.022,.022,glow(0xE9459B),-.02,-.572,.31));   // bandeau RGB de cloison
+[[-.48,-1.17,.78],[.34,-1.17,.78],[-.48,-1.17,-.78],[.34,-1.17,-.78]]
+  .forEach(([x,y,z])=>CASE.add(cyl(.07,.06,mat.matte,x,y,z,12)));
+[[.72,-.85],[.72,.18],[-.30,-.85],[-.30,.18],[.20,-.34]]     // entretoises
+  .forEach(([y,z])=>{ const st=cyl(.028,.026,mat.gold,-.4275,y,z,10);
+                      st.rotation.z=Math.PI/2; CASE.add(st); });
+[[.35,.42],[-.15,.42],[-.45,.42]].forEach(([y,z])=>          // passe-câbles
+  CASE.add(box(.03,.34,.11,mat.matte,-.448,y,z)));
+const caseFans=new THREE.Group();
+[.58,-.02,-.62].forEach(y=>{
+  const f=makeFan(.27,.09,0xE9459B); f.position.set(-.02,y,.915); caseFans.add(f);
+  const bez=new THREE.Mesh(new THREE.RingGeometry(.268,.352,40),mat.matte);   // enjoliveur
+  bez.position.set(-.02,y,.968); bez.rotation.y=Math.PI; caseFans.add(bez);
+  const bez2=new THREE.Mesh(new THREE.RingGeometry(.268,.352,40),mat.matte);
+  bez2.position.set(-.02,y,.862); caseFans.add(bez2);
+});
+const rearFan=makeFan(.24,.09,0x3FD0E8); rearFan.position.set(.06,.58,-.90); caseFans.add(rearFan);
+CASE.add(caseFans);
+world.add(CASE);
+
+/* panneau vitré : posé à la toute fin */
+const GLASS=new THREE.Group();
+GLASS.add(box(.02,2.24,2.00,mat.glass,.47,0,0));
+GLASS.add(box(.035,2.24,.05,mat.steel,.465,0,.93));
+GLASS.add(box(.035,2.24,.05,mat.steel,.465,0,-.93));
+world.add(GLASS);
+
+/* ================= 02 · CARTE MÈRE ================= */
+const MOBO=new THREE.Group();
+const boardMats=[new THREE.MeshStandardMaterial({map:pcbTexture(),metalness:.25,roughness:.62}),
+                 mat.edge,mat.edge,mat.edge,mat.edge,mat.edge];
+const boardMesh=new THREE.Mesh(new THREE.BoxGeometry(.03,1.525,1.22),boardMats);
+boardMesh.position.set(-.40,0,-.33); MOBO.add(boardMesh);
+MOBO.add(box(.055,.34,.26,mat.fin,-.36,.50,-.84));                       // VRM
+for(let i=0;i<6;i++) MOBO.add(box(.06,.012,.22,mat.fin,-.355,.38+i*.05,-.84));
+MOBO.add(box(.09,.26,.30,mat.matte,-.34,.66,-.80));                      // capot E/S
+MOBO.add(box(.10,.045,.26,glow(0x3FD0E8),-.34,.66,-.80));
+[.60,.53,.46].forEach(y=>MOBO.add(box(.05,.05,.10,mat.alu,-.36,y,-.86)));// ports arrière
+MOBO.add(box(.075,.22,.50,mat.fin,-.35,-.44,-.28));                      // chipset
+MOBO.add(box(.078,.04,.50,mat.amber,-.35,-.33,-.28));
+MOBO.add(box(.09,.045,.48,mat.fin,-.345,-.14,-.22));                     // dissipateur M.2
+MOBO.add(box(.055,.17,.17,mat.matte,-.36,.23,-.60));                     // socket
+for(let i=0;i<4;i++) MOBO.add(box(.10,.62,.020,mat.matte,-.335,.20,-.10+i*.08));
+const ramY=.19;
+[-.02,.14].forEach(z=>{                                                  // slots 2 et 4
+  MOBO.add(box(.115,.44,.030,mat.matte,-.335,ramY,z));
+  for(let i=0;i<7;i++) MOBO.add(box(.12,.048,.032,mat.fin,-.335,ramY-.15+i*.055,z));
+  MOBO.add(box(.12,.05,.034,glow(0xE9459B),-.335,ramY+.27,z));
+});
+MOBO.add(box(.10,.035,.46,mat.amber,-.345,-.06,-.66));                   // PCIe x16
+MOBO.add(box(.08,.03,.20,mat.matte,-.345,-.32,-.62));                    // PCIe x1
+MOBO.add(box(.07,.09,.15,mat.gold,-.36,.32,.22));                        // 24 broches
+MOBO.add(box(.07,.15,.09,mat.gold,-.36,.68,-.52));                       // 8 broches CPU
+MOBO.position.y=.18;
+world.add(MOBO);
+
+/* ================= 03 · ALIMENTATION ================= */
+const PSU=new THREE.Group();
+const psuMats=[new THREE.MeshStandardMaterial({map:psuLabel(),metalness:.5,roughness:.5}),
+               mat.matte,mat.matte,mat.matte,mat.matte,mat.matte];
+const psuBody=new THREE.Mesh(new THREE.BoxGeometry(.74,.43,.70),psuMats);
+psuBody.position.set(-.04,-.84,-.59); PSU.add(psuBody);
+const pf=makeFan(.19,.05,0x3FD0E8); pf.rotation.x=Math.PI/2; pf.position.set(-.04,-1.02,-.59); PSU.add(pf);
+for(let i=0;i<5;i++) PSU.add(box(.07,.09,.03,mat.gold,-.30+i*.10,-.84,-.245));
+world.add(PSU);
+
+const CABLES=new THREE.Group();
+function cable(pts,r){
+  const c=new THREE.CatmullRomCurve3(pts.map(p=>V(...p)));
+  return new THREE.Mesh(new THREE.TubeGeometry(c,44,r,7,false),mat.cable);
+}
+CABLES.add(cable([[-.30,-.60,-.05],[-.46,-.45,.30],[-.53,.05,.44],[-.50,.45,.28],[-.40,.50,.23],[-.37,.50,.22]],.030));
+CABLES.add(cable([[-.32,-.60,-.30],[-.52,-.10,-.62],[-.54,.55,-.72],[-.48,.86,-.58],[-.38,.86,-.52]],.026));
+world.add(CABLES);
+
+/* ================= 04a · PROCESSEUR ================= */
+const CPU=new THREE.Group();
+CPU.add(box(.022,.19,.19,mat.matte,-.322,.23,-.60));                     // substrat
+CPU.add(box(.018,.16,.16,mat.alu,-.302,.23,-.60));                       // capot métallique
+CPU.position.y=.18;
+world.add(CPU);
+
+/* ================= 04b · WATERCOOLING ================= */
+/* radiateur 240 fixe sous le toit, pompe sur le processeur, deux tuyaux */
+const COOL=new THREE.Group();
+const tube=new THREE.MeshStandardMaterial({color:0xE6E9EF,metalness:.05,roughness:.32});
+
+// bloc pompe, pose sur le capot du processeur
+COOL.add(box(.20,.25,.25,mat.matte,-.227,.23,-.60));
+COOL.add(box(.022,.185,.185,glow(0xE9459B),-.116,.23,-.60));     // dessus éclairé
+[[.10,-.52],[-.10,-.68]].forEach(([dy,dz])=>
+  COOL.add(cyl(.035,.07,mat.alu,-.145,.23+dy,dz,12)));           // raccords
+
+// radiateur + ses deux ventilateurs
+COOL.add(box(.56,.13,1.40,mat.fin,.07,.82,-.14));
+for(let i=0;i<22;i++) COOL.add(box(.54,.006,.045,mat.alu,.07,.885,-.78+i*.061));
+COOL.add(box(.58,.16,.09,mat.matte,.07,.82,-.825));
+COOL.add(box(.58,.16,.09,mat.matte,.07,.82,.545));
+COOL.add(box(.022,.05,1.24,glow(0x3FD0E8),.345,.82,-.14));       // liseré RGB
+[-.49,.08].forEach(z=>{
+  const f=makeFan(.25,.07,0x3FD0E8); f.rotation.x=-Math.PI/2;
+  f.position.set(.07,.70,z); COOL.add(f);
+});
+
+// tuyaux : ils contournent les ventilateurs par l'avant
+COOL.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(
+  [[-.15,.32,-.52],[-.02,.40,-.15],[-.06,.52,.18],[-.08,.58,.32],[-.10,.72,.44],[-.10,.77,.43]]
+  .map(a=>V(...a))),46,.036,8,false), tube));
+COOL.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(
+  [[-.15,.13,-.66],[.06,.28,-.20],[.10,.44,.16],[.12,.54,.32],[.14,.70,.44],[.14,.77,.43]]
+  .map(a=>V(...a))),46,.036,8,false), tube));
+COOL.position.y=.18;
+world.add(COOL);
+
+/* ================= 05 · CARTE GRAPHIQUE ================= */
+const GPU=new THREE.Group();
+const gpuMats=[mat.edge,mat.edge,mat.edge,
+  new THREE.MeshStandardMaterial({map:pcbTexture(),metalness:.25,roughness:.62}),mat.edge,mat.edge];
+const gpuPcb=new THREE.Mesh(new THREE.BoxGeometry(.58,.045,1.42),gpuMats);
+gpuPcb.position.set(-.09,.16,-.20); GPU.add(gpuPcb);
+GPU.add(box(.59,.020,1.38,mat.fin,-.09,.185,-.20));                      // backplate
+for(let i=0;i<22;i++) GPU.add(box(.55,.008,.050,mat.fin,-.09,.05,-.86+i*.062));
+GPU.add(box(.60,.20,.05,mat.matte,-.09,.04,-.89));
+GPU.add(box(.60,.20,.05,mat.matte,-.09,.04,.49));
+GPU.add(box(.05,.21,1.36,mat.matte,-.36,.04,-.20));
+GPU.add(box(.04,.05,1.10,glow(0x3FD0E8),-.352,.11,-.20));                // liseré RGB
+[-.55,.16].forEach(z=>{const f=makeFan(.20,.05,0x3FD0E8);f.rotation.x=Math.PI/2;f.position.set(-.09,-.06,z);GPU.add(f);});
+GPU.add(box(.55,.20,.025,mat.alu,-.09,.04,-.945));                       // équerre PCI
+[-.30,-.16,-.02].forEach(x=>GPU.add(box(.10,.055,.035,mat.matte,x,.04,-.948)));
+GPU.add(box(.10,.05,.19,mat.gold,-.09,.19,.30));                         // 8 broches
+GPU.add(cable([[-.26,-.44,.05],[-.34,-.10,.50],[-.18,.14,.56],[-.09,.20,.34]],.026));
+GPU.position.y=-.02;
+world.add(GPU);
+
+/* ================= chorégraphie ================= */
+const IN = V(.85,.10,0);
+const PARTS=[
+  {o:CASE,  step:0},
+  {o:MOBO,  step:1, off:IN},
+  {o:PSU,   step:2, off:V(.85,-.05,0)},
+  {o:CABLES,step:2, off:V(.85,-.05,0)},
+  {o:CPU,   step:3, off:V(.75,.28,0), t0:2.80, dur:.22},
+  {o:COOL,  step:3, off:IN,           t0:3.04, dur:.34},
+  {o:GPU,   step:4, off:IN},
+  {o:GLASS, step:5, off:V(.70,0,0), t0:4.30, dur:.55}
+];
+const ghostMat=new THREE.LineBasicMaterial({color:0x8FC0FF,transparent:true,opacity:0});
+PARTS.forEach(p=>{
+  p.to=p.o.position.clone();
+  if(!p.off) return;
+  const b=new THREE.Box3().setFromObject(p.o), s=b.getSize(V()), c=b.getCenter(V());
+  const g=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(s.x*1.04,s.y*1.04,s.z*1.04)),ghostMat.clone());
+  g.position.copy(c); world.add(g); p.ghost=g;
+  p.from=p.to.clone().add(p.off);
+  p.o.position.copy(p.from);
+});
+
+/* ================= caméra orbitale ================= */
+const SHOTS=[
+  {aim:V(0,0,0),        zoom:1.02, yaw:.80, pitch:.18},
+  {aim:V(-.05,.10,-.05),zoom:.97,  yaw:.90, pitch:.14},
+  {aim:V(0,-.20,-.10),  zoom:.97,  yaw:.72, pitch:.02},
+  {aim:V(-.05,.20,-.10),zoom:.93,  yaw:1.00,pitch:.26},
+  {aim:V(0,-.05,0),     zoom:.95,  yaw:.66, pitch:.28},
+  {aim:V(0,0,0),        zoom:1.02, yaw:.52, pitch:.18}
+];
+
+/* distance a laquelle le boitier entier tient dans le cadre,
+   recalculee a chaque redimensionnement */
+const fitSphere=new THREE.Box3().setFromObject(CASE).getBoundingSphere(new THREE.Sphere());
+function fitDistance(){
+  const vf=camera.fov*Math.PI/180;
+  const hf=2*Math.atan(Math.tan(vf/2)*camera.aspect);
+  return fitSphere.radius/Math.sin(Math.min(vf,hf)/2)*1.04;
+}
+let FIT=6;
+let uYaw=0, uPitch=0, uZoom=1, uPanX=0, uPanY=0, touched=false;
+const camAim=SHOTS[0].aim.clone();
+let camR=6, camYaw=SHOTS[0].yaw, camPitch=SHOTS[0].pitch;
+
+let drag=false, lastX=0, lastY=0, pinch=0;
+const el=renderer.domElement, grab=document.getElementById('pc3dGrab');
+const down=document.getElementById('pc3dDown');
+down.addEventListener('click',()=>{
+  const next=Math.min(cards.length-1,Math.round(p)+1);
+  cards[next].scrollIntoView({behavior:'smooth',block:'center'});
+});
+const pointers=new Map();
+let panMode=false, mid=null;
+const reset=document.getElementById('pc3dReset');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function moved(){ if(!touched){touched=true; reset.classList.remove('pc3d-gone');} }
+reset.addEventListener('click',()=>{
+  uYaw=uPitch=uPanX=uPanY=0; uZoom=1; touched=false; reset.classList.add('pc3d-gone');
+});
+function rotateBy(dx,dy){
+  uYaw  -= dx*.006;
+  uPitch = clamp(uPitch+dy*.005,-.95,1.20);
+  moved();
+}
+function panBy(dx,dy){
+  const k=FIT*uZoom/viewer.clientHeight*1.6;
+  uPanX=clamp(uPanX-dx*k,-1.6,1.6);
+  uPanY=clamp(uPanY+dy*k,-1.6,1.6);
+  moved();
+}
+
+/* ---- tactile : evenements natifs, seule voie fiable dans une webview iOS ---- */
+let tLast=null, tPinch=0, tMid=null;
+el.addEventListener('touchstart',e=>{
+  grab.classList.add('pc3d-gone');
+  if(e.touches.length===1){
+    tLast={x:e.touches[0].clientX,y:e.touches[0].clientY};
+  }else if(e.touches.length>=2){
+    const a=e.touches[0],b=e.touches[1];
+    tPinch=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+    tMid={x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+  }
+},{passive:false});
+el.addEventListener('touchmove',e=>{
+  e.preventDefault();                       // empeche la webview de capter le geste
+  if(e.touches.length===1 && tLast){
+    const t=e.touches[0];
+    rotateBy(t.clientX-tLast.x, t.clientY-tLast.y);
+    tLast={x:t.clientX,y:t.clientY};
+  }else if(e.touches.length>=2){
+    const a=e.touches[0],b=e.touches[1];
+    const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+    const m={x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+    if(tPinch) uZoom=clamp(uZoom*(tPinch/d),.55,1.8);
+    if(tMid) panBy(m.x-tMid.x, m.y-tMid.y);
+    tPinch=d; tMid=m; tLast=null;
+  }
+},{passive:false});
+const touchEnd=e=>{
+  tLast = e.touches.length===1 ? {x:e.touches[0].clientX,y:e.touches[0].clientY} : null;
+  if(e.touches.length<2){ tPinch=0; tMid=null; }
+};
+el.addEventListener('touchend',touchEnd);
+el.addEventListener('touchcancel',touchEnd);
+
+/* ---- souris : clic gauche pivote, clic droit deplace ---- */
+el.addEventListener('contextmenu',e=>e.preventDefault());
+el.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='touch') return;
+  drag=true; lastX=e.clientX; lastY=e.clientY;
+  panMode = e.button===1 || e.button===2;
+  el.setPointerCapture(e.pointerId); el.classList.add('pc3d-dragging'); grab.classList.add('pc3d-gone');
+});
+el.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch'||!drag) return;
+  if(panMode) panBy(e.clientX-lastX, e.clientY-lastY);
+  else        rotateBy(e.clientX-lastX, e.clientY-lastY);
+  lastX=e.clientX; lastY=e.clientY;
+});
+const up=e=>{ if(e.pointerType==='touch') return; drag=false; panMode=false; el.classList.remove('pc3d-dragging'); };
+el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up);
+
+/* ================= scroll ================= */
+const cards=[...document.querySelectorAll('.pc3d-anchor')];
+let anchors=[], p=0, pS=0;
+function measure(){
+  anchors=cards.map(c=>{const r=c.getBoundingClientRect();return r.top+scrollY+r.height/2;});
+}
+function readScroll(){
+  const line=scrollY+innerHeight*(isPhone()?.75:.50);
+  if(line<=anchors[0]){p=0;return;}
+  if(line>=anchors[anchors.length-1]){p=anchors.length-1;return;}
+  for(let i=0;i<anchors.length-1;i++){
+    if(line<anchors[i+1]){p=i+(line-anchors[i])/(anchors[i+1]-anchors[i]);return;}
+  }
+}
+addEventListener('scroll',()=>{
+  readScroll();
+  document.getElementById('pc3dDown').classList.toggle('pc3d-gone', p>3.4);
+  if(scrollY>140) grab.classList.add('pc3d-gone');
+},{passive:true});
+
+/* ================= boucle ================= */
+function resize(){
+  const w=viewer.clientWidth,h=viewer.clientHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h; camera.fov=isPhone()?42:32;
+  camera.updateProjectionMatrix();
+  FIT=fitDistance();
+  measure(); readScroll();
+}
+addEventListener('resize',resize); resize();
+
+const ease=t=>1-Math.pow(1-t,3);
+const clock=new THREE.Clock(), hud=document.getElementById('pc3dHud');
+const LAST=SHOTS.length-1;
+
+(function tick(){
+  requestAnimationFrame(tick);
+  const dt=Math.min(clock.getDelta(),.05);
+  pS += (p-pS)*Math.min(1,dt*5.5);
+
+  PARTS.forEach(part=>{
+    if(!part.off) return;
+    const t0=part.t0!==undefined?part.t0:part.step-.10, du=part.dur||.45;
+    const t=Math.max(0,Math.min(1,(pS-t0)/du)), e=ease(t);
+    part.o.position.lerpVectors(part.from,part.to,e);
+    part.o.position.y += Math.sin(Math.PI*t)*.09;      // petite courbe d'approche
+    part.o.rotation.z  = (1-e)*.09;                    // la piece se redresse
+    part.o.rotation.y  = (1-e)*.05;
+    part.o.visible = t>.004;
+    if(part.ghost){
+      const pre=Math.max(0,Math.min(1,(pS-(t0-.45))/.30));
+      part.ghost.material.opacity = pre*(1-t)*.55;
+    }
+  });
+
+  const i=Math.min(LAST,Math.floor(pS)), j=Math.min(LAST,i+1), f=pS-i;
+  const A=SHOTS[i],B=SHOTS[j];
+  const yawT=A.yaw+(B.yaw-A.yaw)*f+uYaw, pitchT=A.pitch+(B.pitch-A.pitch)*f+uPitch;
+  // deplacement lateral et vertical, exprime dans le repere de la camera
+  const rx=Math.cos(yawT), rz=-Math.sin(yawT);
+  const ux=-Math.sin(yawT)*Math.sin(pitchT), uy=Math.cos(pitchT), uz=-Math.cos(yawT)*Math.sin(pitchT);
+  const base=A.aim.clone().lerp(B.aim,f);
+  base.x+=rx*uPanX+ux*uPanY; base.y+=uy*uPanY; base.z+=rz*uPanX+uz*uPanY;
+  camAim.lerp(base,Math.min(1,dt*4));
+  camR    += (FIT*(A.zoom+(B.zoom-A.zoom)*f)*uZoom - camR)*Math.min(1,dt*3);
+  camYaw  += (yawT   - camYaw )*Math.min(1,dt*5);
+  camPitch += (pitchT - camPitch)*Math.min(1,dt*5);
+  camera.position.set(
+    camAim.x+camR*Math.cos(camPitch)*Math.sin(camYaw),
+    camAim.y+camR*Math.sin(camPitch),
+    camAim.z+camR*Math.cos(camPitch)*Math.cos(camYaw)
+  );
+  camera.lookAt(camAim);
+
+  const lit=Math.max(0,Math.min(1,pS-1.5));
+  const fin=Math.max(0,Math.min(1,(pS-4.05)/.85));     // bouquet final
+  glowMats.forEach(m=>m.emissiveIntensity=lit*1.15+fin*1.55);
+  rgbA.intensity=lit*.95+fin*1.70; rgbB.intensity=lit*.70+fin*1.45;
+  if(!reduced) spinners.forEach(s=>s.rotation.z+=dt*lit*9);
+
+  const step=Math.min(LAST,Math.round(pS));
+  hud.textContent = step>=5 ? 'TERMINÉ' : String(step+1).padStart(2,'0')+' / 05';
+
+  renderer.render(scene,camera);
+})();
+
   }
 })();
 </script>
