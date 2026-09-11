@@ -80,12 +80,11 @@
   <div class="wrap">
     <div class="form-card reveal">
 
-      <form id="devisForm" action="https://formsubmit.co/contact@mtinformatique.fr" method="POST">
-        <!-- Configuration FormSubmit -->
-        <input type="hidden" name="_subject" value="Nouvelle demande de devis — MT Informatique">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://mtinformatique.fr/merci.html">
+      <!-- ===================================================================
+           IMPORTANT : remplacer COLLER_ICI_URL_WEBAPP par l'URL de déploiement
+           du script Google Apps Script (elle se termine par /exec).
+           =================================================================== -->
+      <form id="devisForm" action="https://script.google.com/macros/s/AKfycbz5eU1qSXgu_WGPU3xZsKa6VEH1VOK-06y_LOxptwFxoRixD44aMdNa5z1ECaxMzoYq/exec" method="POST">
         <!-- Piège anti-spam (doit rester vide et invisible) -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -93,50 +92,50 @@
         <div class="field full">
           <label>Vous êtes...</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="Type de client" value="Particulier" checked onchange="toggleClientType()"> Particulier</label>
-            <label class="radio-opt"><input type="radio" name="Type de client" value="Professionnel" onchange="toggleClientType()"> Professionnel</label>
+            <label class="radio-opt"><input type="radio" name="type_client" value="Particulier" checked onchange="toggleClientType()"> Particulier</label>
+            <label class="radio-opt"><input type="radio" name="type_client" value="Professionnel" onchange="toggleClientType()"> Professionnel</label>
           </div>
         </div>
 
         <div class="form-grid">
           <div class="field">
             <label for="nom">Nom et prénom</label>
-            <input type="text" id="nom" name="Nom et prénom" required>
+            <input type="text" id="nom" name="nom" required>
           </div>
           <div class="field">
             <label for="tel">Téléphone</label>
-            <input type="tel" id="tel" name="Téléphone" required>
+            <input type="tel" id="tel" name="tel" required>
           </div>
           <div class="field full">
             <label for="email">Email <span class="hint">(pour vous renvoyer le devis)</span></label>
-            <input type="email" id="email" name="Email" required>
+            <input type="email" id="email" name="email" required>
           </div>
         </div>
 
         <!-- ===== Champ conditionnel : Nom de l'entreprise (uniquement si Professionnel) ===== -->
         <div class="field full" id="entreprise-field" style="display:none;">
           <label for="entreprise">Nom de l'entreprise</label>
-          <input type="text" id="entreprise" name="Nom de l'entreprise">
+          <input type="text" id="entreprise" name="entreprise">
         </div>
 
         <!-- ===== Adresse d'intervention (obligatoire pour calcul du déplacement) ===== -->
         <div class="field full">
           <label for="adresse">Adresse d'intervention <span class="hint">(numéro, rue, code postal, ville)</span></label>
-          <input type="text" id="adresse" name="Adresse d'intervention" placeholder="Ex : 15 rue de la République, 80000 Amiens" required>
+          <input type="text" id="adresse" name="adresse" placeholder="Ex : 15 rue de la République, 80000 Amiens" required>
         </div>
 
         <div class="field full">
           <label>Zone d'intervention</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="Zone" value="Lille (semaine)" checked> Lille (semaine)</label>
-            <label class="radio-opt"><input type="radio" name="Zone" value="Amiens (week-end)"> Amiens (week-end)</label>
-            <label class="radio-opt"><input type="radio" name="Zone" value="À distance"> À distance</label>
+            <label class="radio-opt"><input type="radio" name="zone" value="Lille (semaine)" checked> Lille (semaine)</label>
+            <label class="radio-opt"><input type="radio" name="zone" value="Amiens (week-end)"> Amiens (week-end)</label>
+            <label class="radio-opt"><input type="radio" name="zone" value="À distance"> À distance</label>
           </div>
         </div>
 
         <div class="field full">
           <label for="type">Type de problème</label>
-          <select id="type" name="Type de problème" required>
+          <select id="type" name="type" required>
             <option value="">Sélectionnez...</option>
             <option>Diagnostic / dépannage panne logicielle</option>
             <option>Ordinateur lent / à optimiser</option>
@@ -152,12 +151,12 @@
 
         <div class="field full">
           <label for="description">Description du problème</label>
-          <textarea id="description" name="Description du problème" placeholder="Décrivez la panne, depuis quand, ce que vous avez déjà essayé..." required></textarea>
+          <textarea id="description" name="description" placeholder="Décrivez la panne, depuis quand, ce que vous avez déjà essayé..." required></textarea>
         </div>
 
         <div class="field full">
           <label for="dispo">Vos disponibilités <span class="hint">(jours / créneaux)</span></label>
-          <input type="text" id="dispo" name="Disponibilités" placeholder="Ex : en semaine après 18h, ou samedi matin">
+          <input type="text" id="dispo" name="dispo" placeholder="Ex : en semaine après 18h, ou samedi matin">
         </div>
 
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer ma demande de devis</button>
@@ -175,7 +174,7 @@
 <script>
 // Affiche/masque le champ "Nom de l'entreprise" selon le type de client
 function toggleClientType() {
-  var pro = document.querySelector('input[name="Type de client"]:checked').value === 'Professionnel';
+  var pro = document.querySelector('input[name="type_client"]:checked').value === 'Professionnel';
   var entrepriseField = document.getElementById('entreprise-field');
   var entrepriseInput = document.getElementById('entreprise');
   if (pro) {
