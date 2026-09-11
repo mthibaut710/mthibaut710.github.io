@@ -84,7 +84,13 @@
            IMPORTANT : remplacer COLLER_ICI_URL_WEBAPP par l'URL de déploiement
            du script Google Apps Script (elle se termine par /exec).
            =================================================================== -->
-      <form id="devisForm" action="https://script.google.com/macros/s/AKfycbz5eU1qSXgu_WGPU3xZsKa6VEH1VOK-06y_LOxptwFxoRixD44aMdNa5z1ECaxMzoYq/exec" method="POST">
+      <!-- Cible cachée : le formulaire est envoyé dedans, donc la page visible
+           ne quitte jamais mtinformatique.fr. La redirection vers merci.html
+           est faite par le script en bas de page. -->
+      <iframe id="mtSubmitFrame" name="mtSubmitFrame" style="display:none;border:0;width:0;height:0"
+              title="Envoi du formulaire" aria-hidden="true"></iframe>
+
+      <form id="devisForm" action="https://script.google.com/macros/s/AKfycbz5eU1qSXgu_WGPU3xZsKa6VEH1VOK-06y_LOxptwFxoRixD44aMdNa5z1ECaxMzoYq/exec" method="POST" target="mtSubmitFrame">
         <!-- Piège anti-spam (doit rester vide et invisible) -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -159,7 +165,7 @@
           <input type="text" id="dispo" name="dispo" placeholder="Ex : en semaine après 18h, ou samedi matin">
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer ma demande de devis</button>
+        <button type="submit" id="devisSubmit" class="btn btn-primary" style="width:100%;justify-content:center;">Envoyer ma demande de devis</button>
 
         <p class="form-note">
           <span>ℹ️</span>
@@ -186,6 +192,40 @@ function toggleClientType() {
     entrepriseInput.value = '';
   }
 }
+
+// ===== Envoi du formulaire sans quitter mtinformatique.fr =====
+// Le formulaire est posté dans une iframe cachée. Quand elle a fini de charger,
+// on redirige la page visible vers merci.html. Le client ne voit jamais
+// l'adresse script.google.com dans sa barre d'adresse.
+(function () {
+  var form  = document.getElementById('devisForm');
+  var frame = document.getElementById('mtSubmitFrame');
+  var btn   = document.getElementById('devisSubmit');
+  if (!form || !frame) return;
+
+  var envoye = false;
+  var secours = null;
+
+  function allerMerci() {
+    if (!envoye) return;
+    envoye = false;
+    if (secours) clearTimeout(secours);
+    window.location.href = 'merci.html';
+  }
+
+  form.addEventListener('submit', function () {
+    envoye = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours...';
+      btn.style.opacity = '0.7';
+    }
+    // Filet de sécurité : si l'iframe ne signale rien, on redirige quand même.
+    secours = setTimeout(allerMerci, 12000);
+  });
+
+  frame.addEventListener('load', allerMerci);
+})();
 </script>
 
 <footer>
