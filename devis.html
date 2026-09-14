@@ -93,6 +93,10 @@
       <form id="devisForm" action="https://script.google.com/macros/s/AKfycbz5eU1qSXgu_WGPU3xZsKa6VEH1VOK-06y_LOxptwFxoRixD44aMdNa5z1ECaxMzoYq/exec" method="POST" target="mtSubmitFrame">
         <!-- Piège anti-spam (doit rester vide et invisible) -->
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <!-- Contrôles remplis par le navigateur : un robot qui n'exécute pas le
+             JavaScript, ou qui poste directement sur l'URL du script, les laisse vides. -->
+        <input type="hidden" name="_ts" id="_ts" value="">
+        <input type="hidden" name="_tk" id="_tk" value="">
 
         <!-- ===== Type de client (Particulier / Professionnel) ===== -->
         <div class="field full">
@@ -149,7 +153,7 @@
             <option>Récupération de données</option>
             <option>Sécurisation / antivirus</option>
             <option>Configuration wifi / imprimante</option>
-            <option>Installation d'un nouvel appareil / Réinstallation Windows</option>
+            <option>Installation d'un nouvel appareil</option>
             <option>Création de site vitrine</option>
             <option>Autre / projet particulier</option>
           </select>
@@ -202,6 +206,15 @@ function toggleClientType() {
   var frame = document.getElementById('mtSubmitFrame');
   var btn   = document.getElementById('devisSubmit');
   if (!form || !frame) return;
+
+  // Jetons anti-robot : posés à l'ouverture de la page, vérifiés côté script.
+  var champTs = document.getElementById('_ts');
+  var champTk = document.getElementById('_tk');
+  if (champTs && champTk) {
+    var ts = Date.now();
+    champTs.value = String(ts);
+    champTk.value = (ts % 97) + 'x' + String(ts).slice(-5);
+  }
 
   var envoye = false;
   var secours = null;
