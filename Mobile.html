@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root{
+    --bleu:#12325c; --bleu2:#2f6fb5; --fond:#f2f5f9; --carte:#ffffff;
+    --texte:#1c1c1c; --gris:#6b7684; --bord:#dde3ec;
+    --vert:#1d7a4c; --orange:#b5661a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;background:var(--fond);color:var(--texte);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       font-size:16px;line-height:1.45;padding-bottom:40px;}
+
+  header{background:var(--bleu);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;
+         position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+  header img{width:34px;height:29px;border-radius:4px;background:#fff;}
+  header .t{font-weight:700;font-size:17px;line-height:1.1;}
+  header .s{font-size:11px;color:#aebdd4;}
+  header button{margin-left:auto;background:rgba(255,255,255,.15);color:#fff;border:0;
+                border-radius:8px;padding:8px 12px;font-size:14px;}
+
+  .wrap{padding:12px;max-width:560px;margin:0 auto;}
+
+  .carte{background:var(--carte);border:1px solid var(--bord);border-radius:12px;
+         padding:14px;margin-bottom:10px;}
+  .carte.clic:active{background:#eef2f8;}
+
+  .haut{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .nom{font-weight:700;font-size:17px;}
+  .meta{color:var(--gris);font-size:13px;margin-top:2px;}
+  .pb{margin-top:8px;font-size:14px;}
+
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+  .b-new{background:#e4eefc;color:var(--bleu2);}
+  .b-gen{background:#fdf0e0;color:var(--orange);}
+  .b-env{background:#e2f3ea;color:var(--vert);}
+
+  .estim{margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);
+         font-size:14px;display:flex;justify-content:space-between;}
+  .estim b{font-size:16px;}
+
+  label{display:block;font-size:12px;color:var(--gris);margin:14px 0 4px;font-weight:600;
+        text-transform:uppercase;letter-spacing:.03em;}
+  input,textarea{width:100%;padding:11px;border:1px solid var(--bord);border-radius:9px;
+                 font-size:16px;font-family:inherit;background:#fff;color:var(--texte);}
+  textarea{min-height:90px;resize:vertical;}
+
+  .btn{display:block;width:100%;padding:14px;border:0;border-radius:10px;font-size:16px;
+       font-weight:600;margin-top:10px;text-align:center;text-decoration:none;}
+  .p{background:var(--bleu);color:#fff;}
+  .s{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu);}
+  .g{background:#fff;color:var(--gris);border:1px solid var(--bord);}
+  .btn:disabled{opacity:.5;}
+
+  .duo{display:flex;gap:8px;}
+  .duo .btn{flex:1;}
+
+  .info{font-size:14px;padding:8px 0;border-bottom:1px solid var(--bord);
+        display:flex;justify-content:space-between;gap:12px;}
+  .info span:first-child{color:var(--gris);flex-shrink:0;}
+  .info span:last-child{text-align:right;font-weight:600;word-break:break-word;}
+  .info a{color:var(--bleu2);font-weight:600;}
+
+  .vide{text-align:center;color:var(--gris);padding:50px 20px;font-size:15px;}
+  .msg{padding:12px;border-radius:10px;margin-bottom:12px;font-size:14px;white-space:pre-line;}
+  .m-ok{background:#e2f3ea;color:var(--vert);}
+  .m-ko{background:#fdeaea;color:#a12727;}
+
+  .pin{max-width:300px;margin:60px auto;text-align:center;}
+  .pin input{text-align:center;font-size:26px;letter-spacing:.35em;padding:14px;}
+  .charge{text-align:center;padding:40px;color:var(--gris);}
+</style>
+</head>
+<body>
+
+<header>
+  <? if (logo) { ?><img src="data:image/png;base64,<?= logo ?>" alt=""><? } ?>
+  <div><div class="t"><?= entreprise ?></div><div class="s">Demandes de devis · <?= version ?></div></div>
+  <button id="btnHaut" onclick="retour()" style="display:none">Retour</button>
+</header>
+
+<div class="wrap" id="app">
+  <div class="charge">Chargement...</div>
+</div>
+
+<script>
+var CODE = '<?= codeUrl ?>';
+var DONNEES = [];
+var COURANT = null;
+var TOUT = false;
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (!CODE) { try { CODE = localStorage.getItem('mt_code') || ''; } catch(e){} }
+  if (CODE) charger(); else ecranPin();
+});
+
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function retour(){ COURANT = null; rendre(); }
+
+// ---------- Code d'accès ----------
+function ecranPin(err){
+  el('btnHaut').style.display = 'none';
+  el('app').innerHTML =
+    '<div class="pin">' +
+      (err ? '<div class="msg m-ko">' + esc(err) + '</div>' : '') +
+      '<label>Code d\'accès</label>' +
+      '<input id="pin" type="tel" inputmode="numeric" autocomplete="off" maxlength="12">' +
+      '<button class="btn p" onclick="validerPin()">Entrer</button>' +
+    '</div>';
+  el('pin').focus();
+  el('pin').addEventListener('keydown', function(ev){ if (ev.key === 'Enter') validerPin(); });
+}
+
+function validerPin(){
+  var v = el('pin').value.trim();
+  if (!v) return;
+  CODE = v;
+  el('app').innerHTML = '<div class="charge">Vérification...</div>';
+  charger(function(){ try { localStorage.setItem('mt_code', CODE); } catch(e){} });
+}
+
+// ---------- Chargement ----------
+function charger(apres){
+  google.script.run
+    .withSuccessHandler(function(r){ DONNEES = r; rendre(); if (apres) apres(); })
+    .withFailureHandler(function(e){
+      var m = String(e && e.message || e);
+      if (m.indexOf('Code incorrect') > -1) { CODE = ''; ecranPin('Code incorrect.'); }
+      else el('app').innerHTML = '<div class="msg m-ko">' + esc(m) + '</div>' +
+                                 '<button class="btn s" onclick="charger()">Réessayer</button>';
+    })
+    .apiListe(CODE, TOUT);
+}
+
+function rendre(msg, type){
+  el('btnHaut').style.display = COURANT ? 'block' : 'none';
+  var h = '';
+  if (msg) h += '<div class="msg ' + (type === 'ko' ? 'm-ko' : 'm-ok') + '">' + esc(msg) + '</div>';
+  h += COURANT ? vueDetail() : vueListe();
+  el('app').innerHTML = h;
+  window.scrollTo(0, 0);
+}
+
+// ---------- Liste ----------
+function badge(s){
+  if (s === 'Devis envoyé')  return '<span class="badge b-env">Envoyé</span>';
+  if (s === 'Devis généré')  return '<span class="badge b-gen">À envoyer</span>';
+  return '<span class="badge b-new">Nouvelle</span>';
+}
+
+function vueListe(){
+  var h = '';
+  if (!DONNEES.length){
+    h += '<div class="vide">' + (TOUT ? 'Aucune demande.' : 'Aucune demande en cours.') + '</div>';
+  }
+  for (var i = 0; i < DONNEES.length; i++){
+    var d = DONNEES[i];
+    h += '<div class="carte clic" onclick="ouvrir(' + d.ligne + ')">' +
+         '<div class="haut"><div>' +
+           '<div class="nom">' + esc(d.nom) + '</div>' +
+           '<div class="meta">' + esc(d.date) + ' · ' + esc(d.ref) +
+             (d.zone ? ' · ' + esc(d.zone) : '') + '</div>' +
+         '</div>' + badge(d.statut) + '</div>' +
+         '<div class="pb">' + esc(d.probleme) + '</div>' +
+         (d.total ? '<div class="estim"><span>' +
+            (d.numDevis ? esc(d.numDevis) : 'Total') +
+            '</span><b>' + esc(d.total) + ' €</b></div>' : '') +
+         '</div>';
+  }
+  h += '<button class="btn g" onclick="basculer()">' +
+       (TOUT ? 'Masquer les devis envoyés' : 'Afficher tout l\'historique') + '</button>';
+  return h;
+}
+
+function basculer(){ TOUT = !TOUT; el('app').innerHTML = '<div class="charge">Chargement...</div>'; charger(); }
+
+function ouvrir(ligne){
+  for (var i = 0; i < DONNEES.length; i++) if (DONNEES[i].ligne === ligne) COURANT = DONNEES[i];
+  rendre();
+}
+
+// ---------- Détail ----------
+function info(l, v){ return v ? '<div class="info"><span>' + l + '</span><span>' + v + '</span></div>' : ''; }
+
+function vueDetail(){
+  var d = COURANT;
+  var h = '<div class="carte">' +
+    '<div class="haut"><div><div class="nom">' + esc(d.nom) + '</div>' +
+    '<div class="meta">' + esc(d.ref) + ' · ' + esc(d.typeClient) + '</div></div>' +
+    badge(d.statut) + '</div><div style="height:8px"></div>';
+
+  if (d.entreprise) h += info('Entreprise', esc(d.entreprise));
+  if (d.tel)   h += info('Téléphone', '<a href="tel:' + esc(d.tel.replace(/ /g,'')) + '">' + esc(d.tel) + '</a>');
+  if (d.email) h += info('Email', '<a href="mailto:' + esc(d.email) + '">' + esc(d.email) + '</a>');
+  if (d.adresse) h += info('Adresse',
+        '<a href="https://maps.apple.com/?q=' + encodeURIComponent(d.adresse) + '">' + esc(d.adresse) + '</a>');
+  h += info('Zone', esc(d.zone));
+  if (d.km !== '') h += info('Distance', esc(d.km) + ' km');
+  h += info('Problème', esc(d.probleme));
+  if (d.dispos) h += info('Disponibilités', esc(d.dispos));
+  h += '</div>';
+
+  if (d.description){
+    h += '<div class="carte"><label style="margin-top:0">Description du client</label>' +
+         '<div style="font-size:15px;white-space:pre-line">' + esc(d.description) + '</div></div>';
+  }
+
+  h += '<div class="carte">' +
+    '<label style="margin-top:0">Prestations — une par ligne : Désignation ; Qté ; Prix</label>' +
+    '<textarea id="prest">' + esc(d.prestations) + '</textarea>' +
+    '<label>Frais de déplacement (€)</label>' +
+    '<input id="depl" type="tel" inputmode="decimal" value="' + esc(d.deplacement) + '">' +
+    '<button class="btn p" id="bGen" onclick="generer()">' +
+      (d.numDevis ? 'Régénérer le devis ' + esc(d.numDevis) : 'Générer le devis') + '</button>' +
+    '<button class="btn g" onclick="enregistrer()">Enregistrer sans générer</button>' +
+    '</div>';
+
+  if (d.numDevis){
+    h += '<div class="carte">' +
+      '<div class="info"><span>Devis</span><span>' + esc(d.numDevis) + '</span></div>' +
+      '<div class="info"><span>Total</span><span>' + esc(d.total) + ' €</span></div>' +
+      (d.pdfDevis ? '<a class="btn s" href="' + esc(d.pdfDevis) + '" target="_blank">Ouvrir le PDF du devis</a>' : '') +
+      '<button class="btn p" id="bMail" onclick="mail()">Préparer le mail au client</button>' +
+      '</div>';
+  }
+
+  if (d.pdfFiche){
+    h += '<a class="btn g" href="' + esc(d.pdfFiche) + '" target="_blank">Ouvrir la fiche de demande</a>';
+  }
+  return h;
+}
+
+// ---------- Actions ----------
+function occupe(id, txt){
+  var b = el(id); if (!b) return null;
+  b.disabled = true; b.dataset.old = b.textContent; b.textContent = txt; return b;
+}
+function libre(id){
+  var b = el(id); if (!b) return;
+  b.disabled = false; if (b.dataset.old) b.textContent = b.dataset.old;
+}
+
+function enregistrer(){
+  var p = el('prest').value, dep = el('depl').value;
+  google.script.run
+    .withSuccessHandler(function(){ COURANT.prestations = p; COURANT.deplacement = dep;
+                                    charger(); rendre('Enregistré.'); })
+    .withFailureHandler(function(e){ rendre(String(e.message || e), 'ko'); })
+    .apiEnregistrer(CODE, COURANT.ligne, p, dep);
+}
+
+function generer(){
+  var p = el('prest').value, dep = el('depl').value, ligne = COURANT.ligne;
+  occupe('bGen', 'Génération...');
+  google.script.run
+    .withSuccessHandler(function(r){
+      libre('bGen');
+      if (!r.ok){ rendre(r.message, 'ko'); return; }
+      google.script.run.withSuccessHandler(function(liste){
+        DONNEES = liste;
+        COURANT = null;
+        for (var i = 0; i < liste.length; i++) if (liste[i].ligne === ligne) COURANT = liste[i];
+        rendre(r.message);
+      }).apiListe(CODE, TOUT);
+    })
+    .withFailureHandler(function(e){ libre('bGen'); rendre(String(e.message || e), 'ko'); })
+    .apiGenerer(CODE, ligne, p, dep);
+}
+
+function mail(){
+  occupe('bMail', 'Création...');
+  var ligne = COURANT.ligne;
+  google.script.run
+    .withSuccessHandler(function(r){
+      libre('bMail');
+      google.script.run.withSuccessHandler(function(liste){
+        DONNEES = liste;
+        COURANT = null;
+        for (var i = 0; i < liste.length; i++) if (liste[i].ligne === ligne) COURANT = liste[i];
+        rendre(r.message, r.ok ? 'ok' : 'ko');
+      }).apiListe(CODE, true);
+    })
+    .withFailureHandler(function(e){ libre('bMail'); rendre(String(e.message || e), 'ko'); })
+    .apiMail(CODE, ligne);
+}
+</script>
+</body>
+</html>
